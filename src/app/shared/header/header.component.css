@@ -1,0 +1,32 @@
+/* Asegurar que el navbar no tenga espacios alrededor */
+.navbar {
+    padding: 10px 20px;
+  }
+  
+  /* Hacer que el header sea fijo */
+  .fixed-top {
+    z-index: 1030; /* Asegurar que esté sobre otros elementos */
+  }
+  
+  /* Personalizar el color de fondo si es necesario */
+  .bg-primary {
+    background-color: #1f4524 !important; /* Azul oscuro como en la imagen */
+    height: 90px;
+  }
+  
+  /* Asegurar que los enlaces y botones sean visibles */
+  .nav-link {
+    color: white !important;
+    font-weight: 500;
+    margin: 0 10px;
+  }
+  
+  .nav-link:hover {
+    text-decoration: underline;
+  }
+  
+  .btn-primary {
+    background-color: #198754 !important; /* Color del botón en la imagen */
+    border-color: #198754;
+  }
+

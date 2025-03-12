@@ -1,0 +1,113 @@
+<!-- <p class="text-danger">{{ loginError }}</p> -->
+<div class="max-vh-100">
+  <div class="row min-vh-100">
+    <!-- Background Image Column -->
+    <div class="col-lg-6 d-none d-lg-block position-relative bg-image">
+      <div class="dark-overlay">
+        <!-- <h1
+          class="text-white position-absolute top-50 start-50 translate-middle display-3 fw-bold"
+        >
+          HealthU
+        </h1> -->
+      </div>
+    </div>
+
+    <!-- Login Form Column -->
+    <div class="col-lg-6 d-flex align-items-center justify-content-center">
+      <div class="login-container">
+        <h2 class="text-center p-4">Iniciar Sesión</h2>
+          <!-- Logo -->
+          <div class="text-center">
+            <img
+              src="../../../../assets/Designer.png"
+              alt="sena-HealthU"
+              class="img-fluid"
+              style="max-width: 220px"
+            />
+          </div>
+        <div class="text-center mb-4">
+          <span>Al continuar, aceptas nuestro</span>
+          <a href="#" class="enlace"> Acuerdo del usuario</a>
+          <span> y confirmas que has entendido la </span>
+          <a href="#" class="enlace">Política de privacidad</a>.
+        </div>
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm">
+          <div >
+            <label class="form-label"> Email </label>
+            <input
+              formControlName="emailUsuario"
+              type="email"
+              class="form-control form-control-lg"
+              id="exampleInputEmail"
+              aria-describedby="emailHelp"
+              [(ngModel)] ="correoIngresado"
+            />
+          </div>
+
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="error-container ">
+            <div *ngIf="email.errors?.['required']">
+              El Email es requerido.
+            </div>
+            <div *ngIf="email.errors ?.['email'] || email.errors ?.['pattern']">
+              El Email debe tener un formato válido.
+            </div>
+          </div>
+
+          <div >
+            <label for="exampleInputPassword" class="form-label mt-5">
+              Contraseña
+            </label>
+            <div class="input-group">
+              <input
+                formControlName="contrasenaUsuario"
+                [type]="showPassword ? 'text' : 'password'"
+                class="form-control  "
+                id="exampleInputPassword"
+                [(ngModel)]="contrasenaIngresada"
+              />
+
+              <button
+                class="btn btn-outline-secondary "
+                type="button"
+                (click)="togglePassword()">
+                <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+              </button>
+
+            </div>
+              <div
+                *ngIf="password.invalid && (password.dirty || password.touched)"
+                class="error-container ">
+                <div *ngIf="password.errors?.['required']">
+                  El Password es requerido.
+                </div>
+                <div *ngIf="password.errors?.['minlength']">
+                  El Password debe tener al menos 6 caracteres.
+                </div>
+              </div>
+
+          </div>
+          <div class="text-end  mt-4 mb-2">
+            <a (click)="abrirModalDesdeLogin()"  class="enlace" >¿Has olvidado tu contraseña?</a>
+          </div>
+          <!-- Modal dentro de recuperar-contrasena -->
+          <app-recuperar-contrasena (modalAbierto)="mostrarModal()"></app-recuperar-contrasena>
+   
+          <button
+            type="submit"
+            (click)="login()"
+            class="btn btn-success mb-4 w-100"
+            [disabled]="contrasenaIngresada.length < 3 || correoIngresado.length < 11">
+            Iniciar Sesión
+          </button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

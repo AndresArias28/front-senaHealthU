@@ -1,0 +1,9 @@
+.btn-success {
+    background-color: #39A900 !important;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-success:hover {
+    background-color: #2e8700 !important;
+  }

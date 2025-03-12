@@ -1,0 +1,27 @@
+  .modal-content {
+    border-radius: 20px;
+  }
+  
+  .form-control {
+    background-color: #f1e9e9 !important;
+    color: rgb(30, 31, 29) !important;
+  }
+  
+  .form-control::placeholder {
+    color: #bbb;
+  }
+  
+  .btn-primary {
+    background-color: #1da1f2; /* Color similar a Twitter */
+    border: none;
+  }
+  
+  .btn-primary:disabled {
+    background-color: #444;
+    cursor: not-allowed;
+  }
+  
+  .btn-close-white {
+    filter: invert(1);
+  }
+  

@@ -1,0 +1,108 @@
+<div class=" signup-container  d-flex align-items-center">
+    <div class="row w-100 g-0">
+      <!-- Signup Form Column -->
+      <div class="col-12 col-md-3 offset-md-3 col-lg-6 offset-lg-3">
+        <div class="signup-form p-4 p-md-5 rounded-4">
+          <!-- Header Section -->
+          <div class="mb-5">
+            <h2 class="signup-title mb-3">Crear cuenta de administrador</h2>
+            <!-- <p class="text-muted">es rápido y facil</p> -->
+          </div>
+
+          <!-- Signup Form -->
+          <form [formGroup]="register" (ngSubmit)="onSubmit()">
+            <div class="row mb-3">
+              <div class="col-6">
+                <!-- <label class="form-label">First Name</label> -->
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  formControlName="nombreAdmin" 
+                  placeholder="Nombre"
+                >
+                </div>
+                
+
+              <div class="col-6">
+                <!-- <label class="form-label">Last Name</label> -->
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  formControlName="apellidoAdmin"
+                  placeholder="Apellido"
+                >
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <!-- <label class="form-label">Email Address</label> -->
+              <input 
+                type="email" 
+                class="form-control" 
+                formControlName="emailAdmin"
+                placeholder="Correo electrónico"
+              >
+              <div *ngIf="emailAdmin.invalid && (emailAdmin.dirty || emailAdmin.touched)"
+                  class="error-container ">
+                      <div *ngIf="emailAdmin.errors?.['required']">
+                          Email requerido.
+                      </div>
+                      <div *ngIf="emailAdmin.errors ?.['email'] || emailAdmin.errors ?.['pattern']">
+                          Formato inválido.
+                      </div>
+              </div>
+              
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-6">
+                <!-- <label class="form-label">Password</label> -->
+                <div class="input-group">
+                  <input 
+                    [type]="showPassword ? 'text' : 'password'" 
+                    class="form-control" 
+                    formControlName="contrasenaAdmin"
+                    placeholder="contraseña"
+                  >
+                  <button 
+                    class="btn btn-outline-secondary" 
+                    type="button"
+                    (click)="togglePasswordVisibility()"
+                  >
+                    <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-6">
+                <!-- <label class="form-label">Confirm Password</label> -->
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  formControlName="confirmPassword"
+                  placeholder="Confirma contraseña"
+                >
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <!-- <label class="form-label">Phone Number</label> -->
+              <input 
+                type="tel" 
+                class="form-control" 
+                formControlName="cedulaAdmin"
+                placeholder="Cedula"
+              >
+            </div>
+
+            <button 
+              type="submit" 
+              class="btn btn-primary w-100"
+              [disabled]="!register.valid"
+            >
+              Crear Administrador
+            </button>
+            <a  routerLink="/inicio-login"  class="d-flex justify-content-center mt-3 text-primary">¿Ya tienes una cuenta?</a>
+          </form>
+        </div>
+      </div>
+    </div>

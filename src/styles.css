@@ -1,0 +1,16 @@
+
+/*  CLASES DE CONTROL DE ESTADO DE LOS INPUTS 
+/*  reflejar automaticamente muchas propiedades de control en el FormControl como clase CSS
+ng-valid, ng-invalid, ng-pending, ng-dirty, ng-pristine, ng-untouched, ng-touched, ng-empty, ng-not-empty
+*/
+
+
+.ng-valid:not(form).ng-touched   {
+    border-left: 5px solid #42A948; /* green */
+  }
+ 
+.ng-invalid:not(form).ng-touched  {
+    border-left: 5px solid #a94442; /* red */
+  }
+
+  

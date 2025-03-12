@@ -1,0 +1,43 @@
+/* Custom styles */
+.nav-link {
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .nav-link:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .nav-link.active {
+    background-color: #198754;
+    color: white !important;
+  }
+  
+  .btn-light {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+  }
+  
+  .btn-light:hover {
+    background-color: #e9ecef;
+    border-color: #e9ecef;
+  }
+  
+  /* Custom scrollbar for sidebar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+  
+  
