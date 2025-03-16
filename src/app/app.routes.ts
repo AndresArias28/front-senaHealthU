@@ -6,6 +6,7 @@ import { DashboardSuperusuarioComponent } from './feature/pages/dashboard-superu
 import { roleGuard } from './core/guards/role.guard';
 import { Component } from '@angular/core';
 import { RegisterComponent } from './feature/auth/register/register.component';
+import { RegisterUserComponent } from './feature/auth/register-user/register-user.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
@@ -31,6 +32,12 @@ export const routes: Routes = [
         component: RegisterComponent,
         //canActivate: [authGuard, roleGuard],
         //data: {role: 'ROLE_Superusuario'}
+    },
+    {
+        path : 'register-user',
+        component: RegisterUserComponent,
+        //canActivate: [authGuard, roleGuard],
+        //data: {role: 'ROLE_Administrador'}
     },
     {path: '**', redirectTo: 'iniciar-sesion' },
 ];

@@ -2,126 +2,36 @@
 <!-- Sidebar -->
 <div class="row min-vh-100">
   <div class="col-auto px-0 bg-light border-end" style="width: 280px">
-    <app-sidebar></app-sidebar>
+    <app-sidebar
+    [seccionActual]="seccionActual" 
+    [tipoUsuario]="'administrador'"
+    (seccionSeleccionada)="cambiarSeccion($event)"
+    >
+    </app-sidebar>
   </div>
   <!-- Main Content -->
   <div class="col px-4 py-4">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-      <h4 class="mb-0">Usuarios</h4>
-      <button class="btn btn-success rounded-3">
-        <i class="bi bi-plus-lg me-2"></i>
-        Registrar usuario nuevo
-      </button>
-    </div>
-
-    <!-- Users Table -->
-    <div class="card border-0 shadow-sm rounded-4">
-      <div class="card-body p-0">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="bg-light">
-              <tr>
-                <th class="border-0 px-4">Name</th>
-                <th class="border-0">Email</th>
-                <th class="border-0">Status</th>
-                <th class="border-0">Role</th>
-                <th class="border-0 text-end pe-4">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="px-4">
-                  <div class="d-flex align-items-center">
-                    <img
-                      src="/placeholder.svg?height=40&width=40"
-                      class="rounded-circle me-3"
-                      width="40"
-                      height="40"
-                      alt="User avatar"
-                    />
-                    <div>
-                      <p class="fw-semibold mb-0">John Doe</p>
-                      <small class="text-muted">johndoe</small>
-                    </div>
-                  </div>
-                </td>
-                <td>john.doeexample.com</td>
-                <td>
-                  <span
-                    class="badge bg-success-subtle text-success rounded-pill px-3"
-                    >Active</span
-                  >
-                </td>
-                <td>Admin</td>
-                <td class="text-end pe-4">
-                  <button class="btn btn-light btn-sm rounded-circle">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-4">
-                  <div class="d-flex align-items-center">
-                    <img
-                      src="/placeholder.svg?height=40&width=40"
-                      class="rounded-circle me-3"
-                      width="40"
-                      height="40"
-                      alt="User avatar"
-                    />
-                    <div>
-                      <p class="fw-semibold mb-0">Jane Smith</p>
-                      <small class="text-muted">janesmith</small>
-                    </div>
-                  </div>
-                </td>
-                <td>jane.smithexample.com</td>
-                <td>
-                  <span
-                    class="badge bg-danger-subtle text-danger rounded-pill px-3"
-                    >Inactive</span
-                  >
-                </td>
-                <td>Editor</td>
-                <td class="text-end pe-4">
-                  <button class="btn btn-light btn-sm rounded-circle">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-4">
-                  <div class="d-flex align-items-center">
-                    <img
-                      src="/placeholder.svg?height=40&width=40"
-                      class="rounded-circle me-3"
-                      width="40"
-                      height="40"
-                      alt="User avatar"
-                    />
-                    <div>
-                      <p class="fw-semibold mb-0">Mike Johnson</p>
-                      <small class="text-muted">mikejohnson</small>
-                    </div>
-                  </div>
-                </td>
-                <td>mike.johnsonexample.com</td>
-                <td>
-                  <span
-                    class="badge bg-success-subtle text-success rounded-pill px-3"
-                    >Active</span
-                  >
-                </td>
-                <td>User</td>
-                <td class="text-end pe-4">
-                  <button class="btn btn-light btn-sm rounded-circle">
-                    <i class="bi bi-pencil"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="contenido p-4">
+      <div *ngIf="seccionActual === 'gestionUsers'">
+        <h3>Gestión de Usuarios</h3>
+        <app-dashboard-graphics
+          [tipoUsuario]="'administrador'"
+        ></app-dashboard-graphics>
+      </div>
+      
+      <div *ngIf="seccionActual === 'dashboard'">
+        <div class="row justify-content-between align-items-center mb-2">
+          <app-programador></app-programador>
         </div>
+      </div>
+      <div *ngIf="seccionActual === 'settings'">
+        <h3>Settings</h3>
+        <p>Configuraciones del sistema...</p>
+      </div>
+      <div *ngIf="seccionActual !== 'settings' && seccionActual !== 'dashboard'  && seccionActual !== 'gestionUsers'">
+       <h3> 
+          Bienvenido al panel de administración de SENA Health-U
+      </h3>
       </div>
     </div>
   </div>

@@ -4,16 +4,18 @@ import { LoginService } from '../../../core/services/login/login.service';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../shared/sidebar/sidebar.component';
 import { DashboardGraphicsComponent } from "../dashboard-graphics/dashboard-graphics.component";
+import { ProgramadorComponent } from "../programador/programador.component";
 
 @Component({
   selector: 'app-dashboard-superusuario',
-  imports: [NavComponent, CommonModule, SidebarComponent, DashboardGraphicsComponent],
+  imports: [NavComponent, CommonModule, SidebarComponent,
+     ProgramadorComponent, DashboardGraphicsComponent, ProgramadorComponent],
   templateUrl: './dashboard-superusuario.component.html',
   styleUrl: './dashboard-superusuario.component.css',
 })
 export class DashboardSuperusuarioComponent {
-  seccionActual: string = 'dashboard'; 
-  userLoginOn: boolean = false;
+  seccionActual: string = ''; 
+  userRol: string = 'superusuario';
   title = 'admin-dashboard';
   //userData?: User;
 

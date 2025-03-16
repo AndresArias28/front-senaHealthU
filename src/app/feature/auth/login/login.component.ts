@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ declare var window: any;
 export class LoginComponent implements OnInit {
   
   @ViewChild(RecuperarContrasenaComponent) recuperarComponent!: RecuperarContrasenaComponent;
-  // private modalInstance!: new  Modal | null; 
+
   contrasenaIngresada: string = '';
   loginError: string = '';
   loginForm;
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router, 
     private loginService: LoginService,
-    private ngZone: NgZone 
+    // private ngZone: NgZone 
   ) { //validaciones del formulario reactivo
     this.loginForm = this.formBuilder.group({
       emailUsuario: ['', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$') ]],
@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {}
-
 
   login() {  
     //formularios reactivos
@@ -52,7 +51,7 @@ export class LoginComponent implements OnInit {
 
           // Redirigir según el rol
           if (rol == 'ROLE_Administrador') {
-            console.log("deberai entrar aca");
+            console.log("deberia entrar aca");
               this.router.navigate(['/inicio-admin']);
           } else if (rol === 'ROLE_Superusuario') {
               this.router.navigate(['/inicio-super']);
