@@ -25,7 +25,7 @@ export class RegisterUserComponent {
       cedula: ['', [Validators.required, Validators.minLength(6)]],
     }, { 
       validators: [this.passwordMatchValidator] 
-    });
+    });63
   }
 
   onSubmitUser() {
