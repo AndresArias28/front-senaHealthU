@@ -13,8 +13,15 @@ import { RouterModule } from '@angular/router';
 })
 
 export class DashboardGraphicsComponent  implements OnInit, OnChanges {
-  @Input() tipoUsuario!: string; 
+  @Input() tipoUsuario!: string;
   userLoginOn: boolean = false;
+  datos = [
+    { id: 1, nombre: 'Juan', edad: 25, foto: 'foto1.png', correo: 'juan@gmail.com' },
+    { id: 2, nombre: 'María', edad: 30, foto: 'foto2.png', correo: 'maria@gmail.com' },
+    { id: 3, nombre: 'Luis', edad: 28, foto: 'foto3.png', correo: 'luis@gmail.com'  }
+  ];
+
+  seleccionados: number[] = [];
 
   constructor(private loginService: LoginService) {}
 
@@ -31,5 +38,20 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
     if (changes['tipoUsuario'] && this.tipoUsuario) {
       console.log("Tipo de usuario actualizado:", this.tipoUsuario);
     }
+  }
+
+  toggleSeleccion(id: number) {
+    const index = this.seleccionados.indexOf(id);
+    if (index > -1) {
+      this.seleccionados.splice(index, 1);
+    } else {
+      this.seleccionados.push(id);
+    }
+  }
+
+  eliminarSeleccionados() {
+    this.datos = this.datos.filter(d => !this.seleccionados.includes(d.id));
+    this.seleccionados = [];
+    
   }
 }
