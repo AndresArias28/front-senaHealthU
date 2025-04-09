@@ -24,10 +24,11 @@
         <h3>Settings</h3>
         <p>Configuraciones del sistema...</p>
       </div>
-      <div *ngIf="seccionActual !== 'settings' && seccionActual !== 'dashboard'  && seccionActual !== 'gestionUsers'">
-       <h3> 
-          Bienvenido al panel de administración de SENA Health-U
-      </h3>
+      <div *ngIf="seccionActual == '' || seccionActual == null">
+        <h3> 
+          Bienvenido Superusuario de SENA Health-U
+        </h3>
+        <p>Gestione los usuarios desde aquí.</p>
       </div>
     </div>
   </div>

@@ -4,7 +4,7 @@ import { LoginService } from '../../../core/services/login/login.service';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../shared/sidebar/sidebar.component';
 import { DashboardGraphicsComponent } from "../dashboard-graphics/dashboard-graphics.component";
-import { ProgramadorComponent } from "../programador/programador.component";
+import { ProgramadorComponent } from "../programador-qr/programador.component";
 
 @Component({
   selector: 'app-dashboard-superusuario',

@@ -17,8 +17,9 @@ declare var window: any;
 })
 
 export class LoginComponent implements OnInit {
-  
-  @ViewChild(RecuperarContrasenaComponent) recuperarComponent!: RecuperarContrasenaComponent;
+
+  // esto es para el modal de recuperar contraseña
+  @ViewChild(RecuperarContrasenaComponent) recuperarComponent!: RecuperarContrasenaComponent;//esto es para el modal de recuperar contraseña
 
   contrasenaIngresada: string = '';
   loginError: string = '';
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
     private router: Router, 
     private loginService: LoginService,
     // private ngZone: NgZone 
+
   ) { //validaciones del formulario reactivo
     this.loginForm = this.formBuilder.group({
       emailUsuario: ['', [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$') ]],
@@ -77,7 +79,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit() {//e ol que hace es abrir el modal al hacer click en el boton de recuperar contraseña
     this.recuperarComponent.modalAbierto.subscribe(() => {
       this.mostrarModal();
     });

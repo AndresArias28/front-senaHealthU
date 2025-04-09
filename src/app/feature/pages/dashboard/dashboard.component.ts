@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoginService } from '../../../core/services/login/login.service';
 import { SidebarComponent } from '../../../shared/sidebar/sidebar.component';
 import { DashboardGraphicsComponent } from '../dashboard-graphics/dashboard-graphics.component';
-import { ProgramadorComponent } from '../programador/programador.component';
+import { ProgramadorComponent } from '../programador-qr/programador.component';
 //import { User } from '../../../shared/models/user';
 //import { PersonalDetailsComponent } from "../personal-details/personal-details.component";
 
@@ -17,7 +17,7 @@ import { ProgramadorComponent } from '../programador/programador.component';
 })
 
 export class DashboardComponent {
-  seccionActual: string = 'administrador';
+  seccionActual: string = '';
 
   //@Input() tipoUsuario!: string; 
   //userData?: User;
