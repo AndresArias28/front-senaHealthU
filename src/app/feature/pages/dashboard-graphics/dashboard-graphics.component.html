@@ -15,18 +15,24 @@
             </a>
         </div>
 
-        <!-- <a *ngIf="tipoUsuario" class="btn btn-success rounded-3 p-2" [routerLink]="['/register-admin', tipoUsuario]">
-            <i class="bi bi-plus-lg me-2"></i>
-            Registrar nuevo
-          </a> -->
-          
         <!--tabla de usuarios-->
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-0">
                 <div class="table-responsive">
+                    <input
+                    type="text"
+                    placeholder="Buscar por nombre, correo..."
+                    [(ngModel)]="terminoBusqueda"
+                    (ngModelChange)="buscar()"
+                    class="border p-2 rounded mb-4 w-full"
+                   />
+                   <button (click)="buscar()" class="bg-blue-500 text-white px-4 py-2 rounded">
+                    Buscar
+                  </button>
                     <table class="table table-hover align-middle mb-0 ">
                         <thead class="bg-light table-success">
                             <tr class="text-uppercase   ">
+                                <th class="border-0 " style="max-width: 20px;"></th>
                                 <th class="border-0 px-4">Nombres</th>
                                 <th class="border-0">Correo</th>
                                 <th class="border-0">Estado</th>
@@ -34,50 +40,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor="let persona of datosFiltrados">
+                              <td>
+                                <input type="checkbox" [checked]="seleccionados.includes(persona.id)"
+                                       (change)="toggleSeleccion(persona.id)">
+                              </td>
                                 <td class="px-4">
-                                    <div class="d-flex align-items-center">
-                                        <img src="/placeholder.svg?height=40&width=40" class="rounded-circle me-3" width="40" height="40" alt="User avatar" />
-                                        <div>
-                                            <p class="fw-semibold mb-0">John Doe</p>
-                                            <small class="text-muted">johndoe</small>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <p class="fw-semibold mb-0">john.doeexample.com</p>
-                                </td>
-                                <td>
-                                    <span class="badge bg-success-subtle text-success rounded-pill px-3">Active</span>
-                                </td>
-                            
-                                <td class="text-end pe-4">
-                                    <button class="btn btn-light btn-sm rounded-circle">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                    <button class="btn btn-light btn-sm rounded-circle">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </td>                            
-                            </tr>
 
-                            <tr>
-                                <td class="px-4">
                                     <div class="d-flex align-items-center">
                                         <img src="/placeholder.svg?height=40&width=40" class="rounded-circle me-3" width="40" height="40" alt="User avatar" />
                                         <div>
-                                            <p class="fw-semibold mb-0">John Doe</p>
-                                            <small class="text-muted">johndoe</small>
+                                            <p class="fw-semibold mb-0">{{ persona.nombre }}</p>
+                                            <small class="text-muted">{{ persona.nombre }}</small>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="fw-semibold mb-0">john.doeexample.com</p>
+                                    <p class="fw-semibold mb-0">{{ persona.correo }}</p>
                                 </td>
                                 <td>
                                     <span class="badge bg-success-subtle text-success rounded-pill px-3">Active</span>
                                 </td>
-                            
+
                                 <td class="text-end pe-4">
                                     <button class="btn btn-light btn-sm rounded-circle">
                                         <i class="bi bi-pencil"></i>
@@ -85,13 +69,14 @@
                                     <button class="btn btn-light btn-sm rounded-circle">
                                         <i class="bi bi-trash"></i>
                                     </button>
-                                </td>                             
+                                </td>
                             </tr>
                         </tbody>
                     </table>
+
+                    <button class="mt-3 btn btn-success rounded-3 p-2  " (click)="eliminarSeleccionados()">Eliminar seleccionados</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
