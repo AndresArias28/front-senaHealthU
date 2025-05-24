@@ -1,5 +1,5 @@
 <app-nav></app-nav>
-<!-- Sidebar -->
+<!-- sidebar -->
 <div class="row min-vh-100">
   <div class="col-auto px-0 bg-light border-end" style="width: 280px">
     <app-sidebar
@@ -9,32 +9,45 @@
     >
     </app-sidebar>
   </div>
-  <!-- Main Content -->
+  <!-- main Content -->
   <div class="col px-4 py-4">
     <div class="contenido p-4">
+
+      <!-- componente de los usuarios -->
       <div *ngIf="seccionActual === 'gestionUsers'">
         <h3>Gestión de Usuarios</h3>
         <app-dashboard-graphics
           [tipoUsuario]="'administrador'"
         ></app-dashboard-graphics>
       </div>
-      
+
+      <!-- componente del QR -->
       <div *ngIf="seccionActual === 'qr'">
         <div class="row justify-content-between align-items-center mb-2">
           <app-programador></app-programador>
         </div>
       </div>
+
+      <!-- componente crear rutinas -->
+      <div *ngIf="seccionActual === 'registrarRutina'">
+        <div class="row justify-content-between align-items-center mb-2">
+          <app-register-rutine (rutinaRegistrada)="redirigirAGestionUsuarios()" > </app-register-rutine>
+        </div>
+      </div>
+
+      <!-- componente de los configuraciones -->
       <div *ngIf="seccionActual === 'settings'">
         <h3>Settings</h3>
         <p>Configuraciones del sistema...</p>
       </div>
+
+      <!-- sino es ninguna de las anteriores -->
       <div *ngIf="seccionActual == '' || seccionActual == null">
-     
-        <h3> 
-            Bienvenido Instructor de SENA Health-U
-        </h3>
+        <h3> Bienvenido Instructor </h3>
         <p>Gestione los usuarios desde aquí.</p>
       </div>
+
+
     </div>
   </div>
 </div>

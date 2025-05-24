@@ -24,6 +24,11 @@ export class UserService {
     )
   }
 
+  geAllUsers() : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.urlApi}obtenereUsarios`).pipe(
+      catchError(this.handleError))
+  } 
+
   private handleError(handleError: HttpErrorResponse) {
     if(handleError.status===0){
       console.error('Se ha producido un error ', handleError.message);

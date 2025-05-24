@@ -1,7 +1,7 @@
 <!-- <p class="text-danger">{{ loginError }}</p> -->
 <div class="max-vh-100">
   <div class="row min-vh-100">
-    <!-- Background Image Column -->
+    <!-- background Image Column -->
     <div class="col-lg-6 d-none d-lg-block position-relative bg-image">
       <div class="dark-overlay">
         <!-- <h1
@@ -94,15 +94,15 @@
             <a (click)="abrirModalDesdeLogin()"  class="enlace" >¿Has olvidado tu contraseña?</a>
           </div>
           
-          <!-- Modal dentro de recuperar-contrasena -->
+          <!-- modal dentro de recuperar-contrasena -->
           <app-recuperar-contrasena (modalAbierto)="mostrarModal()"></app-recuperar-contrasena>
    
           <button
             type="submit"
             (click)="login()"
             class="btn btn-success mb-4 w-100"
-            [disabled]="contrasenaIngresada.length < 3 || correoIngresado.length < 11">
-            Iniciar Sesión
+            [disabled]="!contrasenaIngresada || contrasenaIngresada.length < 3">
+            Iniciar Sesion
           </button>
 
         </form>

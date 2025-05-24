@@ -14,6 +14,12 @@ export class SidebarComponent {
   @Output() seccionSeleccionada = new EventEmitter<string>(); // Emite cambios aL padre
 
   cambiarSeccion(seccion: string) {
+    if (seccion === "logout") {
+      
+      console.log("logout", seccion);
+      sessionStorage.removeItem("token"); //elimina el token del sessionStorage
+      window.location.href = '/login'; //redirige a la vista de login
+    }
     console.log('Sidebar emitió sección:', seccion);
     this.seccionSeleccionada.emit(seccion);//emite el cambio de sección a la vista padre
   } 

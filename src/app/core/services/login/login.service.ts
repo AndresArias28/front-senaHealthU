@@ -13,8 +13,6 @@ export class LoginService {
   currentUserLoginOn = new BehaviorSubject<boolean>(false);//observable para el estado del login
   currentUserData = new BehaviorSubject<String>("");
 
-  private dataUrl = 'assets/data.json';
-
   //servicio para el login utilizando httpclient, se inyecta en el constructor 
   // agregar el proveedor en app.config.ts
   constructor(private http: HttpClient) {
@@ -43,7 +41,7 @@ export class LoginService {
   }
 
   login(credentials: LoginRequest): Observable<any> {
-    return this.http.post<any>(environment.urlHost+"auth/login",credentials).pipe(
+    return this.http.post<any>(environment.urlHost+"auth/login", credentials).pipe(
       tap( (userData) => {//si todo sale bien encadeno una serie de operaciones con tap
         console.log('Token recibido del backend:', userData.token);
         sessionStorage.setItem("token", userData.token);//guarda el token en el sessionStorage
@@ -54,6 +52,7 @@ export class LoginService {
       catchError(this.handleError)
     );
   }
+
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 200) {

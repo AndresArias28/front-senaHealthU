@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <div class="col-auto px-0 bg-light border-end p-4" style="width: 280px">
   <div class="d-flex flex-column h-100">
-    <!-- Profile Section -->
+    <!-- profile Section -->
     <div class="text-center p-4 border-bottom">
       <div class="position-relative d-inline-block">
         <img
@@ -48,12 +48,31 @@
           <i class="bi bi-house-door me-3"></i> Crear QR
         </button>
 
+         <button
+          *ngIf="tipoUsuario === 'administrador'"
+          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
+          [class.active]="seccionActual === 'registrarRutina'"
+          (click)="cambiarSeccion('registrarRutina')" >
+          <i class="bi bi-clipboard-check me-3"></i> Crear rutina nueva
+        </button>
+
+
+     
+
         <button
           class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
           [class.active]="seccionActual === 'settings'"
           (click)="cambiarSeccion('settings')" >
           <i class="bi bi-gear me-3"></i>Configuraciones
         </button>
+
+        <button
+          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
+          [class.active]="seccionActual === 'logout'"
+          (click)="cambiarSeccion('logout')" >
+          <i class="bi bi-box-arrow-right me-3"></i>Salir
+        </button>
+
       </div>
     </div>
   </div>
