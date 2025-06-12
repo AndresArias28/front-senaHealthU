@@ -9,7 +9,8 @@ export const roleGuard: CanMatchFn = (route, segments) => {
     //console.log('AuthGuard', loginService.userToken);
     const rolUsuario = loginService.getRole();//obtener rol del usuario del sessionstoage
     console.log('Rol obtenido:', rolUsuario);
-    const rolRequerido = route.data?.['role'];
+    const rolRequerido = route.data?.['role']; //obtener el rol requerido
   
-    return rolUsuario === rolRequerido;
+    return rolUsuario === rolRequerido; //compara el rol del usuario con el rol requerido
+    // Si el rol coincide, permite el acceso; de lo contrario, deniega el acceso
 };

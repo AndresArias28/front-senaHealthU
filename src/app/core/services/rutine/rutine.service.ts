@@ -11,6 +11,7 @@ import {jwtDecode} from 'jwt-decode';
 export class RutineService {
 
   currentRutine = new BehaviorSubject<String>(""); // Observable para la rutina actual
+  rutines = new BehaviorSubject<any[]>([]); // Observable para todas las rutinas
 
 
   constructor(private http: HttpClient) {
@@ -22,9 +23,28 @@ export class RutineService {
     return this.http.post<any>(environment.urlHost + "rutina/crear", rutineData).pipe(
       tap((response) => {
         console.log('Rutina registrada:', response);
-        this.currentRutine.next(response);
+        this.currentRutine.next(response); // actualiza el observable con la nueva rutina
       }),
       
+      catchError(this.handleError)
+    );
+  }
+  // Método para obtener todas las rutinas
+  getAllRutines(): Observable<any[]> {
+    return this.http.get<any[]>(environment.urlHost + "rutina/obtenerRutinas").pipe(
+      tap((response) => {
+        console.log('Rutinas obtenidas:', response);
+        this.rutines.next(response);
+      }),
+      catchError(this.handleError)
+    );
+  }
+  //eliminar una rutina por ID
+  deleteRutine(id: number): Observable<any> {
+    return this.http.delete<any>(environment.urlHost + "rutina/eliminarRutinas/" + id).pipe(
+      tap((response) => {
+        console.log('Rutina eliminada:', response);
+      }),
       catchError(this.handleError)
     );
   }

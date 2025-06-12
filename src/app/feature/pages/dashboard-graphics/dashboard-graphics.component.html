@@ -7,13 +7,13 @@
               Registrar nuevo administrador
             </a>
         </div>
-
+<!-- 
         <div *ngIf="tipoUsuario === 'administrador'" class="d-flex justify-content-between align-items-center mb-2">
             <a class="btn btn-success rounded-3 p-2" [routerLink]="['/register-user']">
               <i class="bi bi-plus-lg me-2"></i>
-              Registrar nuevo Usuario
+              Registrar nueva Rutina
             </a>
-        </div>
+        </div> -->
 
         <!--tabla de usuarios-->
         <div class="card border-0 shadow-sm rounded-4">
@@ -33,40 +33,41 @@
                         <thead class="bg-light table-success">
                             <tr class="text-uppercase   ">
                                 <th class="border-0 " style="max-width: 20px;"></th>
-                                <th class="border-0 px-4">Nombres</th>
-                                <th class="border-0">Correo</th>
-                                <th class="border-0">Estado</th>
+                                <th class="border-0 px-4">Nombre</th>
+                                <th class="border-0">Descripción</th>
+                                <th class="border-0">Enfoque</th>
                                 <th class="border-0 text-end pe-4">Acciones </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let persona of datosFiltrados">
+                            <tr *ngFor="let rutine of datosFiltrados">
                               <td>
-                                <input type="checkbox" [checked]="seleccionados.includes(persona.id)"
-                                       (change)="toggleSeleccion(persona.id)">
+                                <input type="checkbox" [checked]="seleccionados.includes(rutine.id)"
+                                       (change)="toggleSeleccion(rutine.idRutina)" />
                               </td>
                                 <td class="px-4">
 
                                     <div class="d-flex align-items-center">
-                                        <img src="/placeholder.svg?height=40&width=40" class="rounded-circle me-3" width="40" height="40" alt="User avatar" />
+                                        <!-- <img src="/placeholder.svg?height=40&width=40" class="rounded-circle me-3" width="40" height="40" alt="User avatar" /> -->
                                         <div>
-                                            <p class="fw-semibold mb-0">{{ persona.nombre }}</p>
-                                            <small class="text-muted">{{ persona.nombre }}</small>
+                                            <p class="fw-semibold mb-0">{{ rutine.nombre }}</p>
+                                            <small class="text-muted">{{ rutine.nombre }}</small>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="fw-semibold mb-0">{{ persona.correo }}</p>
+                                    <p class="fw-semibold mb-0">{{ rutine.descripcion }}</p>
                                 </td>
                                 <td>
-                                    <span class="badge bg-success-subtle text-success rounded-pill px-3">Active</span>
+                                    <p class="fw-semibold mb-0">{{ rutine.enfoque }}</p>
+
                                 </td>
 
                                 <td class="text-end pe-4">
                                     <button class="btn btn-light btn-sm rounded-circle">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <button class="btn btn-light btn-sm rounded-circle">
+                                    <button class="btn btn-light btn-sm rounded-circle" (click)="eliminarRutina(rutine.idRutina)">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </td>

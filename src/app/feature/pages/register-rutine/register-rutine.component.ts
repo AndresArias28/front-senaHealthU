@@ -52,6 +52,7 @@ export class RegisterRutineComponent implements OnInit {
   ngOnInit() {
     // inicializar con uno por defecto
     this.actualizarCamposEjercicios(1);
+
   }
 
   //guardar la rutina - comunicar con el servicio
@@ -63,11 +64,10 @@ export class RegisterRutineComponent implements OnInit {
           this.mensajeExito = 'Rutina registrada exitosamente';
           setTimeout( () => {
             console.log('Rutina registrada exitosamente:', response);
-            this.rutinaRegistrada.emit(); // Emitir evento al padre
+            this.rutinaRegistrada.emit(); // emitir evento al padre
             this.mensajeExito = ''; //limpiar mensaje de exito
              
-
-          }, 2000); // esperar 2 segundos antes de limpiar el mensaje
+          }, 2000); 
         },
         error: (error) => {
           console.error('Error al registrar la rutina:', error);
@@ -83,6 +83,7 @@ export class RegisterRutineComponent implements OnInit {
       console.log('Formulario inválido');
     }
   }
+
 
   actualizarCamposEjercicios(cantidad: number) {
     // Limpiar el FormArray antes de agregar nuevos controles
@@ -109,7 +110,6 @@ export class RegisterRutineComponent implements OnInit {
     this.actualizarCamposEjercicios(cantidad);
   }
 
-
   //metodo para la seleccion de archivos
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -126,6 +126,5 @@ export class RegisterRutineComponent implements OnInit {
   get ejerciciosFormArray(): FormArray { 
     return this.formularioRutina.get('ejercicios') as FormArray; //esto es para acceder a los ejercicios
   } 
-
 
 }

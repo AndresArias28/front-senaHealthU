@@ -6,8 +6,7 @@ import { SidebarComponent } from '../../../shared/sidebar/sidebar.component';
 import { DashboardGraphicsComponent } from '../dashboard-graphics/dashboard-graphics.component';
 import { ProgramadorComponent } from '../programador-qr/programador.component';
 import { RegisterRutineComponent } from '../register-rutine/register-rutine.component';
-//import { User } from '../../../shared/models/user';
-//import { PersonalDetailsComponent } from "../personal-details/personal-details.component";
+
 
 @Component({
   selector: 'app-dashboard',
@@ -21,7 +20,6 @@ export class DashboardComponent {
 
   seccionActual: string = '';
 
-
   constructor(private loginService: LoginService) {}
 
   cambiarSeccion(seccion: string) {
@@ -32,5 +30,10 @@ export class DashboardComponent {
   redirigirAGestionUsuarios() {
     this.seccionActual = 'gestionUsers'; // cambio manual tras registrar rutina
     console.log('Redirigido a gestionUsers tras registrar rutina');
+  }
+  redirigirADashboard() {
+    this.seccionActual = 'gestionUsers'; // cambio manual tras eliminar rutina
+    console.log('Redirigido a gestionUsers tras eliminar rutina');
+  
   }
 }

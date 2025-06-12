@@ -15,10 +15,11 @@
 
       <!-- componente de los usuarios -->
       <div *ngIf="seccionActual === 'gestionUsers'">
-        <h3>Gestión de Usuarios</h3>
+        <h3>Gestión de Rutinas</h3>
         <app-dashboard-graphics
           [tipoUsuario]="'administrador'"
-        ></app-dashboard-graphics>
+          (rutinaEliminada)="redirigirADashboard()"
+        ></app-dashboard-graphics >
       </div>
 
       <!-- componente del QR -->
@@ -46,7 +47,6 @@
         <h3> Bienvenido Instructor </h3>
         <p>Gestione los usuarios desde aquí.</p>
       </div>
-
 
     </div>
   </div>
