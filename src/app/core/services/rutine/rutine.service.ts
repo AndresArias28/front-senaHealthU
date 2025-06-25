@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { LoginRequest } from '../../../shared/models/loginRequest';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environmets';
-import {jwtDecode} from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +11,7 @@ export class RutineService {
 
   currentRutine = new BehaviorSubject<String>(""); // Observable para la rutina actual
   rutines = new BehaviorSubject<any[]>([]); // Observable para todas las rutinas
+  ejercicios = new BehaviorSubject<any[]>([]); // Observable para los ejercicios
 
 
   constructor(private http: HttpClient) {
@@ -39,6 +39,18 @@ export class RutineService {
       catchError(this.handleError)
     );
   }
+
+  getAllExcercises(): Observable<any[]> {
+    return this.http.get<any[]>(environment.urlHost + "ejercicio/obtenerEjercicios").pipe(
+      tap((response) => {
+        console.log('Ejercicios obtenidos:', response);
+        this.ejercicios.next(response); // Actualiza el observable de rutinas con los ejercicios
+      }),
+      catchError(this.handleError)
+    );
+  }
+      
+    
   //eliminar una rutina por ID
   deleteRutine(id: number): Observable<any> {
     return this.http.delete<any>(environment.urlHost + "rutina/eliminarRutinas/" + id).pipe(

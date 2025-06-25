@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../core/services/user/user.service';
 import { RutineService } from '../../../core/services/rutine/rutine.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-graphics',
@@ -21,9 +22,9 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
   userLoginOn: boolean = false;
   terminoBusqueda: string = '';
   datos: any[] = []; // Cambia el tipo de datos según tu necesidad
-  seleccionados: number[] = [];
-  datosFiltrados = [...this.datos]; // copia inicial
-  constructor(private loginService: LoginService, private userService : UserService, private rutineService: RutineService) {}
+  seleccionados: number[] = []; // Lista de IDs de rutinas seleccionadas
+  datosFiltrados = [...this.datos]; // copia inicial de datos para filtrar
+  constructor(private loginService: LoginService, private userService : UserService, private rutineService: RutineService, private route: Router ) {}
 
   ngOnInit(): void {// se ejecuta una sola vez al cargar el componente en el DOM del navegador
     
@@ -46,6 +47,10 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
       }
     });
 
+  }
+
+  redirigeRutinas() {
+    this.route.navigateByUrl('/register-rutine'); // Redirige a la página de registro de rutinas
   }
 
   ngOnChanges(changes: SimpleChanges) {

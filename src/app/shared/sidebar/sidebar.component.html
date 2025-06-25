@@ -47,16 +47,6 @@
           (click)="cambiarSeccion('qr')" >
           <i class="bi bi-house-door me-3"></i> Crear QR
         </button>
-
-         <button
-          *ngIf="tipoUsuario === 'administrador'"
-          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
-          [class.active]="seccionActual === 'registrarRutina'"
-          (click)="cambiarSeccion('registrarRutina')" >
-          <i class="bi bi-clipboard-check me-3"></i> Crear rutina nueva
-        </button>
-
-
      
 
         <button

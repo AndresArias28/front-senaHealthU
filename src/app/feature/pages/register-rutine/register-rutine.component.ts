@@ -15,7 +15,6 @@ export class RegisterRutineComponent implements OnInit {
 
   @Output() rutinaRegistrada = new EventEmitter<void>(); // Emite cambios al padre
   mensajeExito: String = '';
-
   nombre: String = '';
   descripcion: String = '';
   fotoRutina: String = '';
@@ -29,12 +28,7 @@ export class RegisterRutineComponent implements OnInit {
   cantidadEjercicios: number = 0;
   formularioRutina!: FormGroup;
 
-  ejercicios: any[] = [
-    { id: 1, nombre: 'Ejercicio 1' },
-    { id: 2, nombre: 'Ejercicio 2' },
-    { id: 3, nombre: 'Ejercicio 3' },
-    { id: 4, nombre: 'Ejercicio 4' },
-  ];
+  ejercicios: any[] = [];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private rutineService: RutineService) {
     this.formularioRutina = this.formBuilder.group({
@@ -50,9 +44,17 @@ export class RegisterRutineComponent implements OnInit {
   }
 
   ngOnInit() {
-    // inicializar con uno por defecto
-    this.actualizarCamposEjercicios(1);
+  
+    this.rutineService.getAllExcercises().subscribe({
+      next: (ejercicios) => {
+        this.ejercicios = ejercicios;
+      },
+      error: (error) => {
+        console.error('Error al obtener ejercicios:', error);
+      }
+    });
 
+    this.actualizarCamposEjercicios(1);
   }
 
   //guardar la rutina - comunicar con el servicio

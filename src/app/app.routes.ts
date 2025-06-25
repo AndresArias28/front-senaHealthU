@@ -7,6 +7,7 @@ import { roleGuard } from './core/guards/role.guard';
 import { Component } from '@angular/core';
 import { RegisterComponent } from './feature/auth/register/register.component';
 import { RegisterUserComponent } from './feature/auth/register-user/register-user.component';
+import { RegisterRutineComponent } from './feature/pages/register-rutine/register-rutine.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
@@ -38,6 +39,10 @@ export const routes: Routes = [
         component: RegisterUserComponent,
         //canActivate: [authGuard, roleGuard],
         //data: {role: 'ROLE_Administrador'}
+    },
+    {
+        path: 'register-rutine',
+        component: RegisterRutineComponent,
     },
     {path: '**', redirectTo: 'iniciar-sesion' },
 ];
