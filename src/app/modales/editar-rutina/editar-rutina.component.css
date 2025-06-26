@@ -1,8 +1,9 @@
-
 .modal-header {
-  padding: 24px 24px 16px 24px;
+  padding: 20px 24px;
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
   
   h2 {
     margin: 0;
@@ -11,45 +12,76 @@
     gap: 12px;
     font-size: 20px;
     font-weight: 500;
-    color: #333;
   }
 }
 
 .modal-container {
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
-}
-
-.image-upload-section {
-  margin: 20px 0;
-}
-
-.upload-card {
-  margin: 16px 0;
+  padding: 0;
+  max-height: 70vh;
+  overflow-y: auto;
   
-  mat-card-header {
-    mat-card-title {
+
+  .form-section {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f5f5f5;
+    
+    &:last-of-type {
+      border-bottom: none;
+    }
+    
+    .w-100 {
+      width: 100%;
+    }
+  }
+  
+
+  .image-upload-section {
+    background-color: #fafafa;
+    
+    .section-title {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 16px;
+      margin-bottom: 16px;
+      font-weight: 500;
+      color: #333;
+      
+      .optional-badge {
+        background: #e0e0e0;
+        color: #666;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-weight: normal;
+      }
     }
+  }
+}
+
+.upload-card {
+  margin: 0;
+  box-shadow: none !important;
+  border: 2px dashed #ddd;
+  background: white;
+  
+  mat-card-content {
+    padding: 20px !important;
   }
 }
 
 .current-image-info {
   margin-bottom: 16px;
   
-  mat-chip-set {
-    margin-bottom: 8px;
-  }
-  
-  .image-name {
-    margin: 0;
-    font-size: 14px;
-    color: #666;
-    font-style: italic;
+  .image-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .image-name {
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+    }
   }
 }
 
@@ -58,24 +90,75 @@
     display: flex;
     gap: 12px;
     margin-bottom: 16px;
-    flex-wrap: wrap;
     
-    button {
+    .upload-btn, .remove-btn {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+    
+    .upload-btn {
+      min-width: 160px;
+    }
+    
+    .remove-btn {
+      min-width: 120px;
+    }
   }
   
-  mat-progress-bar {
+  .progress-container {
     margin: 16px 0;
+    
+    .progress-text {
+      display: block;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-top: 8px;
+    }
   }
   
   .upload-info {
-    small {
-      color: #666;
-      font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #666;
+    
+    .info-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
     }
+  }
+}
+
+
+.help-section {
+  padding: 16px 24px;
+  background: #e3f2fd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #1565c0;
+  
+  .help-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+  
+  kbd {
+    background: #333;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: monospace;
   }
 }
 
@@ -83,34 +166,48 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  padding: 16px 24px 24px 24px;
+  padding: 20px 24px;
   margin: 0;
   border-top: 1px solid #e0e0e0;
   background-color: #fafafa;
+  
+  button {
+    min-width: 100px;
+    height: 40px;
+  }
 }
+
 
 
 @media (max-width: 768px) {
   .modal-container {
-    padding: 16px;
-    max-width: 100%;
-  }
-  
-  .upload-controls .upload-buttons {
-    flex-direction: column;
+    max-height: 80vh;
     
-    button {
-      width: 100%;
-      justify-content: center;
+    .form-section {
+      padding: 16px 20px;
+    }
+    
+    .upload-controls .upload-buttons {
+      flex-direction: column;
+      
+      .upload-btn, .remove-btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
   }
   
   .modal-actions {
     flex-direction: column-reverse;
+    padding: 16px 20px;
     
     button {
       width: 100%;
     }
+  }
+  
+  .help-section {
+    padding: 12px 20px;
   }
 }
 

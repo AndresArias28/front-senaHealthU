@@ -10,16 +10,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIcon } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-// import { MatSlider } from '@angular/material/slider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 
 export interface RutinaData {
+  nombre: string;
   descripcion: string;
+  enfoque: string;
   imagen?: string;
-  imagenNombre?: string;
+  fotoRutina?: string;
+  isEdit?: boolean;
 }
 
 @Component({
@@ -34,7 +36,6 @@ export interface RutinaData {
     MatIconModule,
     MatSelectModule,
     MatCardModule,
-    // MatSlider,
     MatExpansionModule,
     MatTooltipModule,
     MatIcon,
@@ -56,10 +57,7 @@ export class EditarRutinaComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.currentImageName = this.rutina.imagenNombre || 'imagen-rutina.jpg';
-
-
-
+    this.currentImageName = this.rutina.fotoRutina || 'imagen-rutina.jpg';
   }
 
   // Selección de archivo
@@ -102,7 +100,7 @@ export class EditarRutinaComponent implements OnInit {
       try {
         const result = e.target?.result as string;
         this.rutina.imagen = result;
-        this.rutina.imagenNombre = file.name;
+        this.rutina.fotoRutina = file.name;
         this.currentImageName = file.name;
 
         this.showSuccess('Imagen cargada correctamente');
@@ -125,7 +123,7 @@ export class EditarRutinaComponent implements OnInit {
   // Eliminar imagen
   removeImage() {
     this.rutina.imagen = undefined;
-    this.rutina.imagenNombre = undefined;
+    this.rutina.fotoRutina = undefined;
     this.currentImageName = '';
     this.showSuccess('Imagen eliminada');
   }
@@ -144,9 +142,11 @@ export class EditarRutinaComponent implements OnInit {
     }
 
     const result: RutinaData = {
+      nombre: this.rutina.nombre.trim(),
+      enfoque: this.rutina.enfoque.trim(),
       descripcion: this.rutina.descripcion.trim(),
       imagen: this.rutina.imagen,
-      imagenNombre: this.rutina.imagenNombre,
+      fotoRutina: this.rutina.fotoRutina,
     };
 
     this.dialogRef.close(result);

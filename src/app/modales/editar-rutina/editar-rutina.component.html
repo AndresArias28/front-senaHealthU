@@ -1,6 +1,31 @@
-<!-- Template del modal simplificado -->
-<div class="modal-container">
-  <!-- Campo de descripción existente -->
+<!-- 
+<div class="modal-header" mat-dialog-title>
+  <h2>
+    <mat-icon>fitness_center</mat-icon>
+    {{data.isEdit ? 'Editar Rutina' : 'Nueva Rutina'}}
+  </h2>
+</div> -->
+
+<div class="modal-container" mat-dialog-content>
+
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nombre Rutina</mat-label>
+      <input matInput  [(ngModel)]="rutina.nombre"/>
+    </mat-form-field>
+  </div>
+
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Enfoque</mat-label>
+    <mat-select  [(ngModel)]="rutina.enfoque">
+      <mat-option value="TREN_SUPERIOR">TREN_SUPERIOR</mat-option>
+      <mat-option value="TREN_INFERIOR">TREN_INFERIOR</mat-option>
+      <mat-option value="FULL_BODY">FULL_BODY</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
   <mat-form-field appearance="outline" class="w-100">
     <mat-label>Descripción</mat-label>
     <textarea matInput rows="3" [(ngModel)]="rutina.descripcion"></textarea>

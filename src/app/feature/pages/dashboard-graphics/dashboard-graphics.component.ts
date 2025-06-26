@@ -1,5 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Chart, ChartConfiguration  } from 'chart.js/auto';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { Chart, ChartConfiguration } from 'chart.js/auto';
 import { LoginService } from '../../../core/services/login/login.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,23 +21,24 @@ import { RutineService } from '../../../core/services/rutine/rutine.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarRutinaComponent } from '../../../modales/editar-rutina/editar-rutina.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
   selector: 'app-dashboard-graphics',
   imports: [
-    CommonModule, RouterModule, FormsModule, MatDialogModule,
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    ],
+  ],
   templateUrl: './dashboard-graphics.component.html',
-  styleUrl: './dashboard-graphics.component.css'
+  styleUrl: './dashboard-graphics.component.css',
 })
-
-export class DashboardGraphicsComponent  implements OnInit, OnChanges {
-
-
+export class DashboardGraphicsComponent implements OnInit, OnChanges {
   @Output() rutinaEliminada = new EventEmitter<void>();
   @Input() tipoUsuario!: string;
   userLoginOn: boolean = false;
@@ -38,30 +47,67 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
   seleccionados: number[] = []; // Lista de IDs de rutinas seleccionadas
   datosFiltrados = [...this.datos]; // copia inicial de datos para filtrar
 
-  constructor(private loginService: LoginService, 
-    private userService : UserService, 
+  constructor(
+    private loginService: LoginService,
+    private userService: UserService,
     private rutineService: RutineService,
-    private dialog: MatDialog, 
-    private route: Router ) {}
+    private dialog: MatDialog,
+    private route: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
-    abrirModal(rutina: any): void {
-      const dialogRef = this.dialog.open(EditarRutinaComponent, {
-        width: '600px',
-        data: { ...rutina }
-      });
+  abrirModal(rutina: any): void {
+    const dialogRef = this.dialog.open(EditarRutinaComponent, {
+      width: '650px',
+      maxWidth: '95vw', // Para que no se salga en pantallas pequeñas
+      maxHeight: '90vh', // Para que no se salga verticalmente
+      panelClass: 'custom-modal-panel', // Clase personalizada
+      disableClose: false, // Permite cerrar con ESC o click fuera
+      autoFocus: true, // Enfoca automáticamente el primer campo
+      data: { ...rutina },
+    });
 
-      dialogRef.afterClosed().subscribe(resultado => {
-        if (resultado) {
-          // Aquí actualizas la rutina (por ID, por ejemplo)
-          const index = this.datosFiltrados.findIndex(r => r.id === resultado.id);
-          if (index > -1) this.datosFiltrados[index] = resultado;
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        if (resultado.isEdit) {
+          // Actualizar rutina existente
+          const index = this.datosFiltrados.findIndex(
+            (r) => r.id === resultado.id
+          );
+          if (index > -1) {
+            this.datosFiltrados[index] = resultado;
+            this.mostrarMensaje('Rutina actualizada correctamente', 'success');
+          }
+        } else {
+          // Agregar nueva rutina
+          this.datosFiltrados.push(resultado);
+          this.mostrarMensaje('Rutina creada correctamente', 'success');
         }
-      });
-    }
+        // Aquí actualizas la rutina (por ID, por ejemplo)
+        const index = this.datosFiltrados.findIndex(
+          (r) => r.id === resultado.id
+        );
+        if (index > -1) this.datosFiltrados[index] = resultado;
+      }
+    });
+  }
 
-  ngOnInit(): void {// se ejecuta una sola vez al cargar el componente en el DOM del navegador
-    
-    this.loginService.currentUserLoginOn.subscribe({//se suscribe al observable currentUserLoginOn al iniciar el componente
+  private mostrarMensaje(
+    mensaje: string,
+    tipo: 'success' | 'error' = 'success'
+  ): void {
+    this.snackBar.open(mensaje, 'Cerrar', {
+      duration: 3000,
+      panelClass:
+        tipo === 'success' ? ['success-snackbar'] : ['error-snackbar'],
+    });
+  }
+
+  ngOnInit(): void {
+    // se ejecuta una sola vez al cargar el componente en el DOM del navegador
+
+    this.loginService.currentUserLoginOn.subscribe({
+      //se suscribe al observable currentUserLoginOn al iniciar el componente
       next: (userLoginOn) => {
         this.userLoginOn = userLoginOn; //almacena el estado del login en la variable userLoggedIn
       },
@@ -76,9 +122,8 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
       },
       error: (error) => {
         console.error('Error al obtener rutinas:', error);
-      }
+      },
     });
-
   }
 
   editarRutina(id: number) {
@@ -91,7 +136,7 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tipoUsuario'] && this.tipoUsuario) {
-      console.log("Tipo de usuario actualizado:", this.tipoUsuario);
+      console.log('Tipo de usuario actualizado:', this.tipoUsuario);
     }
   }
 
@@ -108,13 +153,13 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
     if (!confirm('¿Estás seguro de que deseas eliminar esta rutina?')) {
       return; // Cancela la eliminación si el usuario no confirma
     }
-    
+
     this.rutineService.deleteRutine(id).subscribe({
       next: () => {
         // console.log('Rutina eliminada:', response);
-        this.datos = this.datos.filter(d => d.id !== id);
+        this.datos = this.datos.filter((d) => d.id !== id);
         this.datosFiltrados = [...this.datos]; // Actualiza los datos filtrados
-        this.seleccionados = this.seleccionados.filter(s => s !== id); // Elimina el ID de la lista de seleccionados
+        this.seleccionados = this.seleccionados.filter((s) => s !== id); // Elimina el ID de la lista de seleccionados
         this.rutinaEliminada.emit();
         alert('Rutina eliminada exitosamente.');
         //recargar la apogina
@@ -122,9 +167,8 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
       },
       error: (error) => {
         console.error('Error al eliminar la rutina:', error);
-      }
+      },
     });
-   
   }
 
   eliminarSeleccionados() {
@@ -132,14 +176,16 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
       alert('No hay rutinas seleccionadas para eliminar.');
       return;
     }
-    if (!confirm('¿Estás seguro de que deseas eliminar las rutinas seleccionadas?')) {
+    if (
+      !confirm(
+        '¿Estás seguro de que deseas eliminar las rutinas seleccionadas?'
+      )
+    ) {
       return; // Cancela la eliminación si el usuario no confirma
     }
-    
 
-    this.datos = this.datos.filter(d => !this.seleccionados.includes(d.id));
+    this.datos = this.datos.filter((d) => !this.seleccionados.includes(d.id));
     this.seleccionados = [];
-
   }
 
   quitarTildes(texto: string): string {
@@ -147,21 +193,19 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
   }
 
   buscar() {
-    const termino = this.quitarTildes(this.terminoBusqueda.trim().toLowerCase()); // Quita tildes y convierte a minúsculas this.terminoBusqueda.trim().toLowerCase();
-    
+    const termino = this.quitarTildes(
+      this.terminoBusqueda.trim().toLowerCase()
+    ); // Quita tildes y convierte a minúsculas this.terminoBusqueda.trim().toLowerCase();
+
     if (!termino) {
       this.datosFiltrados = [...this.datos];
       return;
     }
 
-    this.datosFiltrados = this.datos.filter(item =>{
-      
+    this.datosFiltrados = this.datos.filter((item) => {
       const nombreNormalizado = this.quitarTildes(item.nombre?.toLowerCase());
 
-      return nombreNormalizado.includes(termino) 
+      return nombreNormalizado.includes(termino);
     });
-
   }
-
-
 }
