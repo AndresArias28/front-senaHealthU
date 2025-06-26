@@ -27,6 +27,7 @@ export class RegisterRutineComponent implements OnInit {
   duracion: String = '';
   cantidadEjercicios: number = 0;
   formularioRutina!: FormGroup;
+  archivoSeleccionado: File | null = null;
 
   ejercicios: any[] = [];
 
@@ -44,7 +45,6 @@ export class RegisterRutineComponent implements OnInit {
   }
 
   ngOnInit() {
-  
     this.rutineService.getAllExcercises().subscribe({
       next: (ejercicios) => {
         this.ejercicios = ejercicios;
@@ -59,17 +59,30 @@ export class RegisterRutineComponent implements OnInit {
 
   //guardar la rutina - comunicar con el servicio
   registerRutine() {
-    if (this.formularioRutina.valid) {
+    if (this.formularioRutina.valid && this.archivoSeleccionado) {
 
-      this.rutineService.registerRutine(this.formularioRutina.value).subscribe({
+      const datos = {
+        nombre: this.formularioRutina.value.nombre,
+        descripcion: this.formularioRutina.value.descripcion,
+        enfoque: this.formularioRutina.value.enfoque,
+        dificultad: this.formularioRutina.value.dificultad,
+        cantidadEjercicios: this.formularioRutina.value.cantidadEjercicios,
+        ejercicios: this.formularioRutina.value.ejercicios
+      };
+
+      const formData = new FormData();
+      formData.append('datos', new Blob([JSON.stringify(datos)], { type: 'application/json' })); // Agrega los datos de la
+      formData.append('fotoRutina', this.archivoSeleccionado); // Agrega el archivo seleccionado
+
+      this.rutineService.registerRutine(formData).subscribe({
         next: (response) => {
           this.mensajeExito = 'Rutina registrada exitosamente';
           setTimeout( () => {
             console.log('Rutina registrada exitosamente:', response);
             this.rutinaRegistrada.emit(); // emitir evento al padre
             this.mensajeExito = ''; //limpiar mensaje de exito
-             
-          }, 2000); 
+            this.router.navigate(['/inicio-admin']); // Redirigir al dashboard después de registrar
+          }, 1000); 
         },
         error: (error) => {
           console.error('Error al registrar la rutina:', error);
@@ -78,6 +91,7 @@ export class RegisterRutineComponent implements OnInit {
         complete: () => {
           console.log('Registro de rutina completado');
           this.formularioRutina.reset(); // Resetea el formulario después de registrar
+          this.archivoSeleccionado = null; // Resetea el archivo seleccionado
         }
       });
 
@@ -97,7 +111,7 @@ export class RegisterRutineComponent implements OnInit {
     for (let i = 0; i < cantidad; i++) {
       ejerciciosArray.push(this.formBuilder.group({
         nombreEjercicio: [''],
-        repeticiones: [''],
+        repeticion: [''],
         series: [''],
         carga: [''],
         duracion: ['', [Validators.required]],
@@ -112,6 +126,7 @@ export class RegisterRutineComponent implements OnInit {
     this.actualizarCamposEjercicios(cantidad);
   }
 
+
   //metodo para la seleccion de archivos
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
@@ -119,8 +134,9 @@ export class RegisterRutineComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.fotoRutina = e.target.result; // Aquí puedes almacenar la imagen en una variable
+        this.archivoSeleccionado = file; // Almacena el archivo seleccionado
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); 
     }
   }
 

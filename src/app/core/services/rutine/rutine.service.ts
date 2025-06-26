@@ -19,8 +19,8 @@ export class RutineService {
   }
 
   // Método para registrar una rutina
-  registerRutine(rutineData: any): Observable<any> {
-    return this.http.post<any>(environment.urlHost + "rutina/crear", rutineData).pipe(
+  registerRutine(formaData: FormData): Observable<any> {
+    return this.http.post<any>(environment.urlHost + "rutina/crear", formaData).pipe(
       tap((response) => {
         console.log('Rutina registrada:', response);
         this.currentRutine.next(response); // actualiza el observable con la nueva rutina

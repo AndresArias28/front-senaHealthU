@@ -1,10 +1,10 @@
-<div>
+<div class="container p-3">
   <h2>Crear nueva rutina</h2>
   <p>Seleccione los ejercicios que desea incluir en la rutina.</p>
-  <form *ngIf="formularioRutina" [formGroup]="formularioRutina">
+  <form *ngIf="formularioRutina" [formGroup]="formularioRutina" (ngSubmit)="registerRutine()" enctype="multipart/form-data">
 
 
-    <div>
+    <div class="mb-3" >
       <label class="form-label"> Nombre de la rutina </label>
       <input
         formControlName="nombre"
@@ -107,8 +107,8 @@
         </select>
 
         <input
-          formControlName="repeticiones" 
-          placeholder="Repeticioness"
+          formControlName="repeticion" 
+          placeholder="Repeticiones"
           class="form-control mb-2"
           type="number"
         />
@@ -135,9 +135,8 @@
 
     <div class="mt-3">
       <button
-        type="button"
+        type="submit"
         class="btn btn-success"
-        (click)="registerRutine()"
       >
         Crear Rutina
       </button>
