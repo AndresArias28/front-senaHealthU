@@ -1,21 +1,34 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Chart, ChartConfiguration  } from 'chart.js/auto';
 import { LoginService } from '../../../core/services/login/login.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../core/services/user/user.service';
 import { RutineService } from '../../../core/services/rutine/rutine.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarRutinaComponent } from '../../../modales/editar-rutina/editar-rutina.component';
+
 
 @Component({
   selector: 'app-dashboard-graphics',
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [
+    CommonModule, RouterModule, FormsModule, MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ],
   templateUrl: './dashboard-graphics.component.html',
   styleUrl: './dashboard-graphics.component.css'
 })
 
 export class DashboardGraphicsComponent  implements OnInit, OnChanges {
+
 
   @Output() rutinaEliminada = new EventEmitter<void>();
   @Input() tipoUsuario!: string;
@@ -24,7 +37,27 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
   datos: any[] = []; // Cambia el tipo de datos según tu necesidad
   seleccionados: number[] = []; // Lista de IDs de rutinas seleccionadas
   datosFiltrados = [...this.datos]; // copia inicial de datos para filtrar
-  constructor(private loginService: LoginService, private userService : UserService, private rutineService: RutineService, private route: Router ) {}
+
+  constructor(private loginService: LoginService, 
+    private userService : UserService, 
+    private rutineService: RutineService,
+    private dialog: MatDialog, 
+    private route: Router ) {}
+
+    abrirModal(rutina: any): void {
+      const dialogRef = this.dialog.open(EditarRutinaComponent, {
+        width: '600px',
+        data: { ...rutina }
+      });
+
+      dialogRef.afterClosed().subscribe(resultado => {
+        if (resultado) {
+          // Aquí actualizas la rutina (por ID, por ejemplo)
+          const index = this.datosFiltrados.findIndex(r => r.id === resultado.id);
+          if (index > -1) this.datosFiltrados[index] = resultado;
+        }
+      });
+    }
 
   ngOnInit(): void {// se ejecuta una sola vez al cargar el componente en el DOM del navegador
     
@@ -40,13 +73,16 @@ export class DashboardGraphicsComponent  implements OnInit, OnChanges {
         this.datos = response; // Asigna las rutinas obtenidas a la variable datos
         this.datosFiltrados = [...this.datos]; // Actualiza los datos filtrados
         this.rutineService.rutines.next(this.datos); // Actualiza el observable de rutinas
-
       },
       error: (error) => {
         console.error('Error al obtener rutinas:', error);
       }
     });
 
+  }
+
+  editarRutina(id: number) {
+    this.route.navigate(['/edit-rutine', id]);
   }
 
   redirigeRutinas() {

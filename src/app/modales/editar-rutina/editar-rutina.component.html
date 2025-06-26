@@ -1,0 +1,84 @@
+<!-- Template del modal simplificado -->
+<div class="modal-container">
+  <!-- Campo de descripción existente -->
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Descripción</mat-label>
+    <textarea matInput rows="3" [(ngModel)]="rutina.descripcion"></textarea>
+  </mat-form-field>
+
+  <!-- Sección de carga de imagen -->
+  <div class="image-upload-section">
+    <mat-card class="upload-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>image</mat-icon>
+          Imagen de la rutina
+        </mat-card-title>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <!-- Información de imagen actual -->
+        <div class="current-image-info" *ngIf="rutina.imagen">
+          <mat-chip-set>
+            <mat-chip color="primary" selected>
+              <mat-icon matChipAvatar>check_circle</mat-icon>
+              Imagen cargada
+            </mat-chip>
+          </mat-chip-set>
+          <p class="image-name">{{currentImageName}}</p>
+        </div>
+
+        <!-- Área de carga -->
+        <div class="upload-controls">
+          <!-- Input file oculto -->
+          <input #fileInput 
+                 type="file" 
+                 accept="image/*" 
+                 (change)="onFileSelected($event)"
+                 style="display: none;">
+          
+          <!-- Botones de acción -->
+          <div class="upload-buttons">
+            <button mat-raised-button 
+                    color="primary" 
+                    (click)="fileInput.click()"
+                    [disabled]="isUploading">
+              <mat-icon>cloud_upload</mat-icon>
+              {{rutina.imagen ? 'Cambiar imagen' : 'Cargar imagen'}}
+            </button>
+            
+            <button mat-button 6
+                    color="warn" 
+                    (click)="removeImage()" 
+                    *ngIf="rutina.imagen"
+                    [disabled]="isUploading">
+              <mat-icon>delete</mat-icon>
+              Eliminar
+            </button>
+          </div>
+
+          <!-- Progress bar para carga -->
+          <!-- <mat-progress-bar mode="indeterminate" *ngIf="isUploading"></mat-progress-bar> -->
+          
+          <!-- Información adicional -->
+          <div class="upload-info">
+            <small class="text-muted">
+              Formatos soportados: JPG, PNG, GIF (máx. 5MB)
+            </small>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Botones del modal -->
+  <div class="modal-actions">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button 
+            color="primary" 
+            (click)="onSave()"
+            [disabled]="isUploading">
+      Guardar
+    </button>
+  </div>
+</div>

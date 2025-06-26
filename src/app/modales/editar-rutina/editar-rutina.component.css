@@ -1,0 +1,152 @@
+
+.modal-header {
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 0;
+  
+  h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+  }
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.image-upload-section {
+  margin: 20px 0;
+}
+
+.upload-card {
+  margin: 16px 0;
+  
+  mat-card-header {
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+    }
+  }
+}
+
+.current-image-info {
+  margin-bottom: 16px;
+  
+  mat-chip-set {
+    margin-bottom: 8px;
+  }
+  
+  .image-name {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    font-style: italic;
+  }
+}
+
+.upload-controls {
+  .upload-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    
+    button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+  
+  mat-progress-bar {
+    margin: 16px 0;
+  }
+  
+  .upload-info {
+    small {
+      color: #666;
+      font-size: 12px;
+    }
+  }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px 24px 24px;
+  margin: 0;
+  border-top: 1px solid #e0e0e0;
+  background-color: #fafafa;
+}
+
+
+@media (max-width: 768px) {
+  .modal-container {
+    padding: 16px;
+    max-width: 100%;
+  }
+  
+  .upload-controls .upload-buttons {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  .modal-actions {
+    flex-direction: column-reverse;
+    
+    button {
+      width: 100%;
+    }
+  }
+}
+
+
+::ng-deep {
+  .success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+  
+  .error-snackbar {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+}
+
+
+.upload-card {
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.current-image-info {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

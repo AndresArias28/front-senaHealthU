@@ -49,9 +49,9 @@
         aria-describedby="enfoqueRutinaHelp"
         [(ngModel)]="enfoque"
       >
-        <option value="TREN_SUPERIOR">TREN_SUPERIOR</option>
-        <option value="TREN_INFERIOR">TREN_INFERIOR</option>
-        <option value="FULl_BODY">FULl_BODY</option>
+        <option value="TREN_SUPERIOR">Tren Superior</option> 
+        <option value="TREN_INFERIOR">Tren Inferior</option>
+        <option value="FULL_BODY">Cuerpo Completo</option>
       </select>
     </div>
 
@@ -92,8 +92,6 @@
       >
         <label>Ejercicio {{ i + 1 }}</label> <br> 
         
-
-
         <label for="idEjercicio">Selecciona un ejercicio:</label>
 
         <select 
@@ -147,7 +145,8 @@
 
   </form>
 
-    <div *ngIf="mensajeExito" class="alert alert-success">
-  {{ mensajeExito }}
+  <div *ngIf="mensajeExito" class="alert alert-success">
+    {{ mensajeExito }}
   </div>
+  
 </div>

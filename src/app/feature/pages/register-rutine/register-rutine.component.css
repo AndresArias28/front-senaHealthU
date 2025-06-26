@@ -1,0 +1,24 @@
+.titulo-modal {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.contenido-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  min-width: 300px;
+}
+
+.campo {
+  width: 100%;
+}
+
+.acciones-modal {
+  padding-top: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
