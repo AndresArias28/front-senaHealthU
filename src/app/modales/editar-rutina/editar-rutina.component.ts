@@ -216,6 +216,13 @@ export class EditarRutinaComponent implements OnInit {
     this.currentImageName = '';
     this.showSuccess('Imagen eliminada');
   }
+  eliminarEjercicio(index: number): void {
+    const confirmado = window.confirm('¿Estás seguro de que deseas eliminar este ejercicio de la rutina?');
+    if (confirmado) {
+      this.rutina.ejercicios?.splice(index, 1);
+    }
+  }
+
 
   // Cancelar
   onCancel() {

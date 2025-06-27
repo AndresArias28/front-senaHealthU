@@ -113,8 +113,8 @@
             *ngFor="let ejercicio of rutina.ejercicios; let i = index"
             class="exercise-item"
           >
-          <input [(ngModel)]="ejercicio.idEjercicio" hidden />
-          
+            <input [(ngModel)]="ejercicio.idEjercicio" hidden />
+
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>Nombre del ejercicio</mat-label>
               <input
@@ -161,6 +161,16 @@
                 name="duracion{{ i }}"
               />
             </mat-form-field>
+
+            <div class="text-end">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="eliminarEjercicio(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
 
             <hr class="divider" />
           </div>
