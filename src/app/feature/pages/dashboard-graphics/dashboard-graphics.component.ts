@@ -7,7 +7,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Chart, ChartConfiguration } from 'chart.js/auto';
 import { LoginService } from '../../../core/services/login/login.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +21,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarRutinaComponent } from '../../../modales/editar-rutina/editar-rutina.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { ComunicacionService } from '../../../core/services/comunicacion/comunicacion.service';
 
 @Component({
   selector: 'app-dashboard-graphics',
@@ -53,41 +52,46 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     private rutineService: RutineService,
     private dialog: MatDialog,
     private route: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private comunicacionService: ComunicacionService // Asegúrate de importar el servicio de comunicación
   ) {}
-
   abrirModal(rutina: any): void {
     const dialogRef = this.dialog.open(EditarRutinaComponent, {
       width: '650px',
-      maxWidth: '95vw', // Para que no se salga en pantallas pequeñas
-      maxHeight: '90vh', // Para que no se salga verticalmente
-      panelClass: 'custom-modal-panel', // Clase personalizada
-      disableClose: false, // Permite cerrar con ESC o click fuera
-      autoFocus: true, // Enfoca automáticamente el primer campo
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      panelClass: 'custom-modal-panel',
+      disableClose: false,
+      autoFocus: true,
       data: { ...rutina },
     });
 
+    const instance = dialogRef.componentInstance;
+    instance.rutinaActualizada.subscribe(() => {
+      this.cargarRutinas(); 
+    });
+
     dialogRef.afterClosed().subscribe((resultado) => {
-      if (resultado) {
-        if (resultado.isEdit) {
-          // Actualizar rutina existente
-          const index = this.datosFiltrados.findIndex(
-            (r) => r.id === resultado.id
-          );
-          if (index > -1) {
-            this.datosFiltrados[index] = resultado;
-            this.mostrarMensaje('Rutina actualizada correctamente', 'success');
-          }
-        } else {
-          // Agregar nueva rutina
-          this.datosFiltrados.push(resultado);
-          this.mostrarMensaje('Rutina creada correctamente', 'success');
-        }
-        // Aquí actualizas la rutina (por ID, por ejemplo)
+      console.log('Resultado del modal:', resultado);
+      if (resultado?.actualizado) {
+        this.cargarRutinas();
+        this.mostrarMensaje('Rutinas actualizadas correctamente', 'success');
+        return;
+      }
+
+      // Si se devolvió un nuevo objeto rutina (caso de creación o edición)
+      if (resultado && resultado.id) {
         const index = this.datosFiltrados.findIndex(
           (r) => r.id === resultado.id
         );
-        if (index > -1) this.datosFiltrados[index] = resultado;
+
+        if (resultado.isEdit && index > -1) {
+          this.datosFiltrados[index] = resultado;
+          this.mostrarMensaje('Rutina actualizada correctamente', 'success');
+        } else {
+          this.datosFiltrados.push(resultado);
+          this.mostrarMensaje('Rutina creada correctamente', 'success');
+        }
       }
     });
   }
@@ -122,6 +126,18 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
       },
       error: (error) => {
         console.error('Error al obtener rutinas:', error);
+      },
+    });
+  }
+
+  cargarRutinas() {
+    this.rutineService.getAllRutines().subscribe({
+      next: (rutinas) => {
+        console.log('Rutinas recargadas desde el servidor:', rutinas); // 👈 pon esto
+        this.datosFiltrados = rutinas;
+      },
+      error: (error) => {
+        console.error('Error al cargar rutinas:', error);
       },
     });
   }

@@ -18,7 +18,7 @@ export class RutineService {
     
   }
 
-  // Método para registrar una rutina
+  //registrar una rutina
   registerRutine(formaData: FormData): Observable<any> {
     return this.http.post<any>(environment.urlHost + "rutina/crear", formaData).pipe(
       tap((response) => {
@@ -29,7 +29,19 @@ export class RutineService {
       catchError(this.handleError)
     );
   }
-  // Método para obtener todas las rutinas
+
+  //actualizar una rutina
+  updateRutine(formaData: FormData, id: number): Observable<any> {
+    return this.http.put<any>(environment.urlHost + "rutina/actualizar/" + id, formaData).pipe(
+      tap((response) => {
+        console.log('Rutina actualizada:', response);
+        this.currentRutine.next(response);
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  //obtener todas las rutinas
   getAllRutines(): Observable<any[]> {
     return this.http.get<any[]>(environment.urlHost + "rutina/obtenerRutinas").pipe(
       tap((response) => {

@@ -20,7 +20,7 @@ export class DashboardComponent {
 
   seccionActual: string = '';
 
-  constructor(private loginService: LoginService) {}
+  constructor() {}
 
   cambiarSeccion(seccion: string) {
     console.log('dashh sexxion cambiada a ', seccion);

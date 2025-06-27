@@ -107,7 +107,6 @@ export class RegisterRutineComponent implements OnInit {
     ejerciciosArray.clear(); // limpiar anteriores
 
     // Agregar nuevos controles al FormArray - cantidad de ejercicios
-
     for (let i = 0; i < cantidad; i++) {
       ejerciciosArray.push(this.formBuilder.group({
         nombreEjercicio: [''],
@@ -142,7 +141,7 @@ export class RegisterRutineComponent implements OnInit {
 
   //metodo para la seleccion de ejercicios 
   get ejerciciosFormArray(): FormArray { 
-    return this.formularioRutina.get('ejercicios') as FormArray; //esto es para acceder a los ejercicios
+    return this.formularioRutina.get('ejercicios') as FormArray; // acceder a los ejercicios
   } 
 
 }

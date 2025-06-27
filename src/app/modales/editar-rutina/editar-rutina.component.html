@@ -1,30 +1,22 @@
-<!-- 
-<div class="modal-header" mat-dialog-title>
-  <h2>
-    <mat-icon>fitness_center</mat-icon>
-    {{data.isEdit ? 'Editar Rutina' : 'Nueva Rutina'}}
-  </h2>
-</div> -->
-
 <div class="modal-container" mat-dialog-content>
-
+  <div class="modal-header">
+    <h2>Editar Rutina</h2>
+  </div>
   <div class="form-section">
     <mat-form-field appearance="outline" class="w-100">
       <mat-label>Nombre Rutina</mat-label>
-      <input matInput  [(ngModel)]="rutina.nombre"/>
+      <input matInput [(ngModel)]="rutina.nombre" />
     </mat-form-field>
   </div>
 
-
   <mat-form-field appearance="outline" class="w-100">
     <mat-label>Enfoque</mat-label>
-    <mat-select  [(ngModel)]="rutina.enfoque">
-      <mat-option value="TREN_SUPERIOR">TREN_SUPERIOR</mat-option>
+    <mat-select [(ngModel)]="rutina.enfoque">
+      <mat-option value="TREN_SUPERIOR">Tren Superior</mat-option>
       <mat-option value="TREN_INFERIOR">TREN_INFERIOR</mat-option>
       <mat-option value="FULL_BODY">FULL_BODY</mat-option>
     </mat-select>
   </mat-form-field>
-
 
   <mat-form-field appearance="outline" class="w-100">
     <mat-label>Descripción</mat-label>
@@ -40,7 +32,7 @@
           Imagen de la rutina
         </mat-card-title>
       </mat-card-header>
-      
+
       <mat-card-content>
         <!-- Información de imagen actual -->
         <div class="current-image-info" *ngIf="rutina.imagen">
@@ -50,41 +42,50 @@
               Imagen cargada
             </mat-chip>
           </mat-chip-set>
-          <p class="image-name">{{currentImageName}}</p>
+          <p class="image-name">{{ currentImageName }}</p>
         </div>
 
         <!-- Área de carga -->
         <div class="upload-controls">
           <!-- Input file oculto -->
-          <input #fileInput 
-                 type="file" 
-                 accept="image/*" 
-                 (change)="onFileSelected($event)"
-                 style="display: none;">
-          
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            style="display: none"
+          />
+
           <!-- Botones de acción -->
           <div class="upload-buttons">
-            <button mat-raised-button 
-                    color="primary" 
-                    (click)="fileInput.click()"
-                    [disabled]="isUploading">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="fileInput.click()"
+              [disabled]="isUploading"
+            >
               <mat-icon>cloud_upload</mat-icon>
-              {{rutina.imagen ? 'Cambiar imagen' : 'Cargar imagen'}}
+              {{ rutina.imagen ? "Cambiar imagen" : "Cargar imagen" }}
             </button>
-            
-            <button mat-button 6
-                    color="warn" 
-                    (click)="removeImage()" 
-                    *ngIf="rutina.imagen"
-                    [disabled]="isUploading">
+
+            <button
+              mat-button
+              6
+              color="warn"
+              (click)="removeImage()"
+              *ngIf="rutina.imagen"
+              [disabled]="isUploading"
+            >
               <mat-icon>delete</mat-icon>
               Eliminar
             </button>
           </div>
 
-          <!-- Progress bar para carga -->
-          <!-- <mat-progress-bar mode="indeterminate" *ngIf="isUploading"></mat-progress-bar> -->
-          
+          <!-- Si no hay ejercicios -->
+          <div *ngIf="rutina?.ejercicios?.length === 0">
+            <p>No hay ejercicios registrados en esta rutina.</p>
+          </div>
+
           <!-- Información adicional -->
           <div class="upload-info">
             <small class="text-muted">
@@ -96,13 +97,91 @@
     </mat-card>
   </div>
 
+  <!-- Sección de ejercicios de la rutina -->
+  <ng-container *ngIf="tieneEjercicios(); else sinEjercicios">
+    <div class="exercises-section">
+      <mat-card class="exercises-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>fitness_center</mat-icon>
+            Ejercicios incluidos en la rutina
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div
+            *ngFor="let ejercicio of rutina.ejercicios; let i = index"
+            class="exercise-item"
+          >
+          <input [(ngModel)]="ejercicio.idEjercicio" hidden />
+          
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Nombre del ejercicio</mat-label>
+              <input
+                matInput
+                [(ngModel)]="ejercicio.nombre"
+                name="nombre{{ i }}"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Repeticiones</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="ejercicio.repeticion"
+                name="repeticion{{ i }}"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Series</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="ejercicio.series"
+                name="series{{ i }}"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Carga</mat-label>
+              <input
+                matInput
+                [(ngModel)]="ejercicio.carga"
+                name="carga{{ i }}"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Duración</mat-label>
+              <input
+                matInput
+                [(ngModel)]="ejercicio.duracion"
+                name="duracion{{ i }}"
+              />
+            </mat-form-field>
+
+            <hr class="divider" />
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+
+  <ng-template #sinEjercicios>
+    <p>No hay ejercicios registrados para esta rutina.</p>
+  </ng-template>
+
   <!-- Botones del modal -->
   <div class="modal-actions">
     <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button 
-            color="primary" 
-            (click)="onSave()"
-            [disabled]="isUploading">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSave()"
+      [disabled]="isUploading"
+    >
       Guardar
     </button>
   </div>

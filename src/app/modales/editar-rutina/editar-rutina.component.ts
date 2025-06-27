@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,14 +14,26 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
+import { RutineService } from '../../core/services/rutine/rutine.service';
+import { Router } from '@angular/router';
 
 export interface RutinaData {
+  idRutina?: number;
   nombre: string;
   descripcion: string;
   enfoque: string;
   imagen?: string;
   fotoRutina?: string;
   isEdit?: boolean;
+  ejercicios?: {
+    idEjercicio?: number;
+    nombre: string;
+    repeticion: string;
+    series: string;
+    carga: string;
+    duracion: string;
+    descripcion: string;
+  }[];
 }
 
 @Component({
@@ -42,42 +54,103 @@ export interface RutinaData {
     MatChipsModule,
   ],
   templateUrl: './editar-rutina.component.html',
+  styleUrls: ['./editar-rutina.component.css'],
 })
 export class EditarRutinaComponent implements OnInit {
-  rutina: RutinaData 
+  @Output() rutinaActualizada = new EventEmitter<void>();
+
+  rutina: RutinaData = {
+    nombre: '',
+    descripcion: '',
+    enfoque: '',
+    ejercicios: [],
+  };
+
   currentImageName = '';
   isUploading = false;
+  archivoSeleccionado: File | null = null;
 
   constructor(
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<EditarRutinaComponent>,
+    private rutineService: RutineService,
+    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: RutinaData
   ) {
     this.rutina = { ...data };
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.currentImageName = this.rutina.fotoRutina || 'imagen-rutina.jpg';
   }
 
-  // Selección de archivo
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
+  // Guardar cambios
+  onSave() {
+    const result: any = {
+      idRutina: this.data.idRutina!,
+      nombre: (this.rutina.nombre || '').trim(),
+      enfoque: (this.rutina.enfoque || '').trim(),
+      descripcion: (this.rutina.descripcion || '').trim(),
+      imagen: this.rutina.imagen,
 
-    // Validaciones
-    if (!this.validateFile(file)) {
-      return;
+      isEdit: this.rutina.isEdit,
+      ejercicios:
+        this.rutina.ejercicios?.map((ejercicio: any) => ({
+          idEjercicio: ejercicio.idEjercicio,
+          series: Number(ejercicio.series),
+          repeticion: Number(ejercicio.repeticion),
+          carga: Number(ejercicio.carga),
+          duracion: Number(ejercicio.duracion),
+          descripcion: (ejercicio.descripcion || '').trim(),
+         nombre: (ejercicio.nombre || '').trim(),
+        })) || [],
+    };
+
+    const formData = new FormData();
+    formData.append(
+      'datos',
+      new Blob([JSON.stringify(result)], { type: 'application/json' })
+    );
+
+    if (this.archivoSeleccionado) {
+      formData.append('fotoRutina', this.archivoSeleccionado);
     }
 
-    this.processFile(file);
+    this.rutineService.updateRutine(formData, this.data.idRutina!).subscribe({
+      next: (response) => {
+        this.showSuccess('Rutina actualizada correctamente');
+
+        setTimeout(() => {
+          console.log('Rutina registrada exitosamente:', response);
+          this.rutinaActualizada.emit();
+          this.dialogRef.close({actualizado: true}); // Cerrar el modal y pasar la respuesta
+        }, 1000);
+      },
+      error: (error) => {
+        console.error('Error al actualizar la rutina:', error);
+        this.showError('Error al actualizar la rutina');
+      },
+      complete: () => {
+        this.isUploading = false;
+        this.archivoSeleccionado = null;
+        console.log('Actualización de rutina completada');
+      },
+    });
   }
 
   // Validar archivo
   private validateFile(file: File): boolean {
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    const allowedTypes = [
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+    ];
     if (!allowedTypes.includes(file.type)) {
-      this.showError('Tipo de archivo no válido. Solo se permiten JPG, PNG, GIF y WebP.');
+      this.showError(
+        'Tipo de archivo no válido. Solo se permiten JPG, PNG, GIF y WebP.'
+      );
       return false;
     }
 
@@ -88,6 +161,22 @@ export class EditarRutinaComponent implements OnInit {
     }
 
     return true;
+  }
+
+  // Mostrar mensaje de éxito
+  private showSuccess(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      panelClass: ['success-snackbar'],
+    });
+  }
+
+  // Mostrar mensaje de error
+  private showError(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 5000,
+      panelClass: ['error-snackbar'],
+    });
   }
 
   // Procesar archivo
@@ -128,48 +217,25 @@ export class EditarRutinaComponent implements OnInit {
     this.showSuccess('Imagen eliminada');
   }
 
-  // Guardar cambios
-  onSave() {
-    if (this.isUploading) {
-      this.showError('Espera a que termine la carga de la imagen');
-      return;
-    }
-
-    // Validar descripción
-    if (!this.rutina.descripcion || this.rutina.descripcion.trim() === '') {
-      this.showError('La descripción es obligatoria');
-      return;
-    }
-
-    const result: RutinaData = {
-      nombre: this.rutina.nombre.trim(),
-      enfoque: this.rutina.enfoque.trim(),
-      descripcion: this.rutina.descripcion.trim(),
-      imagen: this.rutina.imagen,
-      fotoRutina: this.rutina.fotoRutina,
-    };
-
-    this.dialogRef.close(result);
-  }
-
   // Cancelar
   onCancel() {
     this.dialogRef.close();
   }
 
-  // Mostrar mensaje de éxito
-  private showSuccess(message: string) {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 3000,
-      panelClass: ['success-snackbar'],
-    });
+  tieneEjercicios(): boolean {
+    return !!this.rutina?.ejercicios && this.rutina.ejercicios.length > 0;
   }
 
-  // Mostrar mensaje de error
-  private showError(message: string) {
-    this.snackBar.open(message, 'Cerrar', {
-      duration: 5000,
-      panelClass: ['error-snackbar'],
-    });
+  // Selección de archivo
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validaciones
+    if (!this.validateFile(file)) {
+      return;
+    }
+
+    this.processFile(file);
   }
 }

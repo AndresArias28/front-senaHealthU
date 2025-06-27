@@ -34,6 +34,46 @@
     }
   }
   
+  .exercises-section{
+    padding: 20px 24px;
+    background-color: #f9f9f9;
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      .exercise-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        
+        .exercise-name {
+          font-size: 14px;
+          color: #333;
+        }
+        
+        .remove-exercise-btn {
+          color: #f44336; /* Red color for remove button */
+          cursor: pointer;
+          font-size: 16px;
+        }
+      }
+    }
+  }
 
   .image-upload-section {
     background-color: #fafafa;
@@ -45,8 +85,8 @@
       margin-bottom: 16px;
       font-weight: 500;
       color: #333;
-      
-      .optional-badge {
+      /* esto es para el badge  */
+      .optional-badge { 
         background: #e0e0e0;
         color: #666;
         font-size: 11px;
@@ -96,27 +136,9 @@
       align-items: center;
       gap: 8px;
     }
-    
-    .upload-btn {
-      min-width: 160px;
-    }
-    
-    .remove-btn {
-      min-width: 120px;
-    }
   }
   
-  .progress-container {
-    margin: 16px 0;
-    
-    .progress-text {
-      display: block;
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-top: 8px;
-    }
-  }
+
   
   .upload-info {
     display: flex;
@@ -137,39 +159,16 @@
 }
 
 
-.help-section {
-  padding: 16px 24px;
-  background: #e3f2fd;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #1565c0;
-  
-  .help-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-  
-  kbd {
-    background: #333;
-    color: white;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-family: monospace;
-  }
-}
 
 .modal-actions {
+  margin-top: 12px;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
   padding: 20px 24px;
   margin: 0;
   border-top: 1px solid #e0e0e0;
-  background-color: #fafafa;
+  background-color: #cfd5ea;
   
   button {
     min-width: 100px;
@@ -206,12 +205,8 @@
     }
   }
   
-  .help-section {
-    padding: 12px 20px;
-  }
 }
-
-
+/*   mostrar el snackbar */
 ::ng-deep {
   .success-snackbar {
     background-color: #4caf50 !important;
