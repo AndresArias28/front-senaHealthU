@@ -55,6 +55,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     private snackBar: MatSnackBar,
     private comunicacionService: ComunicacionService // Asegúrate de importar el servicio de comunicación
   ) {}
+
   abrirModal(rutina: any): void {
     const dialogRef = this.dialog.open(EditarRutinaComponent, {
       width: '650px',
@@ -79,7 +80,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
         return;
       }
 
-      // Si se devolvió un nuevo objeto rutina (caso de creación o edición)
+
       if (resultado && resultado.id) {
         const index = this.datosFiltrados.findIndex(
           (r) => r.id === resultado.id
@@ -108,8 +109,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    // se ejecuta una sola vez al cargar el componente en el DOM del navegador
-
     this.loginService.currentUserLoginOn.subscribe({
       //se suscribe al observable currentUserLoginOn al iniciar el componente
       next: (userLoginOn) => {
@@ -133,7 +132,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   cargarRutinas() {
     this.rutineService.getAllRutines().subscribe({
       next: (rutinas) => {
-        console.log('Rutinas recargadas desde el servidor:', rutinas); // 👈 pon esto
+        console.log('Rutinas recargadas desde el servidor:', rutinas); 
         this.datosFiltrados = rutinas;
       },
       error: (error) => {
@@ -142,9 +141,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
   }
 
-  editarRutina(id: number) {
-    this.route.navigate(['/edit-rutine', id]);
-  }
 
   redirigeRutinas() {
     this.route.navigateByUrl('/register-rutine'); // Redirige a la página de registro de rutinas
@@ -166,8 +162,9 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   }
 
   eliminarRutina(id: number) {
+
     if (!confirm('¿Estás seguro de que deseas eliminar esta rutina?')) {
-      return; // Cancela la eliminación si el usuario no confirma
+      return; 
     }
 
     this.rutineService.deleteRutine(id).subscribe({
@@ -176,10 +173,12 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
         this.datos = this.datos.filter((d) => d.id !== id);
         this.datosFiltrados = [...this.datos]; // Actualiza los datos filtrados
         this.seleccionados = this.seleccionados.filter((s) => s !== id); // Elimina el ID de la lista de seleccionados
-        this.rutinaEliminada.emit();
+        // this.rutinaEliminada.emit();
         alert('Rutina eliminada exitosamente.');
-        //recargar la apogina
-        window.location.reload();
+
+        this.cargarRutinas();
+
+        //window.location.reload();todo: cambiar esto apra solo recargar los ejercico
       },
       error: (error) => {
         console.error('Error al eliminar la rutina:', error);

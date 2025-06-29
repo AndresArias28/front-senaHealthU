@@ -22,7 +22,6 @@ export interface RutinaData {
   nombre: string;
   descripcion: string;
   enfoque: string;
-  imagen?: string;
   fotoRutina?: string;
   isEdit?: boolean;
   ejercicios?: {
@@ -69,6 +68,8 @@ export class EditarRutinaComponent implements OnInit {
   currentImageName = '';
   isUploading = false;
   archivoSeleccionado: File | null = null;
+  listaEjerciciosDisponibles: any[] = [];
+
 
   constructor(
     private snackBar: MatSnackBar,
@@ -84,15 +85,30 @@ export class EditarRutinaComponent implements OnInit {
     this.currentImageName = this.rutina.fotoRutina || 'imagen-rutina.jpg';
   }
 
+  cargarEjerciciosDisponibles(): void {
+  if (this.listaEjerciciosDisponibles.length === 0) {
+    this.rutineService.getAllExcercises().subscribe({
+      next: (res) => {
+        this.listaEjerciciosDisponibles = res;
+        console.log('Ejercicios disponibles cargadosen editar rutina:', this.listaEjerciciosDisponibles);
+      },
+      error: (err) => {
+        this.showError('Error al cargar los ejercicios disponibles');
+        console.error(err);
+      }
+    });
+  }
+}
+
+
   // Guardar cambios
   onSave() {
+
     const result: any = {
       idRutina: this.data.idRutina!,
       nombre: (this.rutina.nombre || '').trim(),
       enfoque: (this.rutina.enfoque || '').trim(),
       descripcion: (this.rutina.descripcion || '').trim(),
-      imagen: this.rutina.imagen,
-
       isEdit: this.rutina.isEdit,
       ejercicios:
         this.rutina.ejercicios?.map((ejercicio: any) => ({
@@ -102,24 +118,27 @@ export class EditarRutinaComponent implements OnInit {
           carga: Number(ejercicio.carga),
           duracion: Number(ejercicio.duracion),
           descripcion: (ejercicio.descripcion || '').trim(),
-         nombre: (ejercicio.nombre || '').trim(),
+
         })) || [],
     };
 
     const formData = new FormData();
+
     formData.append(
       'datos',
       new Blob([JSON.stringify(result)], { type: 'application/json' })
     );
 
     if (this.archivoSeleccionado) {
+      console.log('Archivo seleccionado:', this.archivoSeleccionado);
       formData.append('fotoRutina', this.archivoSeleccionado);
+    }else {
+      console.log('No se ha seleccionado un archivo, no se adjuntará imagen');
     }
 
     this.rutineService.updateRutine(formData, this.data.idRutina!).subscribe({
       next: (response) => {
         this.showSuccess('Rutina actualizada correctamente');
-
         setTimeout(() => {
           console.log('Rutina registrada exitosamente:', response);
           this.rutinaActualizada.emit();
@@ -181,17 +200,15 @@ export class EditarRutinaComponent implements OnInit {
 
   // Procesar archivo
   private processFile(file: File) {
+    
     this.isUploading = true;
-
     const reader = new FileReader();
-
     reader.onload = (e) => {
       try {
         const result = e.target?.result as string;
-        this.rutina.imagen = result;
-        this.rutina.fotoRutina = file.name;
+        this.rutina.fotoRutina = result;
+        // this.rutina.fotoRutina = file.name;
         this.currentImageName = file.name;
-
         this.showSuccess('Imagen cargada correctamente');
       } catch (error) {
         this.showError('Error al procesar la imagen');
@@ -211,9 +228,9 @@ export class EditarRutinaComponent implements OnInit {
 
   // Eliminar imagen
   removeImage() {
-    this.rutina.imagen = undefined;
     this.rutina.fotoRutina = undefined;
     this.currentImageName = '';
+    this.archivoSeleccionado = null;
     this.showSuccess('Imagen eliminada');
   }
   eliminarEjercicio(index: number): void {
@@ -223,8 +240,6 @@ export class EditarRutinaComponent implements OnInit {
     }
   }
 
-
-  // Cancelar
   onCancel() {
     this.dialogRef.close();
   }
@@ -233,7 +248,6 @@ export class EditarRutinaComponent implements OnInit {
     return !!this.rutina?.ejercicios && this.rutina.ejercicios.length > 0;
   }
 
-  // Selección de archivo
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
@@ -242,7 +256,8 @@ export class EditarRutinaComponent implements OnInit {
     if (!this.validateFile(file)) {
       return;
     }
-
-    this.processFile(file);
+    this.archivoSeleccionado = file;// Guardar el archivo seleccionado
+    this.processFile(file);//previsualizar la imagen
   }
+
 }
