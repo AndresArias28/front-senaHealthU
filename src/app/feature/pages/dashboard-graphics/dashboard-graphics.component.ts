@@ -38,6 +38,7 @@ import { ComunicacionService } from '../../../core/services/comunicacion/comunic
   styleUrl: './dashboard-graphics.component.css',
 })
 export class DashboardGraphicsComponent implements OnInit, OnChanges {
+
   @Output() rutinaEliminada = new EventEmitter<void>();
   @Input() tipoUsuario!: string;
   userLoginOn: boolean = false;
@@ -48,12 +49,11 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
 
   constructor(
     private loginService: LoginService,
-    private userService: UserService,
+    // private userService: UserService,
     private rutineService: RutineService,
     private dialog: MatDialog,
     private route: Router,
     private snackBar: MatSnackBar,
-    private comunicacionService: ComunicacionService // Asegúrate de importar el servicio de comunicación
   ) {}
 
   abrirModal(rutina: any): void {
@@ -95,6 +95,11 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  detalleRutina(rutina: any) {
+    
+
   }
 
   private mostrarMensaje(
@@ -140,7 +145,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
       },
     });
   }
-
 
   redirigeRutinas() {
     this.route.navigateByUrl('/register-rutine'); // Redirige a la página de registro de rutinas

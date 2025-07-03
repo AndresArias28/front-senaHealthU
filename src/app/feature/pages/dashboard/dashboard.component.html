@@ -1,53 +1,76 @@
 <app-nav></app-nav>
-<!-- sidebar -->
-<div class="row min-vh-100">
-  <div class="col-auto px-0 bg-light border-end" style="width: 280px">
-    <app-sidebar
-    [seccionActual]="seccionActual" 
-    [tipoUsuario]="'administrador'"
-    (seccionSeleccionada)="cambiarSeccion($event)"
-    >
-    </app-sidebar>
-  </div>
-  <!-- main Content -->
-  <div class="col px-4 py-4">
-    <div class="contenido p-4">
 
-      <!-- componente de los usuarios -->
-      <div *ngIf="seccionActual === 'gestionUsers'">
-        <h3>Gestión de Rutinas</h3>
-        <app-dashboard-graphics
-          [tipoUsuario]="'administrador'"
-          (rutinaEliminada)="redirigirADashboard()"
-        ></app-dashboard-graphics >
-      </div>
+<div class="container-fluid">
+  <div class="row flex-nowrap min-vh-100">
 
-      <!-- componente del QR -->
-      <div *ngIf="seccionActual === 'qr'">
-        <div class="row justify-content-between align-items-center mb-2">
-          <app-programador></app-programador>
-        </div>
-      </div>
-
-      <!-- componente crear rutinas -->
-      <div *ngIf="seccionActual === 'registrarRutina'">
-        <div class="row justify-content-between align-items-center mb-2">
-          <app-register-rutine (rutinaRegistrada)="redirigirAGestionUsuarios()" > </app-register-rutine>
-        </div>
-      </div>
-
-      <!-- componente de los configuraciones -->
-      <div *ngIf="seccionActual === 'settings'">
-        <h3>Settings</h3>
-        <p>Configuraciones del sistema...</p>
-      </div>
-
-      <!-- sino es ninguna de las anteriores -->
-      <div *ngIf="seccionActual == '' || seccionActual == null">
-        <h3> Bienvenido Instructor </h3>
-        <p>Gestione los usuarios desde aquí.</p>
-      </div>
-
+    <!-- Sidebar para pantallas grandes -->
+    <div class="col-auto d-none d-md-block px-0 bg-light border-end" style="width: 280px">
+      <app-sidebar
+        [seccionActual]="seccionActual"
+        [tipoUsuario]="'administrador'"
+        (seccionSeleccionada)="cambiarSeccion($event)">
+      </app-sidebar>
     </div>
+
+    <!-- Sidebar tipo offcanvas para móviles -->
+    <div class="d-md-none">
+      <button class="btn btn-primary m-2 mt-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+        Menú
+      </button>
+
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menú</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+          <app-sidebar
+            [seccionActual]="seccionActual"
+            [tipoUsuario]="'administrador'"
+            (seccionSeleccionada)="cambiarSeccion($event)">
+          </app-sidebar>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="col px-4 py-4">
+      <div class="contenido p-4">
+
+        <div *ngIf="seccionActual === 'gestionUsers'">
+          <h3>Gestión de Rutinas</h3>
+          <app-dashboard-graphics [tipoUsuario]="'administrador'"></app-dashboard-graphics>
+        </div>
+
+        <div *ngIf="seccionActual === 'gestionEjercicios'">
+          <h3>Gestión de Ejercicios</h3>
+          <app-dashboard-exercises [tipoUsuario]="'administrador'"></app-dashboard-exercises>
+        </div>
+
+        <div *ngIf="seccionActual === 'qr'">
+          <div class="row justify-content-between align-items-center mb-2">
+            <app-programador></app-programador>
+          </div>
+        </div>
+
+        <div *ngIf="seccionActual === 'registrarRutina'">
+          <div class="row justify-content-between align-items-center mb-2">
+            <app-register-rutine (rutinaRegistrada)="redirigirAGestionUsuarios()"></app-register-rutine>
+          </div>
+        </div>
+
+        <div *ngIf="seccionActual === 'settings'">
+          <h3>Settings</h3>
+          <p>Configuraciones del sistema...</p>
+        </div>
+
+        <div *ngIf="seccionActual == '' || seccionActual == null">
+          <h3> Bienvenido Instructor </h3>
+          <p>Gestione rutinas, ejercicios y usuarios desde aquí.</p>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 </div>

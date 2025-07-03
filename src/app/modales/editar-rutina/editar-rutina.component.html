@@ -17,8 +17,8 @@
       <mat-label>Enfoque</mat-label>
       <mat-select [(ngModel)]="rutina.enfoque">
         <mat-option value="TREN_SUPERIOR">Tren Superior</mat-option>
-        <mat-option value="TREN_INFERIOR">TREN_INFERIOR</mat-option>
-        <mat-option value="FULL_BODY">FULL_BODY</mat-option>
+        <mat-option value="TREN_INFERIOR">Tren Inferior</mat-option>
+        <mat-option value="FULL_BODY">Cuerpo Completo</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -204,7 +204,6 @@
 
   <!-- Botones del modal -->
   <div class="modal-actions">
-    <button mat-button (click)="onCancel()">Cancelar</button>
     <button
       mat-raised-button
       color="primary"
@@ -213,5 +212,7 @@
     >
       Guardar
     </button>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+
   </div>
 </div>

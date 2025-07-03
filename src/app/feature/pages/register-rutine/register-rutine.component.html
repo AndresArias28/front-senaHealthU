@@ -1,10 +1,13 @@
-<div class="container p-3">
+<div class="container p-3" style="margin-top: 80px;" >
   <h2>Crear nueva rutina</h2>
   <p>Seleccione los ejercicios que desea incluir en la rutina.</p>
-  <form *ngIf="formularioRutina" [formGroup]="formularioRutina" (ngSubmit)="registerRutine()" enctype="multipart/form-data">
-
-
-    <div class="mb-3" >
+  <form
+    *ngIf="formularioRutina"
+    [formGroup]="formularioRutina"
+    (ngSubmit)="registerRutine()"
+    enctype="multipart/form-data"
+  >
+    <div class="mb-3">
       <label class="form-label"> Nombre de la rutina </label>
       <input
         formControlName="nombre"
@@ -49,12 +52,11 @@
         aria-describedby="enfoqueRutinaHelp"
         [(ngModel)]="enfoque"
       >
-        <option value="TREN_SUPERIOR">Tren Superior</option> 
+        <option value="TREN_SUPERIOR">Tren Superior</option>
         <option value="TREN_INFERIOR">Tren Inferior</option>
         <option value="FULL_BODY">Cuerpo Completo</option>
       </select>
     </div>
-
 
     <div>
       <label class="form-label"> Seleccione la dificultad de la rutina </label>
@@ -86,38 +88,41 @@
     </div>
 
     <div formArrayName="ejercicios">
-      <div *ngFor="let grupo of ejerciciosFormArray.controls; let i = index"
+      <div
+        *ngFor="let grupo of ejerciciosFormArray.controls; let i = index"
         [formGroupName]="i"
         class="mt-3 border p-2 rounded"
       >
-        <label>Ejercicio {{ i + 1 }}</label> <br> 
-        
+        <label>Ejercicio {{ i + 1 }}</label> <br />
+
         <label for="idEjercicio">Selecciona un ejercicio:</label>
 
-        <select 
+        <select
           formControlName="idEjercicio"
           class="form-select mb-2"
           aria-describedby="ejercicioRutinaHelp"
-         [(ngModel)]="idEjercicio"
-        
+          [(ngModel)]="idEjercicio"
         >
-          <option *ngFor="let ejercicio of ejercicios" [value]="ejercicio.idEjercicio">
+          <option
+            *ngFor="let ejercicio of ejercicios"
+            [value]="ejercicio.idEjercicio"
+          >
             {{ ejercicio.nombreEjercicio }}
           </option>
         </select>
-
-        <input
-          formControlName="repeticion" 
-          placeholder="Repeticiones"
-          class="form-control mb-2"
-          type="number"
-        />
         <input
           formControlName="series"
           placeholder="Series"
           class="form-control mb-2"
           type="number"
         />
+        <input
+          formControlName="repeticion"
+          placeholder="Repeticiones"
+          class="form-control mb-2"
+          type="number"
+        />
+
         <input
           formControlName="carga"
           placeholder="Carga (Kg)"
@@ -134,18 +139,15 @@
     </div>
 
     <div class="mt-3">
-      <button
-        type="submit"
-        class="btn btn-success"
-      >
-        Crear Rutina
+      <button type="submit" class="btn btn-success">Crear Rutina</button>
+
+      <button class="btn btn-success " style="margin-left: 10px;" onclick="window.history.back()">
+        Volver al Dashboard
       </button>
     </div>
-
   </form>
 
   <div *ngIf="mensajeExito" class="alert alert-success">
     {{ mensajeExito }}
   </div>
-  
 </div>

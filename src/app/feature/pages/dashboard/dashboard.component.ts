@@ -6,12 +6,13 @@ import { SidebarComponent } from '../../../shared/sidebar/sidebar.component';
 import { DashboardGraphicsComponent } from '../dashboard-graphics/dashboard-graphics.component';
 import { ProgramadorComponent } from '../programador-qr/programador.component';
 import { RegisterRutineComponent } from '../register-rutine/register-rutine.component';
+import { DashboardExercisesComponent } from '../dashboard-exercises/dashboard-exercises.component';
 
 
 @Component({
   selector: 'app-dashboard',
   imports: [NavComponent, CommonModule, SidebarComponent, 
-    DashboardGraphicsComponent, ProgramadorComponent, RegisterRutineComponent],
+    DashboardGraphicsComponent, ProgramadorComponent, RegisterRutineComponent, DashboardExercisesComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -35,5 +36,10 @@ export class DashboardComponent {
     this.seccionActual = 'gestionUsers'; // cambio manual tras eliminar rutina
     console.log('Redirigido a gestionUsers tras eliminar rutina');
   
+  }
+
+  redirigirAGestionEjercicios() {
+    this.seccionActual = 'gestionEjercicios';
+    console.log('Redirigido a gestion Ejercicios ');
   }
 }

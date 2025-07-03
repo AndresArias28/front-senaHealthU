@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 import { RegisterComponent } from './feature/auth/register/register.component';
 import { RegisterUserComponent } from './feature/auth/register-user/register-user.component';
 import { RegisterRutineComponent } from './feature/pages/register-rutine/register-rutine.component';
+import { RegisterExerciseComponent } from './feature/pages/register-exercise/register-exercise.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
@@ -43,6 +44,10 @@ export const routes: Routes = [
     {
         path: 'register-rutine',
         component: RegisterRutineComponent,
+    },
+    {
+        path: 'register-exercise',
+        component: RegisterExerciseComponent
     },
     {path: '**', redirectTo: 'iniciar-sesion' },
 ];

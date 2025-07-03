@@ -17,16 +17,14 @@ export class SidebarComponent implements OnInit {
   constructor(private comunicacionsv: ComunicacionService) {}
 
   ngOnInit() {
-    // Suscribirse al observable del servicio de comunicación
+    // suscribirse al observable del servicio de comunicación
     this.comunicacionsv.seccion$.subscribe((seccion: string) => {
       this.cambiarSeccion(seccion);
     });
   }
 
-
   cambiarSeccion(seccion: string) {
     if (seccion === "logout") {
-      
       console.log("logout", seccion);
       sessionStorage.removeItem("token"); //elimina el token del sessionStorage
       window.location.href = '/login'; //redirige a la vista de login

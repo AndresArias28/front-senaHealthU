@@ -37,8 +37,8 @@
                     <table class="table table-hover align-middle mb-0 ">
                         <thead class="bg-light table-success">
                             <tr class="text-uppercase   ">
-                                <th class="border-0 " style="max-width: 20px;"></th>
-                                <th class="border-0 px-4">Nombre</th>
+                                <!-- <th class="border-0 " style="max-width: 20px;"></th> -->
+                                <th class="border-0 px-4">Rutina</th>
                                 <th class="border-0">Descripción</th>
                                 <th class="border-0">Enfoque</th>
                                 <th class="border-0 text-end pe-4">Acciones </th>
@@ -46,29 +46,37 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let rutine of datosFiltrados">
-                              <td>
+                              <!-- <td>
                                 <input type="checkbox" [checked]="seleccionados.includes(rutine.id)"
                                        (change)="toggleSeleccion(rutine.idRutina)" />
-                              </td>
+                              </td> -->
                                 <td class="px-4">
 
                                     <div class="d-flex align-items-center">
-                                        <!-- <img src="/placeholder.svg?height=40&width=40" class="rounded-circle me-3" width="40" height="40" alt="User avatar" /> -->
                                         <div>
-                                            <p class="fw-semibold mb-0">{{ rutine.nombre }}</p>
-                                            <small class="text-muted">{{ rutine.nombre }}</small>
+                                            <p class="mb-0">{{ rutine.nombre }}</p>
+                                            <img
+                                                src="{{ rutine.fotoRutina }}"
+                                                class="img-fluid"
+                                                alt="imagen rutina"
+                                                style="max-width: 100px; max-height: 100px; border-radius: 10px;"
+                                            />
+                                            <!-- <small class="text-muted">{{ rutine.nombre }}</small> -->
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="fw-semibold mb-0">{{ rutine.descripcion }}</p>
+                                    <p class="mb-0">{{ rutine.descripcion }}</p>
                                 </td>
                                 <td>
-                                    <p class="fw-semibold mb-0">{{ rutine.enfoque }}</p>
+                                    <p class="mb-0">{{ rutine.enfoque }}</p>
 
                                 </td>
 
                                 <td class="text-end pe-4">
+                                    <!-- <button class="btn btn-light btn-sm rounded-circle" (click)="detalleRutina(rutine)">
+                                        <i class="bi bi-eye" ></i>
+                                    </button> -->
                                     <button class="btn btn-light btn-sm rounded-circle" (click)="abrirModal(rutine)">
                                         <i class="bi bi-pencil" ></i>
                                     </button>
@@ -80,7 +88,7 @@
                         </tbody>
                     </table>
 
-                    <button class="mt-3 btn btn-success rounded-3 p-2  " (click)="eliminarSeleccionados()">Eliminar seleccionados</button>
+                    <!-- <button class="mt-3 btn btn-success rounded-3 p-2  " (click)="eliminarSeleccionados()">Eliminar seleccionados</button> -->
                 </div>
             </div>
         </div>

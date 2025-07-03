@@ -70,7 +70,6 @@ export class EditarRutinaComponent implements OnInit {
   archivoSeleccionado: File | null = null;
   listaEjerciciosDisponibles: any[] = [];
 
-
   constructor(
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<EditarRutinaComponent>,
@@ -86,24 +85,25 @@ export class EditarRutinaComponent implements OnInit {
   }
 
   cargarEjerciciosDisponibles(): void {
-  if (this.listaEjerciciosDisponibles.length === 0) {
-    this.rutineService.getAllExcercises().subscribe({
-      next: (res) => {
-        this.listaEjerciciosDisponibles = res;
-        console.log('Ejercicios disponibles cargadosen editar rutina:', this.listaEjerciciosDisponibles);
-      },
-      error: (err) => {
-        this.showError('Error al cargar los ejercicios disponibles');
-        console.error(err);
-      }
-    });
+    if (this.listaEjerciciosDisponibles.length === 0) {
+      this.rutineService.getAllExcercises().subscribe({
+        next: (res) => {
+          this.listaEjerciciosDisponibles = res;
+          console.log(
+            'Ejercicios disponibles cargadosen editar rutina:',
+            this.listaEjerciciosDisponibles
+          );
+        },
+        error: (err) => {
+          this.showError('Error al cargar los ejercicios disponibles');
+          console.error(err);
+        },
+      });
+    }
   }
-}
-
 
   // Guardar cambios
   onSave() {
-
     const result: any = {
       idRutina: this.data.idRutina!,
       nombre: (this.rutina.nombre || '').trim(),
@@ -118,7 +118,6 @@ export class EditarRutinaComponent implements OnInit {
           carga: Number(ejercicio.carga),
           duracion: Number(ejercicio.duracion),
           descripcion: (ejercicio.descripcion || '').trim(),
-
         })) || [],
     };
 
@@ -132,18 +131,16 @@ export class EditarRutinaComponent implements OnInit {
     if (this.archivoSeleccionado) {
       console.log('Archivo seleccionado:', this.archivoSeleccionado);
       formData.append('fotoRutina', this.archivoSeleccionado);
-    }else {
+    } else {
       console.log('No se ha seleccionado un archivo, no se adjuntará imagen');
     }
 
     this.rutineService.updateRutine(formData, this.data.idRutina!).subscribe({
       next: (response) => {
         this.showSuccess('Rutina actualizada correctamente');
-        setTimeout(() => {
-          console.log('Rutina registrada exitosamente:', response);
-          this.rutinaActualizada.emit();
-          this.dialogRef.close({actualizado: true}); // Cerrar el modal y pasar la respuesta
-        }, 1000);
+        console.log('Rutina registrada exitosamente:', response);
+        this.rutinaActualizada.emit();
+        this.dialogRef.close({ actualizado: true }); // Cerrar el modal y pasar la respuesta
       },
       error: (error) => {
         console.error('Error al actualizar la rutina:', error);
@@ -200,7 +197,6 @@ export class EditarRutinaComponent implements OnInit {
 
   // Procesar archivo
   private processFile(file: File) {
-    
     this.isUploading = true;
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -234,7 +230,9 @@ export class EditarRutinaComponent implements OnInit {
     this.showSuccess('Imagen eliminada');
   }
   eliminarEjercicio(index: number): void {
-    const confirmado = window.confirm('¿Estás seguro de que deseas eliminar este ejercicio de la rutina?');
+    const confirmado = window.confirm(
+      '¿Estás seguro de que deseas eliminar este ejercicio de la rutina?'
+    );
     if (confirmado) {
       this.rutina.ejercicios?.splice(index, 1);
     }
@@ -256,8 +254,7 @@ export class EditarRutinaComponent implements OnInit {
     if (!this.validateFile(file)) {
       return;
     }
-    this.archivoSeleccionado = file;// Guardar el archivo seleccionado
-    this.processFile(file);//previsualizar la imagen
+    this.archivoSeleccionado = file; // Guardar el archivo seleccionado
+    this.processFile(file); //previsualizar la imagen
   }
-
 }

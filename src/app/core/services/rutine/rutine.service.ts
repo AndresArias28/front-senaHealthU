@@ -52,6 +52,16 @@ export class RutineService {
     );
   }
 
+  getRutineById(id: number): Observable<any> {
+    return this.http.get<any>(environment.urlHost + "rutina/obtenerRutina/" + id).pipe(
+      tap((response) => {
+        console.log('Rutina obtenida:', response);
+        this.currentRutine.next(response);
+      }),
+      catchError(this.handleError)
+    );
+  }
+
   getAllExcercises(): Observable<any[]> {
     return this.http.get<any[]>(environment.urlHost + "ejercicio/obtenerEjercicios").pipe(
       tap((response) => {
@@ -62,7 +72,6 @@ export class RutineService {
     );
   }
       
-    
   //eliminar una rutina por ID
   deleteRutine(id: number): Observable<any> {
     return this.http.delete<any>(environment.urlHost + "rutina/eliminarRutinas/" + id).pipe(
