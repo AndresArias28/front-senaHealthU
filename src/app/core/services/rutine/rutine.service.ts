@@ -14,9 +14,7 @@ export class RutineService {
   ejercicios = new BehaviorSubject<any[]>([]); // Observable para los ejercicios
 
 
-  constructor(private http: HttpClient) {
-    
-  }
+  constructor(private http: HttpClient) {}
 
   //registrar una rutina
   registerRutine(formaData: FormData): Observable<any> {

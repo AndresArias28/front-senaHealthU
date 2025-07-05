@@ -1,0 +1,62 @@
+<div class="container p-3" style="margin-top: 80px">
+  <h2>Asignar Rutina</h2>
+
+  <form
+    *ngIf="formularioAsignarRutina"
+    [formGroup]="formularioAsignarRutina"
+    (ngSubmit)="asignarRutina()"
+  >
+    <div class="mb-3">
+      <label class="form-label"> Seleccionar Usuario </label>
+      <select
+        formControlName="idPersona"
+        class="form-select form-select-lg"
+        id="idPersona"
+        aria-describedby="idPersonaHelp"
+        [(ngModel)]="idPersona"
+      >
+        <option *ngFor="let usuario of usuarios" [value]="usuario.idPersona">
+          {{ usuario.nombreCompleto }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label"> Seleccionar Rutina </label>
+      <select
+        formControlName="idRutina"
+        class="form-select form-select-lg"
+        id="idRutina"
+        aria-describedby="idRutinaHelp"
+        [(ngModel)]="idRutina"
+      >
+        <option *ngFor="let rutina of rutinas" [value]="rutina.idRutina">
+          {{ rutina.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label class="form-label"> Observaciones </label>
+      <input
+        formControlName="observaciones"
+        type="text"
+        class="form-control form-control-lg"
+        id="observaciones"
+        aria-describedby="descripcionRutinaHelp"
+        [(ngModel)]="observaciones"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Asignar Rutina</button>
+    <button
+      class="btn btn-success"
+      style="margin-left: 10px"
+      onclick="window.history.back()"
+    >
+      Volver al Dashboard
+    </button>
+  </form>
+    <div *ngIf="mensajeExito" class="alert alert-success">
+    {{ mensajeExito }}
+  </div>
+</div>

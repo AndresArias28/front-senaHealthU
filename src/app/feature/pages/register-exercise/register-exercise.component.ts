@@ -32,10 +32,7 @@ export class RegisterExerciseComponent {
   ) {
     this.formularioEjercicio = this.formBuilder.group({
       nombreEjercicio: ['', [Validators.required]],
-      descripcionEjercicio: [
-        '',
-        [Validators.required, Validators.minLength(10)],
-      ],
+      descripcionEjercicio: ['', [Validators.required, Validators.minLength(10)],],
       fotoEjercicio: [''],
       met: ['', [Validators.required]],
       musculos: ['', [Validators.required]],

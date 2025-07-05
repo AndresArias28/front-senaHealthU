@@ -53,6 +53,12 @@
           </div>
         </div>
 
+        <div *ngIf="seccionActual === 'asignarRutina'">
+          <div class="row justify-content-between align-items-center mb-2">
+            <app-asignar-rutina></app-asignar-rutina>
+          </div>
+        </div>
+
         <div *ngIf="seccionActual === 'registrarRutina'">
           <div class="row justify-content-between align-items-center mb-2">
             <app-register-rutine (rutinaRegistrada)="redirigirAGestionUsuarios()"></app-register-rutine>
