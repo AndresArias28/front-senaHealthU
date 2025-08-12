@@ -21,6 +21,9 @@ export class AsignarRutinaComponent implements OnInit {
   rutinas: any[] = [];
   idPersona: number = 0;
   idRutina: number = 0;
+  diaSemana: string = '';
+  
+  dias: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
   constructor(
     private formBuilder: FormBuilder,

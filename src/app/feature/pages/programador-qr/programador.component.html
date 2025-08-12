@@ -31,11 +31,17 @@
     <h3 class="mb-2 font-semibold">Código QR generado:</h3>
     <qrcode [qrdata]="codigoQR" [width]="370" errorCorrectionLevel="M"></qrcode>
   </div>
+
   <div *ngIf="codigoQR" class="mb-4">
     <h3 class="mb-2 font-semibold">Código QR en texto:</h3>
     <p>{{ codigoQR }}</p>
   </div>
-  <button (click)="imprimirQR()">Imprimir QR</button>
-  <button (click)="enviarQR()">Enviar QR</button>
+  
+  <button (click)="saveQR()">Guardar QR</button>
+
+  <div *ngIf="mensaje" class="alert alert-success mt-2">
+  {{ mensaje }}
+</div>
+
 </div>
 <div class="botones"></div>

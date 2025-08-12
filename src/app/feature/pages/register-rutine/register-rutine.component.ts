@@ -28,7 +28,6 @@ export class RegisterRutineComponent implements OnInit {
   cantidadEjercicios: number = 0;
   formularioRutina!: FormGroup;
   archivoSeleccionado: File | null = null;
-
   ejercicios: any[] = [];
 
   constructor(private formBuilder: FormBuilder, private router: Router, private rutineService: RutineService) {
@@ -53,7 +52,6 @@ export class RegisterRutineComponent implements OnInit {
         console.error('Error al obtener ejercicios:', error);
       }
     });
-
     this.actualizarCamposEjercicios(1);
   }
 
