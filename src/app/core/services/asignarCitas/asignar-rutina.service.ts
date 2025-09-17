@@ -11,9 +11,9 @@ export class AsignarRutinaService {
   currentAsignacion = new BehaviorSubject<String>(""); // Observable para la asignación actual
   
   constructor(private http: HttpClient) {}
-
+ 
   asignarRutina( datos: any): Observable<any> {
-    return this.http.post<any>(environment.urlHost + "asignaciones/asignar", datos).pipe(
+    return this.http.post<any>(environment.urlProd + "asignaciones/asignar", datos).pipe(
       tap((response) => {
         console.log('Asignación de rutina:', response);
         this.currentAsignacion.next(response);

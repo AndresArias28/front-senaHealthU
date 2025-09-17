@@ -18,7 +18,7 @@ export class RutineService {
 
   //registrar una rutina
   registerRutine(formaData: FormData): Observable<any> {
-    return this.http.post<any>(environment.urlHost + "rutina/crear", formaData).pipe(
+    return this.http.post<any>(environment.urlProd + "rutina/crear", formaData).pipe(
       tap((response) => {
         console.log('Rutina registrada:', response);
         this.currentRutine.next(response); // actualiza el observable con la nueva rutina
@@ -30,7 +30,7 @@ export class RutineService {
 
   //actualizar una rutina
   updateRutine(formaData: FormData, id: number): Observable<any> {
-    return this.http.put<any>(environment.urlHost + "rutina/actualizar/" + id, formaData).pipe(
+    return this.http.put<any>(environment.urlProd + "rutina/actualizar/" + id, formaData).pipe(
       tap((response) => {
         console.log('Rutina actualizada:', response);
         this.currentRutine.next(response);
@@ -41,7 +41,7 @@ export class RutineService {
 
   //obtener todas las rutinas
   getAllRutines(): Observable<any[]> {
-    return this.http.get<any[]>(environment.urlHost + "rutina/obtenerRutinas").pipe(
+    return this.http.get<any[]>(environment.urlProd + "rutina/obtenerRutinas").pipe(
       tap((response) => {
         console.log('Rutinas obtenidas:', response);
         this.rutines.next(response);
@@ -51,7 +51,7 @@ export class RutineService {
   }
 
   getRutineById(id: number): Observable<any> {
-    return this.http.get<any>(environment.urlHost + "rutina/obtenerRutina/" + id).pipe(
+    return this.http.get<any>(environment.urlProd + "rutina/obtenerRutina/" + id).pipe(
       tap((response) => {
         console.log('Rutina obtenida:', response);
         this.currentRutine.next(response);
@@ -61,7 +61,7 @@ export class RutineService {
   }
 
   getAllExcercises(): Observable<any[]> {
-    return this.http.get<any[]>(environment.urlHost + "ejercicio/obtenerEjercicios").pipe(
+    return this.http.get<any[]>(environment.urlProd + "ejercicio/obtenerEjercicios").pipe(
       tap((response) => {
         console.log('Ejercicios obtenidos:', response);
         this.ejercicios.next(response); // Actualiza el observable de rutinas con los ejercicios
@@ -72,7 +72,7 @@ export class RutineService {
       
   //eliminar una rutina por ID
   deleteRutine(id: number): Observable<any> {
-    return this.http.delete<any>(environment.urlHost + "rutina/eliminarRutinas/" + id).pipe(
+    return this.http.delete<any>(environment.urlProd + "rutina/eliminarRutinas/" + id).pipe(
       tap((response) => {
         console.log('Rutina eliminada:', response);
       }),

@@ -3,5 +3,5 @@ export const environment = {
     // urlHost:'https://gym-ver2-api-aafaf6c56cad.herokuapp.com/',
     urlHost:'http://localhost:6090/',
     urlApi: 'http://localhost:6090/user/',
-    userId:1
+    urlProd: 'http://54.227.38.102:8080/'
   };

@@ -15,25 +15,25 @@ export class UserService {
 
   getUser(id: number) : Observable<User>{
     console.log('Ejecutando getUser() para ID:', id);
-    return this.http.get<User>(`${environment.urlApi}obtenereUsario/${id}`).pipe(
+    return this.http.get<User>(`${environment.urlProd}obtenereUsario/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   updateUser(userRequest : User) : Observable<any>{
-    return this.http.put(`${environment.urlApi}actualizarUsuario`, userRequest).pipe(
+    return this.http.put(`${environment.urlProd}actualizarUsuario`, userRequest).pipe(
       catchError(this.handleError)
     )
   }
 
   geAllUsers() : Observable<User[]> {
-    return this.http.get<User[]>(`${environment.urlApi}obtenereUsarios`).pipe(
+    return this.http.get<User[]>(`${environment.urlProd}user/obtenereUsarios`).pipe(
       catchError(this.handleError))
   } 
 
   registerQr(codigoQR: string): Observable<any> {
     const token = sessionStorage.getItem('token');
-
+ 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -43,7 +43,7 @@ export class UserService {
       codigoQR: codigoQR
     };
     
-    return this.http.post(`${environment.urlHost}admin/register/qr`, body, { headers }).pipe(
+    return this.http.post(`${environment.urlProd}admin/register/qr`, body, { headers }).pipe(
       tap((response) => {
         console.log('QR registrado exitosamente:', response);
       }),

@@ -22,7 +22,6 @@ export class AsignarRutinaComponent implements OnInit {
   idPersona: number = 0;
   idRutina: number = 0;
   diaSemana: string = '';
-  
   dias: string[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
   constructor(
@@ -39,6 +38,7 @@ export class AsignarRutinaComponent implements OnInit {
       rutinas: this.formBuilder.array([]),
       usuarios: this.formBuilder.array([]),
       fechaAsignacion: [new Date()],
+      diaSemana: [this.diaSemana, Validators.required]
     });
   }
 

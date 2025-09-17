@@ -25,7 +25,7 @@ export class ProgramadorComponent {
   }
 
   saveQR() {
-    const codigoQR = JSON.stringify({
+    const codigoQR: string = JSON.stringify({
       accion: this.accion,
       idDesafio: this.idDesafio.trim()
     })
@@ -36,20 +36,18 @@ export class ProgramadorComponent {
         this.mensaje = 'QR registrado exitosamente.';
         setTimeout(() => {
         this.mensaje = '';
-      }, 3000);
+      }, 1000);
       },
       error: (error) => {
         console.error('Error al registrar el QR:', error);
         this.mensaje = 'Error al registrar el QR.';
         setTimeout(() => {
         this.mensaje = '';
-      }, 3000);
+      }, 1000);
       }
     });
  
   }
-
-
 
   generarQR() {
     if (this.idDesafio.trim()) {

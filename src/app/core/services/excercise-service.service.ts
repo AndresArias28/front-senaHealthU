@@ -15,7 +15,7 @@ export class ExcerciseServiceService {
 
   registerExercise(formData: FormData): Observable<any> {
     return this.http
-      .post<any>(environment.urlHost + 'ejercicio/crearEjercicio', formData)
+      .post<any>(environment.urlProd + 'ejercicio/crearEjercicio', formData)
       .pipe(
         tap((response) => {
           console.log('Ejercicio registrado:', response);
@@ -27,7 +27,7 @@ export class ExcerciseServiceService {
 
   updateExercise(formData: FormData, id: number): Observable<any> {
     return this.http
-      .put<any>(environment.urlHost + 'ejercicio/actualizarEjercicio/' + id, formData)
+      .put<any>(environment.urlProd + 'ejercicio/actualizarEjercicio/' + id, formData)
       .pipe(
         tap((response) => {
           console.log('Ejercicio actualizado:', response);
@@ -39,7 +39,7 @@ export class ExcerciseServiceService {
 
   deleteExercise(id: number): Observable<any> {
     return this.http
-      .delete<any>(environment.urlHost + 'ejercicio/eliminarEjercicio/' + id)
+      .delete<any>(environment.urlProd + 'ejercicio/eliminarEjercicio/' + id)
       .pipe(
         tap((response) => {
           console.log('Ejercicio eliminado:', response);

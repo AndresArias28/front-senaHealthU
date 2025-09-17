@@ -58,8 +58,8 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/inicio-admin']);
           } else if (rol === 'ROLE_Superusuario') {
               this.router.navigate(['/inicio-super']);
-          } else if (rol === 'Aprendiz') {
-            this.router.navigate(['/inicio-super']);
+          } else if (rol === 'ROLE_Aprendiz') {
+            this.router.navigate(['/inicio-admin']);
           } 
         },
         error: (error) => {
