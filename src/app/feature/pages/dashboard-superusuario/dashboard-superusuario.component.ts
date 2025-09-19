@@ -8,7 +8,7 @@ import { ProgramadorComponent } from "../programador-qr/programador.component";
 
 @Component({
   selector: 'app-dashboard-superusuario',
-  imports: [NavComponent, CommonModule, SidebarComponent,
+  imports: [CommonModule, SidebarComponent,
      ProgramadorComponent, DashboardGraphicsComponent, ProgramadorComponent],
   templateUrl: './dashboard-superusuario.component.html',
   styleUrl: './dashboard-superusuario.component.css',

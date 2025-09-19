@@ -1,27 +1,5 @@
 <div class="card border-0 shadow-sm rounded-4">
     <div class="col px-4 py-4">
-        <!--boton registrar-->
-        <div *ngIf="tipoUsuario !== 'administrador'" class="d-flex justify-content-between align-items-center mb-2">
-            <a class="btn btn-success rounded-3 p-2" [routerLink]="['/register-admin']">
-              <i class="bi bi-plus-lg me-2"></i>
-              Registrar nuevo administrador
-            </a>
-        </div>
-<!-- 
-        <div *ngIf="tipoUsuario === 'administrador'" class="d-flex justify-content-between align-items-center mb-2">
-            <a class="btn btn-success rounded-3 p-2" [routerLink]="['/register-user']">
-              <i class="bi bi-plus-lg me-2"></i>
-              Registrar nueva Rutina
-            </a>
-        </div> -->
-
-        <!--tabla de usuarios-->
-         <div *ngIf="tipoUsuario !== 'apren'" class="d-flex justify-content-between align-items-center mb-2">
-            <a class="btn btn-success rounded-3 p-2" [routerLink]="['/register-admin']">
-              <i class="bi bi-plus-lg me-2"></i>
-              Registrar nuevo administrador
-            </a>
-        </div>
         
         <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-0">
@@ -35,9 +13,9 @@
                    />
                    <div class="flex justify-between items-center mb-4 gap-2">
 
-                    <button (click)="buscar()" class="btn btn-success rounded-3 p-2 me-2"> Buscar </button>
+                    <button (click)="buscar()" class="btn btn-success rounded-3 p-2 me-2"> Buscar rutina </button>
 
-                    <button class=" btn btn-success rounded-3 p-2 me-2 " (click)="redirigeRutinas()">Crear Rutinas</button>
+                    <button class=" btn btn-success rounded-3 p-2 me-2 " (click)="redirigeRutinas()">Crear rutina</button>
 
                    </div>
 

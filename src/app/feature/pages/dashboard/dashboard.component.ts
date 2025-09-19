@@ -11,7 +11,7 @@ import { AsignarRutinaComponent } from "../asignar-rutina/asignar-rutina.compone
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NavComponent, 
+  imports: [ 
     CommonModule, 
     SidebarComponent,
     DashboardGraphicsComponent, 

@@ -1,4 +1,4 @@
-<app-nav></app-nav>
+<!-- <app-nav></app-nav> -->
 
 <div class="container-fluid">
   <div class="row flex-nowrap min-vh-100">
@@ -38,12 +38,12 @@
       <div class="contenido p-4">
 
         <div *ngIf="seccionActual === 'gestionUsers'">
-          <h3>Gestión de Rutinas</h3>
+          <h3 style="margin-top: 20px;">Gestión de Rutinas</h3>
           <app-dashboard-graphics [tipoUsuario]="'administrador'"></app-dashboard-graphics>
         </div>
 
         <div *ngIf="seccionActual === 'gestionEjercicios'">
-          <h3>Gestión de Ejercicios</h3>
+          <h3 style="margin-top: 20px;">Gestión de Ejercicios</h3>
           <app-dashboard-exercises [tipoUsuario]="'administrador'"></app-dashboard-exercises>
         </div>
 
@@ -71,7 +71,7 @@
         </div>
 
         <div *ngIf="seccionActual == '' || seccionActual == null">
-          <h3> Bienvenido Instructor </h3>
+          <h3 style="margin-top: 20px;"> Bienvenido Instructor </h3>
           <p>Gestione rutinas, ejercicios y usuarios desde aquí.</p>
         </div>
 
