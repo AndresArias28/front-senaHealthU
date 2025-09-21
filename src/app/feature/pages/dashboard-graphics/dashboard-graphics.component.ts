@@ -15,13 +15,13 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { UserService } from '../../../core/services/user/user.service';
 import { RutineService } from '../../../core/services/rutine/rutine.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarRutinaComponent } from '../../../modales/editar-rutina/editar-rutina.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ComunicacionService } from '../../../core/services/comunicacion/comunicacion.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { toast } from 'ngx-sonner';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-dashboard-graphics',
@@ -33,27 +33,26 @@ import { ComunicacionService } from '../../../core/services/comunicacion/comunic
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule,
   ],
   templateUrl: './dashboard-graphics.component.html',
   styleUrl: './dashboard-graphics.component.css',
 })
 export class DashboardGraphicsComponent implements OnInit, OnChanges {
-
   @Output() rutinaEliminada = new EventEmitter<void>();
   @Input() tipoUsuario!: string;
   userLoginOn: boolean = false;
   terminoBusqueda: string = '';
-  datos: any[] = []; // Cambia el tipo de datos según tu necesidad
-  seleccionados: number[] = []; // Lista de IDs de rutinas seleccionadas
-  datosFiltrados = [...this.datos]; // copia inicial de datos para filtrar
+  datos: any[] = []; 
+  seleccionados: number[] = []; 
+  datosFiltrados = [...this.datos]; 
 
   constructor(
     private loginService: LoginService,
-    // private userService: UserService,
     private rutineService: RutineService,
     private dialog: MatDialog,
     private route: Router,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar
   ) {}
 
   abrirModal(rutina: any): void {
@@ -69,7 +68,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
 
     const instance = dialogRef.componentInstance;
     instance.rutinaActualizada.subscribe(() => {
-      this.cargarRutinas(); 
+      this.cargarRutinas();
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {
@@ -79,7 +78,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
         this.mostrarMensaje('Rutinas actualizadas correctamente', 'success');
         return;
       }
-
 
       if (resultado && resultado.id) {
         const index = this.datosFiltrados.findIndex(
@@ -97,10 +95,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
   }
 
-  detalleRutina(rutina: any) {
-    
-
-  }
+  detalleRutina(rutina: any) {}
 
   private mostrarMensaje(
     mensaje: string,
@@ -115,7 +110,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.loginService.currentUserLoginOn.subscribe({
-      //se suscribe al observable currentUserLoginOn al iniciar el componente
       next: (userLoginOn) => {
         this.userLoginOn = userLoginOn; //almacena el estado del login en la variable userLoggedIn
       },
@@ -137,7 +131,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   cargarRutinas() {
     this.rutineService.getAllRutines().subscribe({
       next: (rutinas) => {
-        console.log('Rutinas recargadas desde el servidor:', rutinas); 
+        console.log('Rutinas recargadas desde el servidor:', rutinas);
         this.datosFiltrados = rutinas;
       },
       error: (error) => {
@@ -166,10 +160,21 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   }
 
   eliminarRutina(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: '¿Eliminar rutina?',
+        message: '¿Estás seguro de que deseas eliminar esta rutina?',
+      },
+    });
 
-    if (!confirm('¿Estás seguro de que deseas eliminar esta rutina?')) {
-      return; 
-    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.snackBar.open('Rutina eliminada correctamente', 'Cerrar', {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+        });
+      }
+    });
 
     this.rutineService.deleteRutine(id).subscribe({
       next: () => {
@@ -178,7 +183,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
         this.datosFiltrados = [...this.datos]; // Actualiza los datos filtrados
         this.seleccionados = this.seleccionados.filter((s) => s !== id); // Elimina el ID de la lista de seleccionados
         // this.rutinaEliminada.emit();
-        alert('Rutina eliminada exitosamente.');
+        // toast.success('Rutina eliminada exitosamente.');
 
         this.cargarRutinas();
 
@@ -186,6 +191,9 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
       },
       error: (error) => {
         console.error('Error al eliminar la rutina:', error);
+        toast.error(
+          'Error al eliminar la rutina. Por favor, inténtalo de nuevo.'
+        );
       },
     });
   }

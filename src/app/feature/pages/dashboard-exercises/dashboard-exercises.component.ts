@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarEjercicoComponent } from '../../../modales/editar-ejercico/editar-ejercico.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ExcerciseServiceService } from '../../../core/services/excercise-service.service';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { toast } from 'ngx-sonner';
 
 @Component({
   selector: 'app-dashboard-exercises',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatSnackBarModule],
   templateUrl: './dashboard-exercises.component.html',
   styleUrl: './dashboard-exercises.component.css',
 })
@@ -35,7 +37,7 @@ export class DashboardExercisesComponent implements OnInit {
         console.log('Ejercicios obtenidos:', ejercicios);
         this.datos = ejercicios;
         this.ejercicios = [...this.datos];
-        this.rutineService.ejercicios.next(this.ejercicios); // Actualiza el observable de ejercicios
+        this.rutineService.ejercicios.next(this.ejercicios);
       },
       error: (error) => {
         console.error('Error al obtener ejercicios:', error);
@@ -144,19 +146,28 @@ export class DashboardExercisesComponent implements OnInit {
   }
 
   eliminarEjercicio(id: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: '¿Eliminar rutina?',
+        message: '¿Estás seguro de que deseas eliminar esta rutina?',
+      },
+    });
 
-    if (!confirm('¿Estas seguro de que deseas eliminar este ejercicio?')) {
-      return;
-    }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.snackBar.open('Rutina eliminada correctamente', 'Cerrar', {
+          duration: 2000,
+          panelClass: ['success-snackbar'],
+        });
+      }
+    });
 
     this.excerciseService.deleteExercise(id).subscribe({
       next: () => {
         this.datos = this.datos.filter((d) => d.idEjercicio !== id);
         this.ejercicios = [...this.datos]; // Actualiza los ejercicios filtrados
-        this.seleccionados = this.seleccionados.filter(
-          (s) => s !== id
-        );
-        this.mostrarMensaje('Ejercicio eliminado correctamente', 'success');
+        this.seleccionados = this.seleccionados.filter((s) => s !== id);
+        // this.mostrarMensaje('Ejercicio eliminado correctamente', 'success');
         this.cargarEjercicios(); // Recarga los ejercicios después de eliminar
       },
       error: (error) => {
