@@ -5,7 +5,7 @@
 .bg-image {
   background-image: url('../../../../assets/iniciosesion1.jpeg');
   background-color: #ecf3ef;
-  background-size: 100% auto;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   /*border: 10px solid #39A900;  Marco sólido de 10px de color gris */
@@ -24,7 +24,6 @@
 
 .login-container {
   width: 100%;
-  max-width: 480px;
 }
 
 input {
@@ -43,7 +42,6 @@ input:focus {
 }
 
 .error-container {
-  position: absolute;
   font-size: 12px;
   color: rgb(207, 29, 29);
 }

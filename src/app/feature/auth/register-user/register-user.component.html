@@ -1,13 +1,13 @@
-<div class="d-flex align-items-center vh-100">
-    <div class=" row w-100 p-5">
-       <!-- Sección de Imagen (35%) -->
-    <div class="col-md-5 d-none d-md-block p-0">
-      <img src="../../../../assets/logosena.png" alt="Aprendiz registrándose" class="img-fluid w-100 h-100 object-fit-cover">
+<div class="container-fluid">
+    <div class="row align-items-center">
+       <!-- Sección de Imagen -->
+    <div class="col-lg-5 d-none d-lg-block p-0">
+      <img src="../../../../assets/logosena.png" alt="Aprendiz registrándose" class="img-fluid w-100 vh-100 object-fit-cover">
     </div>
         
-      <!-- Sección del Formulario (65%) -->
-    <div class="col-md-7 d-flex align-items-center justify-content-center">
-      <div class="w-75">
+      <!-- Sección del Formulario -->
+    <div class="col-lg-7 col-md-12 d-flex align-items-center justify-content-center">
+      <div class="w-100 p-4">
         <div class="register-form p-4 p-md-5 rounded-4 shadow">
           <h2 class="signup-title mb-5 pt-4 mt-4 ">Crear nuevo aprendiz</h2>
           <form [formGroup]="registerUser" (ngSubmit)="onSubmitUser()">

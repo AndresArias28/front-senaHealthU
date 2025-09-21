@@ -1,24 +1,28 @@
 <div class="card border-0 shadow-sm rounded-4">
   <div class="card-body p-4">
     <div class="table-responsive">
-      <input
-        type="text"
-        placeholder="Buscar por nombre, correo..."
-        [(ngModel)]="terminoBusqueda"
-        (ngModelChange)="buscar()"
-        class="border p-2 rounded mb-4 w-full"
-      />
-      <div class="flex justify-between items-center mb-4 gap-2">
-        <button (click)="buscar()" class="btn btn-success rounded-3 p-2 me-2">
-          Buscar
-        </button>
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <div class="col-12 col-md-6 mb-2 mb-md-0">
+          <input
+            type="text"
+            placeholder="Buscar por nombre, correo..."
+            [(ngModel)]="terminoBusqueda"
+            (ngModelChange)="buscar()"
+            class="form-control"
+          />
+        </div>
+        <div class="col-12 col-md-6 text-md-end">
+          <button (click)="buscar()" class="btn btn-success rounded-3 p-2 me-2">
+            Buscar
+          </button>
 
-        <button
-          class="btn btn-success rounded-3 p-2 me-2"
-          (click)="crearEjercicio()"
-        >
-          Crear Ejercicio
-        </button>
+          <button
+            class="btn btn-success rounded-3 p-2 me-2"
+            (click)="crearEjercicio()"
+          >
+            Crear Ejercicio
+          </button>
+        </div>
       </div>
       <table class="table table-hover align-middle mb-0">
         <thead class="bg-light table-success">
