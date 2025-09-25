@@ -1,4 +1,4 @@
-/* Custom styles */
+/* Custom styles para sidebar responsivo */
 .nav-link {
   transition: all 0.2s ease-in-out;
 }
@@ -10,4 +10,17 @@
 .nav-link.active {
   background-color: #198754;
   color: white !important;
+}
+
+/* Ajuste para que el sidebar ocupe el 100% en móvil y máximo 280px en desktop */
+.sidebar {
+  width: 100%;
+  max-width: 280px;
+}
+
+@media (max-width: 991.98px) {
+  .sidebar {
+    max-width: 100%;
+    padding: 0.5rem 0.5rem;
+  }
 }

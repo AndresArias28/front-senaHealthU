@@ -1,8 +1,8 @@
+
 <app-header *ngIf="showHeader"></app-header>
-<div class="container-fluid">
-  <div class="row">
-    <router-outlet></router-outlet>
-    <ngx-sonner-toaster></ngx-sonner-toaster>
-  </div>
+<div class="container-fluid px-0">
+  <!-- El contenido principal ahora es manejado directamente por el router-outlet -->
+  <router-outlet></router-outlet>
+  <ngx-sonner-toaster></ngx-sonner-toaster>
 </div>
- <app-footer></app-footer>
+<app-footer></app-footer>
