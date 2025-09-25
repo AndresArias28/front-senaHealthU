@@ -24,6 +24,7 @@ export interface RutinaData {
   enfoque: string;
   fotoRutina?: string;
   isEdit?: boolean;
+  dificultad: string;
   ejercicios?: {
     idEjercicio?: number;
     nombre: string;
@@ -63,6 +64,7 @@ export class EditarRutinaComponent implements OnInit {
     descripcion: '',
     enfoque: '',
     ejercicios: [],
+    dificultad: '',
   };
 
   currentImageName = '';
@@ -89,10 +91,6 @@ export class EditarRutinaComponent implements OnInit {
       this.rutineService.getAllExcercises().subscribe({
         next: (res) => {
           this.listaEjerciciosDisponibles = res;
-          console.log(
-            'Ejercicios disponibles cargadosen editar rutina:',
-            this.listaEjerciciosDisponibles
-          );
         },
         error: (err) => {
           this.showError('Error al cargar los ejercicios disponibles');
@@ -109,6 +107,7 @@ export class EditarRutinaComponent implements OnInit {
       nombre: (this.rutina.nombre || '').trim(),
       enfoque: (this.rutina.enfoque || '').trim(),
       descripcion: (this.rutina.descripcion || '').trim(),
+      dificultad: (this.rutina.dificultad || '').trim(),
       isEdit: this.rutina.isEdit,
       ejercicios:
         this.rutina.ejercicios?.map((ejercicio: any) => ({
@@ -229,6 +228,7 @@ export class EditarRutinaComponent implements OnInit {
     this.archivoSeleccionado = null;
     this.showSuccess('Imagen eliminada');
   }
+  
   eliminarEjercicio(index: number): void {
     const confirmado = window.confirm(
       '¿Estás seguro de que deseas eliminar este ejercicio de la rutina?'

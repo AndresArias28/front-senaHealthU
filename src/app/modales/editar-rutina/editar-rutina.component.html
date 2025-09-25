@@ -25,6 +25,17 @@
 
   <div class="form-section">
     <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nivel de Dificultad</mat-label>
+      <mat-select [(ngModel)]="rutina.dificultad">
+        <mat-option value="PRINCIPIANTE">Principiante</mat-option>
+        <mat-option value="INTERMEDIO">Intermedio</mat-option>
+        <mat-option value="AVANZADO">Avanzado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
       <mat-label>Descripción</mat-label>
       <textarea matInput rows="3" [(ngModel)]="rutina.descripcion"></textarea>
     </mat-form-field>

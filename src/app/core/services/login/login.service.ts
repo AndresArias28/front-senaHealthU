@@ -32,7 +32,7 @@ export class LoginService {
   }
 
   recoverPassword(emailUsuario: string): Observable<any> {
-    return this.http.post<any>(environment.urlHost+"auth/forgot-password", {emailUsuario}).pipe(
+    return this.http.post<any>(environment.urlProd+"auth/forgot-password", {emailUsuario}).pipe(
       tap( (response) => {
         console.log('datos recividos del back:', response);
       }),

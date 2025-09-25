@@ -67,6 +67,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
 
     const instance = dialogRef.componentInstance;
+
     instance.rutinaActualizada.subscribe(() => {
       this.cargarRutinas();
     });
@@ -83,7 +84,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
         const index = this.datosFiltrados.findIndex(
           (r) => r.id === resultado.id
         );
-
         if (resultado.isEdit && index > -1) {
           this.datosFiltrados[index] = resultado;
           this.mostrarMensaje('Rutina actualizada correctamente', 'success');
