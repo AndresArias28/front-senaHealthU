@@ -13,14 +13,14 @@ export class LoginService {
   currentUserLoginOn = new BehaviorSubject<boolean>(false);//observable para el estado del login
   currentUserData = new BehaviorSubject<String>("");
 
-  //servicio para el login utilizando httpclient, se inyecta en el constructor 
+  //servicio para el login utilizando httpclient, se inyecta en el constructor
   // agregar el proveedor en app.config.ts
   constructor(private http: HttpClient) {
     const token = sessionStorage.getItem('token');
     console.log('Token cargado al iniciar el LoginService:', token);
     this.currentUserLoginOn = new BehaviorSubject<boolean>(token !== null);
     this.currentUserData = new BehaviorSubject<String>(token || "");
- 
+
   }
 
   getRole() {

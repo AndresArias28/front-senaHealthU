@@ -11,7 +11,7 @@ import { ComunicacionService } from '../../core/services/comunicacion/comunicaci
 export class SidebarComponent implements OnInit {
 
   @Input() seccionActual!: string  //Definite Assignment Assertion - recibe cambios del padre
-  @Input() tipoUsuario!: string; 
+  @Input() tipoUsuario!: string;
   @Output() seccionSeleccionada = new EventEmitter<string>(); // Emite cambios aL padre
 
   constructor(private comunicacionsv: ComunicacionService) {}
@@ -31,5 +31,5 @@ export class SidebarComponent implements OnInit {
     }
     console.log('Sidebar emitió sección:', seccion);
     this.seccionSeleccionada.emit(seccion);//emite el cambio de sección a la vista padre
-  } 
+  }
 }
