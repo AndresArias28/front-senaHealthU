@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ComunicacionService } from '../../core/services/comunicacion/comunicacion.service';
+import { LoginService } from '../../core/services/login/login.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'app-sidebar',
@@ -11,25 +13,40 @@ import { ComunicacionService } from '../../core/services/comunicacion/comunicaci
 export class SidebarComponent implements OnInit {
 
   @Input() seccionActual!: string  //Definite Assignment Assertion - recibe cambios del padre
-  @Input() tipoUsuario!: string; 
+  @Input() tipoUsuario!: string;
   @Output() seccionSeleccionada = new EventEmitter<string>(); // Emite cambios aL padre
 
-  constructor(private comunicacionsv: ComunicacionService) {}
+    userName: string = '';
+
+  constructor(
+    private comunicacionsv: ComunicacionService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit() {
     // suscribirse al observable del servicio de comunicación
     this.comunicacionsv.seccion$.subscribe((seccion: string) => {
       this.cambiarSeccion(seccion);
     });
+
+    this.loginService.userData.subscribe(token => {
+      if (token) {
+        try {
+          const decodedToken: any = jwtDecode(token);
+          this.userName = decodedToken.nombre;
+        } catch (error) {
+          console.error('Error decoding token:', error);
+        }
+      }
+    });
   }
 
   cambiarSeccion(seccion: string) {
     if (seccion === "logout") {
-      console.log("logout", seccion);
-      sessionStorage.removeItem("token"); //elimina el token del sessionStorage
-      window.location.href = '/login'; //redirige a la vista de login
+      this.loginService.logout();
+      window.location.href = '/login';
     }
     console.log('Sidebar emitió sección:', seccion);
     this.seccionSeleccionada.emit(seccion);//emite el cambio de sección a la vista padre
-  } 
+  }
 }

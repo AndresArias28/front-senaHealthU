@@ -7,7 +7,7 @@
 </div>
 
 <!-- si el usuario esta logueado y  esta en modo edicion -->
-<form *ngIf="userLoginOn && editMode" [formGroup]="registerForm" >
+<form *ngIf="userLoginOn && editMode" [formGroup]="registerForm" class="form-container">
     <div class="form-group row">
         <label for="inputFirstName" class="col-12 col-sm-2 col-form-label">Nombre</label>
         <div class="col-12 col-sm-10">

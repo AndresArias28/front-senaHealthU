@@ -4,11 +4,11 @@
     <div class="col-lg-5 d-none d-lg-block p-0">
       <img src="../../../../assets/logosena.png" alt="Aprendiz registrándose" class="img-fluid w-100 vh-100 object-fit-cover">
     </div>
-        
+
       <!-- Sección del Formulario -->
-    <div class="col-lg-7 col-md-12 d-flex align-items-center justify-content-center">
-      <div class="w-100 p-4">
-        <div class="register-form p-4 p-md-5 rounded-4 shadow">
+    <div class="col-lg-7 col-md-12 d-flex align-items-center justify-content-center bg-body-secondary">
+      <div class="w-100 p-4" style="max-width: 800px;">
+        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 form-container">
           <h2 class="signup-title mb-5 pt-4 mt-4 ">Crear nuevo aprendiz</h2>
           <form [formGroup]="registerUser" (ngSubmit)="onSubmitUser()">
             <!-- Nombre y Apellido -->
@@ -22,7 +22,7 @@
                 <input type="text" class="form-control" formControlName="apellido" placeholder="Apellido Aprendiz">
               </div>
             </div>
-  
+
             <!-- Email -->
             <div class="mb-3">
               <label class="form-label">Correo electrónico</label>
@@ -32,7 +32,7 @@
                 <small *ngIf="emailUser.errors?.['email']">Formato inválido.</small>
               </div>
             </div>
-  
+
             <!-- Cédula y Número de Ficha -->
             <div class="row g-3 mb-3">
               <div class="col-md-6">
@@ -44,7 +44,7 @@
                 <input type="text" class="form-control" formControlName="numeroFicha" placeholder="Número de Ficha">
               </div>
             </div>
-  
+
             <!-- Contraseña y Confirmación -->
             <div class="row g-3 mb-3">
               <div class="col-md-6">
@@ -69,13 +69,13 @@
                 </div>
               </div>
             </div>
-  
+
             <!-- Fecha de nacimiento -->
             <div class="mb-3">
               <label class="form-label">Fecha de Nacimiento</label>
               <input type="date" class="form-control" formControlName="fechaNacimiento">
             </div>
-  
+
             <!-- Estatura, Peso y Nivel -->
             <div class="row g-3 mb-3">
               <div class="col-md-4">
@@ -93,13 +93,13 @@
                 </select>
               </div>
             </div>
-  
+
             <!-- Horas de recompensa -->
             <div class="mb-3">
               <label class="form-label">Horas de Recompensa</label>
               <input type="number" class="form-control" formControlName="horasRecompensas" min="0">
             </div>
-  
+
             <!-- Botón de Registro -->
             <div class="text-center">
               <button type="submit" class="btn btn-success w-100" [disabled]="registerUser.invalid">
@@ -111,4 +111,3 @@
       </div>
     </div>
   </div>
-  

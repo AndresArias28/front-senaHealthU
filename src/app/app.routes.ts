@@ -12,15 +12,15 @@ import { RegisterExerciseComponent } from './feature/pages/register-exercise/reg
 
 export const routes: Routes = [
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
-    
+
     {
         path: 'inicio-admin',
-        component: DashboardComponent, 
+        component: DashboardComponent,
         //canActivate: [authGuard, roleGuard],
         data: {role: 'ROLE_Administrador'}
     },
     {
-        path: 'iniciar-sesion', 
+        path: 'iniciar-sesion',
         component: LoginComponent
     },
     {
