@@ -7,8 +7,7 @@ import { EditarEjercicoComponent } from '../../../modales/editar-ejercico/editar
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ExcerciseServiceService } from '../../../core/services/excercise-service.service';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-import { toast } from 'ngx-sonner';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard-exercises',
@@ -145,35 +144,48 @@ export class DashboardExercisesComponent implements OnInit {
     }
   }
 
-  eliminarEjercicio(id: number) {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        title: '¿Eliminar rutina?',
-        message: '¿Estás seguro de que deseas eliminar esta rutina?',
-      },
-    });
+eliminarEjercicio(id: number) {
+  Swal.fire({
+    title: '¿Eliminar ejercicio?',
+    text: 'Esta acción no se puede deshacer.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Sí, eliminar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // 👉 Solo elimina si confirma
+      this.excerciseService.deleteExercise(id).subscribe({
+        next: () => {
+          // Actualizar arrays locales
+          this.datos = this.datos.filter((d) => d.idEjercicio !== id);
+          this.ejercicios = [...this.datos];
+          this.seleccionados = this.seleccionados.filter((s) => s !== id);
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.snackBar.open('Rutina eliminada correctamente', 'Cerrar', {
-          duration: 2000,
-          panelClass: ['success-snackbar'],
-        });
-      }
-    });
+          this.cargarEjercicios(); // Recargar lista
 
-    this.excerciseService.deleteExercise(id).subscribe({
-      next: () => {
-        this.datos = this.datos.filter((d) => d.idEjercicio !== id);
-        this.ejercicios = [...this.datos]; // Actualiza los ejercicios filtrados
-        this.seleccionados = this.seleccionados.filter((s) => s !== id);
-        // this.mostrarMensaje('Ejercicio eliminado correctamente', 'success');
-        this.cargarEjercicios(); // Recarga los ejercicios después de eliminar
-      },
-      error: (error) => {
-        console.error('Error al eliminar el ejercicio:', error);
-        this.mostrarMensaje('Error al eliminar el ejercicio', 'error');
-      },
-    });
-  }
+          Swal.fire({
+            icon: 'success',
+            title: 'Ejercicio eliminado',
+            text: 'El ejercicio se eliminó correctamente.',
+            timer: 2000,
+            showConfirmButton: false
+          });
+        },
+        error: (error) => {
+          console.error('Error al eliminar el ejercicio:', error);
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo eliminar el ejercicio. Intenta nuevamente.',
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      });
+    }
+  });
+}
 }

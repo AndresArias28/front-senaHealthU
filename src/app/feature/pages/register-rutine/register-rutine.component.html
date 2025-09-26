@@ -1,4 +1,4 @@
-<div class="container p-3" style="margin-top: 80px;" >
+<div class="container p-3" style="margin-top: 80px">
   <h2>Crear nueva rutina</h2>
   <p>Seleccione los ejercicios que desea incluir en la rutina.</p>
   <form
@@ -76,6 +76,7 @@
     <div>
       <label>Cantidad de ejercicios</label>
       <select
+        type="number"
         formControlName="cantidadEjercicios"
         class="form-select"
         [value]="1"
@@ -101,8 +102,8 @@
           formControlName="idEjercicio"
           class="form-select mb-2"
           aria-describedby="ejercicioRutinaHelp"
-          [(ngModel)]="idEjercicio"
         >
+          <option value="">-- Selecciona --</option>
           <option
             *ngFor="let ejercicio of ejercicios"
             [value]="ejercicio.idEjercicio"
@@ -110,7 +111,7 @@
             {{ ejercicio.nombreEjercicio }}
           </option>
         </select>
-        
+
         <input
           formControlName="series"
           placeholder="Series"
@@ -138,11 +139,22 @@
         />
       </div>
     </div>
+    <!-- Error de duplicados -->
+    <div
+      *ngIf="ejerciciosFormArray.errors?.['ejerciciosDuplicados']"
+      class="text-danger mt-2"
+    >
+      No puedes seleccionar el mismo ejercicio más de una vez.
+    </div>
 
     <div class="mt-3">
       <button type="submit" class="btn btn-success">Crear Rutina</button>
 
-      <button class="btn btn-success " style="margin-left: 10px;" onclick="window.history.back()">
+      <button
+        class="btn btn-success"
+        style="margin-left: 10px"
+        onclick="window.history.back()"
+      >
         Volver al Dashboard
       </button>
     </div>
