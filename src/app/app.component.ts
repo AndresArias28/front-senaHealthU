@@ -15,10 +15,12 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   title = 'gym-sena';
   showHeader = true;
+  showBackButton = false;
 
   constructor(private router: Router) {
     this.router.events.subscribe(() => {
       this.showHeader = this.router.url !== '/iniciar-sesion'; // Oculta el header si la ruta es "/login"
+      this.showBackButton = this.router.url === '/sobre-nosotros' || this.router.url === '/contacto';
     });
   }
 }

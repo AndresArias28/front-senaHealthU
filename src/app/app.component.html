@@ -1,6 +1,7 @@
 
 <app-header *ngIf="showHeader"></app-header>
 <div class="container-fluid px-0">
+  <a *ngIf="showBackButton" routerLink="/iniciar-sesion" class="back-button"><span>&#8592;</span> Volver al inicio</a>
   <!-- El contenido principal ahora es manejado directamente por el router-outlet -->
   <router-outlet></router-outlet>
   <ngx-sonner-toaster></ngx-sonner-toaster>
