@@ -11,16 +11,16 @@ import {jwtDecode} from 'jwt-decode';
 export class LoginService {
 
   currentUserLoginOn = new BehaviorSubject<boolean>(false);//observable para el estado del login
-  currentUserData = new BehaviorSubject<String>("");
+  currentUserData = new BehaviorSubject<string>("");
 
-  //servicio para el login utilizando httpclient, se inyecta en el constructor 
+  //servicio para el login utilizando httpclient, se inyecta en el constructor
   // agregar el proveedor en app.config.ts
   constructor(private http: HttpClient) {
     const token = sessionStorage.getItem('token');
     console.log('Token cargado al iniciar el LoginService:', token);
     this.currentUserLoginOn = new BehaviorSubject<boolean>(token !== null);
-    this.currentUserData = new BehaviorSubject<String>(token || "");
- 
+    this.currentUserData = new BehaviorSubject<string>(token || "");
+
   }
 
   getRole() {
@@ -68,7 +68,7 @@ export class LoginService {
   }
 
   //observable que emite el estado actual del usuario
-  get userData(): Observable<String | null> {
+  get userData(): Observable<string | null> {
     return this.currentUserData.asObservable();
   }
 
@@ -77,7 +77,7 @@ export class LoginService {
     return this.currentUserLoginOn.asObservable();
   }
 
-  get userToken(): String | null {
+  get userToken(): string | null {
     return this.currentUserData.value;
   }
 

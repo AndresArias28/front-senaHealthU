@@ -28,3 +28,9 @@ body {
   font-weight: 400;
 }
 
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+
