@@ -3,8 +3,8 @@
     <div class="col-lg-8">
       <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body p-4 p-md-5">
-          <h2 class="card-title mb-4">Crear Nuevo Ejercicio</h2>
-          <form *ngIf="formularioEjercicio" [formGroup]="formularioEjercicio" (ngSubmit)="registerExercise()" enctype="multipart/form-data">
+          <h2 class="card-title mb-4 text-center">Crear Nuevo Ejercicio</h2>
+          <form *ngIf="formularioEjercicio" [formGroup]="formularioEjercicio" (ngSubmit)="registerExercise()" enctype="multipart/form-data" class="form-container">
             <!-- Nombre del Ejercicio -->
             <div class="mb-3">
               <label for="nombreEjercicio" class="form-label">Nombre del ejercicio</label>
