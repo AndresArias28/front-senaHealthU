@@ -56,10 +56,10 @@
           <!-- Información de imagen actual -->
           <div class="current-image-info" *ngIf="rutina.fotoRutina">
             <mat-chip-set>
-              <mat-chip color="primary" selected>
+              <!-- <mat-chip color="primary" selected>
                 <mat-icon matChipAvatar>check_circle</mat-icon>
                 Imagen cargada
-              </mat-chip>
+              </mat-chip> -->
             </mat-chip-set>
             <p class="image-name">{{ archivoSeleccionado }}</p>
             <!-- Previsualización de la imagen actual -->
@@ -106,11 +106,10 @@
             </div>
 
             <!-- Si no hay ejercicios -->
-            <div *ngIf="rutina?.ejercicios?.length === 0">
-              <p>No hay ejercicios registrados en esta rutina.</p>
-            </div>
+            <!-- <div *ngIf="rutina?.ejercicios?.length === 0" >
+              <p class="no-exercises"> No hay ejercicios registrados en esta rutina.</p>
+            </div> -->
 
-            <!-- Información adicional -->
             <div class="upload-info">
               <small class="text-muted">
                 Formatos soportados: JPG, PNG, GIF (máx. 5MB)
@@ -210,7 +209,7 @@
   </ng-container>
 
   <ng-template #sinEjercicios>
-    <p>No hay ejercicios registrados para esta rutina.</p>
+    <p class="no-exercises">No hay ejercicios registrados para esta rutina.</p>
   </ng-template>
 
   <!-- Botones del modal -->

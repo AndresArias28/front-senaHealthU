@@ -16,7 +16,7 @@ export class SidebarComponent implements OnInit {
   @Input() tipoUsuario!: string;
   @Output() seccionSeleccionada = new EventEmitter<string>(); // Emite cambios aL padre
 
-    userName: string = '';
+  userName: string = '';
 
   constructor(
     private comunicacionsv: ComunicacionService,
@@ -24,7 +24,6 @@ export class SidebarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // suscribirse al observable del servicio de comunicación
     this.comunicacionsv.seccion$.subscribe((seccion: string) => {
       this.cambiarSeccion(seccion);
     });
@@ -33,7 +32,8 @@ export class SidebarComponent implements OnInit {
       if (token) {
         try {
           const decodedToken: any = jwtDecode(token);
-          this.userName = decodedToken.nombre;
+          this.userName = decodedToken.nombre_usuario;
+          console.log("el nombre es: " + this.userName);
         } catch (error) {
           console.error('Error decoding token:', error);
         }

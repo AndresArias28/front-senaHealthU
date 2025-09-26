@@ -58,9 +58,10 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
 
   abrirModal(rutina: any): void {
     const dialogRef = this.dialog.open(EditarRutinaComponent, {
-      width: '650px',
-      maxWidth: '95vw',
-      maxHeight: '90vh',
+      width: '510px',
+      maxWidth: '100%',
+      height: '70vh',
+      maxHeight: '100vh',
       panelClass: 'custom-modal-panel',
       disableClose: false,
       autoFocus: true,
