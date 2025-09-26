@@ -1,4 +1,4 @@
-/*  CLASES DE CONTROL DE ESTADO DE LOS INPUTS 
+/*  CLASES DE CONTROL DE ESTADO DE LOS INPUTS
 /*  reflejar automaticamente muchas propiedades de control en el FormControl como clase CSS
 ng-valid, ng-invalid, ng-pending, ng-dirty, ng-pristine, ng-untouched, ng-touched, ng-empty, ng-not-empty
 */
@@ -14,7 +14,13 @@ ng-valid, ng-invalid, ng-pending, ng-dirty, ng-pristine, ng-untouched, ng-touche
 html,
 body {
   height: 100%;
+  /* El padding-top solo en desktop, en móvil usar menos */
   padding-top: 20px;
+}
+@media (max-width: 991.98px) {
+  html, body {
+    padding-top: 10px;
+  }
 }
 body {
   margin: 0;

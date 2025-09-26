@@ -1,107 +1,71 @@
-<div class="card border-0 shadow-sm rounded-4">
-  <div class="card-body p-4">
-    <div class="table-responsive">
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-        <div class="col-12 col-md-6 mb-2 mb-md-0">
-          <input
-            type="text"
-            placeholder="Buscar por nombre, correo..."
-            [(ngModel)]="terminoBusqueda"
-            (ngModelChange)="buscar()"
-            class="form-control"
-          />
-        </div>
-        <div class="col-12 col-md-6 text-md-end">
-          <button (click)="buscar()" class="btn btn-success rounded-3 p-2 me-2">
-            Buscar
-          </button>
-
-          <button
-            class="btn btn-success rounded-3 p-2 me-2"
-            (click)="crearEjercicio()"
-          >
-            Crear ejercicio
-          </button>
+<div class="col px-4 py-4">
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4">
+      <div class="table-responsive-sm table-responsive-md table-responsive-lg">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+          <div class="col-12 col-md-auto flex-grow-1 mb-2 mb-md-0">
+            <input
+              type="text"
+              placeholder="Buscar por nombre..."
+              [(ngModel)]="terminoBusqueda"
+              (ngModelChange)="buscar()"
+              class="form-control"
+            />
+          </div>
+          <div class="col-12 col-md-auto d-flex gap-2 justify-content-end">
+            <button (click)="buscar()" class="btn btn-success rounded-3">
+              Buscar
+            </button>
+            <button
+              class="btn btn-success rounded-3"
+              (click)="crearEjercicio()"
+            >
+              Crear Ejercicio
+            </button>
+          </div>
         </div>
       </div>
-      <table class="table table-hover align-middle mb-0">
-        <thead class="bg-light table-success">
-          <tr class="text-uppercase">
-            <!-- <th class="border-0" style="max-width: 20px;"></th> -->
-            <th class="border-0 px-4">Ejercicio</th>
-            <th class="border-0 px-4">Descripción</th>
-            <th class="border-0">Musculos</th>
-            <th class="border-0">Nivel de esfuerzo(MET)</th>
-            <th class="border-0 text-end pe-4">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let ejercicio of ejercicios">
-            <!-- <td>
-            <input type="checkbox" [checked]="seleccionados.includes(ejercicio.id)"
-                   (change)="toggleSeleccion(ejercicio.idRutina)" />
-          </td> -->
-            <td class="px-4">
-              <div class="d-flex align-items-center">
-                <!-- <img src="/placeholder.svg?height=40&width=40" class="rounded-circle me-3" width="40" height="40" alt="User avatar" /> -->
-                <div>
-                  <p class="mb-0">
-                    {{ ejercicio.nombreEjercicio }}
-                  </p>
-
-                  <img
-                    src="{{ ejercicio.fotoEjercicio }}"
-                    class="img-fluid"
-                    alt="imagen ejercicio"
-                    style="max-width: 100px; max-height: 100px; border-radius: 10px;"
-
-                  />
-                  <!-- <small class="text-muted ">{{ ejercicio.descripcionEjercicio }}</small> -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="bg-light table-success">
+            <tr class="text-uppercase">
+              <th class="border-0 px-4">Ejercicio</th>
+              <th class="border-0">Descripción</th>
+              <th class="border-0">Músculos</th>
+              <th class="border-0">MET</th>
+              <th class="border-0 text-end pe-4">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let ejercicio of ejercicios">
+              <td class="px-4">
+                <div class="d-flex align-items-center">
+                  <div>
+                    <p class="mb-1 fw-bold">{{ ejercicio.nombreEjercicio }}</p>
+                    <img
+                      [src]="ejercicio.fotoEjercicio || 'https://via.placeholder.com/100'"
+                      class="img-fluid"
+                      alt="imagen ejercicio"
+                      style="width: 100px; height: 100px; object-fit: cover; border-radius: 10px;"
+                    />
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td class="px-4">
-              <p class="mb-0">
-                {{ ejercicio.descripcionEjercicio }}
-              </p>
-            </td>
-            <td class="px-4">
-              <p class="mb-0">{{ ejercicio.musculos }}</p>
-            </td>
-            <td class="px-4">
-              <p class="mb-0">{{ ejercicio.met }}</p>
-            </td>
-
-            <td class="text-end pe-4">
-              <!-- <button class="btn btn-light btn-sm rounded-circle" (click)="detalleRutina(rutine)">
-                                        <i class="bi bi-eye" ></i>
-                                    </button> -->
-              <button
-                class="btn btn-light btn-sm rounded-circle"
-                (click)="abrirModal(ejercicio)"
-                data-bs-toggle="modal"
-                data-bs-target="#modalEjercicio"
-              >
-                <i class="bi bi-pencil"></i>
-              </button>
-              <button
-                class="btn btn-light btn-sm rounded-circle"
-                (click)="eliminarEjercicio(ejercicio.idEjercicio)"
-              >
-                <i class="bi bi-trash"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-        <!-- <tfoot>
-        <tr>
-          <td colspan="6" class="text-end">
-            <button class="btn btn-primary" (click)="seleccionarTodos()">Seleccionar Todos</button>
-            <button class="btn btn-secondary" (click)="deseleccionarTodos()">Deseleccionar Todos</button>
-          </td>
-        </tr>
-      </tfoot> -->
-      </table>
+              </td>
+              <td><p class="mb-0 small">{{ ejercicio.descripcionEjercicio }}</p></td>
+              <td><p class="mb-0">{{ ejercicio.musculos }}</p></td>
+              <td><span class="badge bg-info">{{ ejercicio.met }}</span></td>
+              <td class="text-end pe-4">
+                <button class="btn btn-light btn-sm rounded-circle me-2" (click)="abrirModal(ejercicio)" data-bs-toggle="modal" data-bs-target="#modalEjercicio">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-light btn-sm rounded-circle" (click)="eliminarEjercicio(ejercicio.idEjercicio)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

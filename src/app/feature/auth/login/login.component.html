@@ -1,10 +1,9 @@
 <div class="container-fluid vh-100">
   <div class="row vh-100">
     <!-- background Image Column -->
-    <div class="col-lg-6 d-none d-lg-block position-relative bg-image">
-      <div class="dark-overlay">
-      </div>
-    </div>
+    <div
+      class="col-lg-6 d-none d-lg-block position-relative bg-image"
+    ></div>
 
     <!-- Login Form Column -->
     <div class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center">
@@ -12,12 +11,7 @@
         <h2 class="text-center p-4">Iniciar Sesión</h2>
           <!-- Logo -->
           <div class="text-center">
-            <img
-              src="../../../../assets/Designer.png"
-              alt="sena-HealthU"
-              class="img-fluid"
-              style="max-width: 220px"
-            />
+            <img src="../../../../assets/Designer.png" alt="sena-HealthU" class="img-fluid" style="max-width: 220px" />
           </div>
         <div class="text-center mb-4">
           <span>Al continuar, aceptas nuestro</span>
@@ -28,15 +22,14 @@
 
         <!-- Login Form -->
         <form [formGroup]="loginForm">
-          <div >
+          <div>
             <label class="form-label"> Email </label>
             <input
               formControlName="emailUsuario"
               type="email"
               class="form-control form-control-lg"
-              id="exampleInputEmail"
+              id="emailUsuario"
               aria-describedby="emailHelp"
-              [(ngModel)] ="correoIngresado"
             />
           </div>
 
@@ -51,17 +44,16 @@
             </div>
           </div>
 
-          <div >
-            <label for="exampleInputPassword" class="form-label mt-5">
+          <div>
+            <label for="contrasenaUsuario" class="form-label mt-5">
               Contraseña
             </label>
             <div class="input-group">
               <input
                 formControlName="contrasenaUsuario"
                 [type]="showPassword ? 'text' : 'password'"
-                class="form-control  "
-                id="exampleInputPassword"
-                [(ngModel)]="contrasenaIngresada"
+                class="form-control"
+                id="contrasenaUsuario"
               />
 
               <button
@@ -85,16 +77,16 @@
 
           </div>
           <div class="text-end  mt-4 mb-2">
-            <a (click)="abrirModalDesdeLogin()"  class="enlace" >¿Has olvidado tu contraseña?</a>
+            <a (click)="abrirModalDesdeLogin()" class="enlace" >¿Has olvidado tu contraseña?</a>
           </div>
-          
+
             <app-recuperar-contrasena (modalAbierto)="mostrarModal()"></app-recuperar-contrasena>
-   
+
           <button
             type="submit"
             (click)="login()"
             class="btn btn-success mb-4 w-100"
-            [disabled]="!contrasenaIngresada || contrasenaIngresada.length < 3">
+            [disabled]="loginForm.invalid">
             Iniciar Sesion
           </button>
 
@@ -103,5 +95,3 @@
     </div>
   </div>
 </div>
-
-
