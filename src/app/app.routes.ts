@@ -9,6 +9,8 @@ import { RegisterComponent } from './feature/auth/register/register.component';
 import { RegisterUserComponent } from './feature/auth/register-user/register-user.component';
 import { RegisterRutineComponent } from './feature/pages/register-rutine/register-rutine.component';
 import { RegisterExerciseComponent } from './feature/pages/register-exercise/register-exercise.component';
+import { AboutUsComponent } from './feature/pages/about-us/about-us.component';
+import { ContactComponent } from './feature/pages/contact/contact.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
@@ -48,6 +50,14 @@ export const routes: Routes = [
     {
         path: 'register-exercise',
         component: RegisterExerciseComponent
+    },
+    {
+        path: 'sobre-nosotros',
+        component: AboutUsComponent
+    },
+    {
+        path: 'contacto',
+        component: ContactComponent
     },
     {path: '**', redirectTo: 'iniciar-sesion' },
 ];
