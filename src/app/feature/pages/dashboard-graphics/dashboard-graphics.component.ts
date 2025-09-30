@@ -120,14 +120,18 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     this.rutineService.getAllRutines().subscribe({
       next: (response) => {
         console.log('Rutinas obtenidas:', response);
-        this.datos = response; // Asigna las rutinas obtenidas a la variable datos
-        this.datosFiltrados = [...this.datos]; // Actualiza los datos filtrados
+        this.datos = response; 
+        this.datosFiltrados = [...this.datos]; 
         this.rutineService.rutines.next(this.datos); // Actualiza el observable de rutinas
       },
       error: (error) => {
         console.error('Error al obtener rutinas:', error);
       },
     });
+  }
+
+  asignarRutina(idRutina: any) {
+    this.route.navigate(['/asignar-rutina', idRutina]);
   }
 
   cargarRutinas() {
@@ -159,7 +163,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
       this.seleccionados.push(id);
     }
   }
-
 
   eliminarRutina(id: number) {
     Swal.fire({
@@ -217,7 +220,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
         '¿Estás seguro de que deseas eliminar las rutinas seleccionadas?'
       )
     ) {
-      return; 
+      return;
     }
 
     this.datos = this.datos.filter((d) => !this.seleccionados.includes(d.id));
@@ -231,7 +234,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   buscar() {
     const termino = this.quitarTildes(
       this.terminoBusqueda.trim().toLowerCase()
-    ); 
+    );
 
     if (!termino) {
       this.datosFiltrados = [...this.datos];

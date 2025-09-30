@@ -11,6 +11,7 @@ import { RegisterRutineComponent } from './feature/pages/register-rutine/registe
 import { RegisterExerciseComponent } from './feature/pages/register-exercise/register-exercise.component';
 import { AboutUsComponent } from './feature/pages/about-us/about-us.component';
 import { ContactComponent } from './feature/pages/contact/contact.component';
+import { AsignarRutinaComponent } from './feature/pages/asignar-rutina/asignar-rutina.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
@@ -58,6 +59,10 @@ export const routes: Routes = [
     {
         path: 'contacto',
         component: ContactComponent
+    },
+    {
+        path: 'asignar-rutina/:id',
+        component: AsignarRutinaComponent
     },
     {path: '**', redirectTo: 'iniciar-sesion' },
 ];

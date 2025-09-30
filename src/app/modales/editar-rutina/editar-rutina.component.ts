@@ -143,7 +143,7 @@ export class EditarRutinaComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al actualizar la rutina:', error);
-        this.showError('Error al actualizar la rutina');
+        this.showError('No es posible editar la rutina, porque ya fue registrada');
       },
       complete: () => {
         this.isUploading = false;

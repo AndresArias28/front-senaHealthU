@@ -105,11 +105,6 @@
               </button>
             </div>
 
-            <!-- Si no hay ejercicios -->
-            <!-- <div *ngIf="rutina?.ejercicios?.length === 0" >
-              <p class="no-exercises"> No hay ejercicios registrados en esta rutina.</p>
-            </div> -->
-
             <div class="upload-info">
               <small class="text-muted">
                 Formatos soportados: JPG, PNG, GIF (máx. 5MB)
@@ -121,7 +116,7 @@
     </div>
   </div>
 
-  <!-- Sección de ejercicios de la rutina -->
+  <!-- ejercicios de la rutina -->
   <ng-container *ngIf="tieneEjercicios(); else sinEjercicios">
     <div class="exercises-section">
       <mat-card class="exercises-card">

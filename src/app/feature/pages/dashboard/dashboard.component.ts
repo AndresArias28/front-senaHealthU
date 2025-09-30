@@ -6,7 +6,7 @@ import { DashboardGraphicsComponent } from '../dashboard-graphics/dashboard-grap
 import { ProgramadorComponent } from '../programador-qr/programador.component';
 import { RegisterRutineComponent } from '../register-rutine/register-rutine.component';
 import { DashboardExercisesComponent } from '../dashboard-exercises/dashboard-exercises.component';
-import { AsignarRutinaComponent } from "../asignar-rutina/asignar-rutina.component";
+import { GestionarAsignacionComponent } from '../gestionar-asignacion/gestionar-asignacion.component';
 
 
 @Component({
@@ -18,7 +18,7 @@ import { AsignarRutinaComponent } from "../asignar-rutina/asignar-rutina.compone
     ProgramadorComponent, 
     RegisterRutineComponent, 
     DashboardExercisesComponent, 
-    AsignarRutinaComponent],
+    GestionarAsignacionComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })

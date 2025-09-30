@@ -60,6 +60,15 @@ export class RutineService {
     );
   }
 
+  getAllAsinacionRutines(): Observable<any[]> {
+    return this.http.get<any[]>(environment.urlProd + "asignaciones/obttenerAll").pipe(
+      tap((response) => {
+        console.log('Asignaciones obtenidas:', response);
+      }),
+      catchError(this.handleError)
+    );
+  }
+  
   getAllExcercises(): Observable<any[]> {
     return this.http.get<any[]>(environment.urlProd + "ejercicio/obtenerEjercicios").pipe(
       tap((response) => {
