@@ -7,7 +7,7 @@ import { EditarEjercicoComponent } from '../../../modales/editar-ejercico/editar
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ExcerciseServiceService } from '../../../core/services/excercise-service.service';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard-exercises',
@@ -154,7 +154,7 @@ eliminarEjercicio(id: number) {
     cancelButtonColor: '#3085d6',
     confirmButtonText: 'Sí, eliminar',
     cancelButtonText: 'Cancelar'
-  }).then((result) => {
+  }).then((result: SweetAlertResult) => {
     if (result.isConfirmed) {
       // 👉 Solo elimina si confirma
       this.excerciseService.deleteExercise(id).subscribe({

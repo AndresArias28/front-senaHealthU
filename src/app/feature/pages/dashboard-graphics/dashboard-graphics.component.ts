@@ -22,7 +22,7 @@ import { EditarRutinaComponent } from '../../../modales/editar-rutina/editar-rut
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 // import { toast } from 'ngx-sonner';
 // import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard-graphics',
@@ -174,7 +174,7 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
       cancelButtonColor: '#3085d6',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
-    }).then((result) => {
+    }).then((result: SweetAlertResult) => {
       if (result.isConfirmed) {
         this.rutineService.deleteRutine(id).subscribe({
           next: () => {
