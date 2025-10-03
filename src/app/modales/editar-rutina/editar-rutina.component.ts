@@ -15,7 +15,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatChipsModule } from '@angular/material/chips';
 import { RutineService } from '../../core/services/rutine/rutine.service';
-import { Router } from '@angular/router';
 
 export interface RutinaData {
   idRutina?: number;
@@ -76,8 +75,7 @@ export class EditarRutinaComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<EditarRutinaComponent>,
     private rutineService: RutineService,
-    private router: Router,
-    @Inject(MAT_DIALOG_DATA) public data: RutinaData
+    @Inject(MAT_DIALOG_DATA) public data: RutinaData // esto es para recibir los datos al abrir el modal
   ) {
     this.rutina = { ...data };
   }

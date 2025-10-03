@@ -20,8 +20,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarRutinaComponent } from '../../../modales/editar-rutina/editar-rutina.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-// import { toast } from 'ngx-sonner';
-// import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -75,7 +73,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {
-      // console.log('Resultado del modal:', resultado);
       if (resultado?.actualizado) {
         this.cargarRutinas();
         this.mostrarMensaje('Rutinas actualizadas correctamente', 'success');
@@ -97,7 +94,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
   }
 
-  detalleRutina(rutina: any) {}
 
   private mostrarMensaje(
     mensaje: string,
