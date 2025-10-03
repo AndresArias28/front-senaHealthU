@@ -1,0 +1,55 @@
+<div class="modal-container form-container" mat-dialog-content>
+  <div class="modal-header">
+    <h2>Editar Asignación</h2>
+    <button mat-icon-button class="close-button" (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Datos del aprendiz -->
+  <div class="form-section">
+    <p><strong>Aprendiz:</strong> {{ data.nombreAprendiz }}</p>
+    <p><strong>Ficha:</strong> {{ data.ficha }}</p>
+    <p><strong>Nivel físico:</strong> {{ data.nivelFisico }}</p>
+  </div>
+
+  <!-- Observaciones -->
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Observaciones</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="data.observaciones"
+        placeholder="Agregar observaciones"
+        rows="3"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- Rutinas por días -->
+  <div class="form-section">
+    <h3>Días y Rutinas</h3>
+    <div *ngFor="let dia of dias" class="d-flex align-items-center mb-2">
+      <span class="me-3" style="width: 100px;">{{ dia }}</span>
+      <mat-form-field appearance="outline" class="flex-grow-1">
+        <mat-label>Rutina</mat-label>
+        <mat-select [(ngModel)]="rutinasAsignadas[dia]">
+          <mat-option
+            *ngFor="let rutina of rutinasDisponibles"
+            [value]="rutina.nombre"
+          >
+            {{ rutina.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="modal-actions">
+    <button mat-raised-button color="primary" (click)="guardar()">
+      Guardar cambios
+    </button>
+    <button mat-button (click)="dialogRef.close()">Cancelar</button>
+  </div>
+</div>

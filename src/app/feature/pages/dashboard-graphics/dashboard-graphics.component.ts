@@ -75,7 +75,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {
-      // console.log('Resultado del modal:', resultado);
       if (resultado?.actualizado) {
         this.cargarRutinas();
         this.mostrarMensaje('Rutinas actualizadas correctamente', 'success');
@@ -97,7 +96,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
   }
 
-  detalleRutina(rutina: any) {}
 
   private mostrarMensaje(
     mensaje: string,
