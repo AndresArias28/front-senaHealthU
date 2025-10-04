@@ -40,6 +40,12 @@
           <app-dashboard-graphics [tipoUsuario]="'administrador'"></app-dashboard-graphics>
         </div>
 
+        <div *ngIf="seccionActual === 'panelAdmin'">
+          <h3 style="margin-top: 20px;">Panel de Administración</h3>
+          <app-dashboard-admin [tipoUsuario]="'administrador'"></app-dashboard-admin>
+
+        </div>
+
         <div *ngIf="seccionActual === 'gestionEjercicios'">
           <h3 style="margin-top: 20px;">Gestión de Ejercicios</h3>
           <app-dashboard-exercises [tipoUsuario]="'administrador'"></app-dashboard-exercises>

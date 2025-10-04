@@ -7,18 +7,21 @@ import { ProgramadorComponent } from '../programador-qr/programador.component';
 import { RegisterRutineComponent } from '../register-rutine/register-rutine.component';
 import { DashboardExercisesComponent } from '../dashboard-exercises/dashboard-exercises.component';
 import { GestionarAsignacionComponent } from '../gestionar-asignacion/gestionar-asignacion.component';
+import { DashboardAdminComponent } from "../dashboard-admin/dashboard-admin.component";
 
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ 
-    CommonModule, 
+  imports: [
+    CommonModule,
     SidebarComponent,
-    DashboardGraphicsComponent, 
-    ProgramadorComponent, 
-    RegisterRutineComponent, 
-    DashboardExercisesComponent, 
-    GestionarAsignacionComponent],
+    DashboardGraphicsComponent,
+    ProgramadorComponent,
+    RegisterRutineComponent,
+    DashboardExercisesComponent,
+    GestionarAsignacionComponent,
+    DashboardAdminComponent
+],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
