@@ -1,1 +1,126 @@
-<p>dashboard-admin works!</p>
+<!-- Contenedor Principal del Dashboard -->
+<div class="dashboard-container">
+
+  <!-- Fila de Métricas Rápidas -->
+  <div class="row metrics-row">
+    <div class="col-md-3">
+      <div class="card metric-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total de Aprendices Activos</h5>
+          <p class="card-text display-4">{{ totalAprendicesActivos }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card metric-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Promedio de Horas</h5>
+          <p class="card-text display-4">{{ promedioHorasEntrenadas }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card metric-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Rutinas Completadas (Hoy)</h5>
+          <p class="card-text display-4">{{ rutinasCompletadasHoy }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card metric-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Total Rutinas Asignadas</h5>
+          <p class="card-text display-4">{{ rutinasAsignadas }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fila de Gráficas -->
+  <div class="row charts-row">
+    <div class="col-md-8">
+      <div class="card chart-card">
+        <div class="card-body">
+          <h5 class="card-title">Horas Acumuladas por Aprendiz</h5>
+          <!-- Placeholder para la gráfica de barras -->
+          <div class="chart-placeholder">Gráfica de Barras (requiere librería externa)</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card chart-card">
+        <div class="card-body">
+          <h5 class="card-title">Rutinas Asignadas vs. Completadas</h5>
+          <!-- Placeholder para la gráfica de pastel -->
+          <div class="chart-placeholder">Gráfica de Pastel (requiere librería externa)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fila de Contenido Principal: Tabla y Ranking -->
+  <div class="row main-content-row">
+    <!-- Columna de la Tabla de Aprendices -->
+    <div class="col-md-9">
+      <div class="card data-table-card">
+        <div class="card-body">
+          <h5 class="card-title">Lista de Aprendices</h5>
+          <!-- Filtros de la Tabla -->
+          <div class="filters-container">
+            <input type="text" class="form-control" placeholder="Buscar por nombre..." [(ngModel)]="filtroNombre" (input)="aplicarFiltros()">
+            <input type="text" class="form-control" placeholder="Filtrar por ficha..." [(ngModel)]="filtroFicha" (input)="aplicarFiltros()">
+            <select class="form-control" [(ngModel)]="filtroNivel" (change)="aplicarFiltros()">
+              <option value="">Todos los niveles</option>
+              <option value="Alto">Alto</option>
+              <option value="Medio">Medio</option>
+              <option value="Bajo">Bajo</option>
+            </select>
+          </div>
+          <!-- Tabla de Aprendices -->
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Ficha</th>
+                  <th>Nivel</th>
+                  <th>Puntos</th>
+                  <th>Horas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ap of aprendicesFiltrados">
+                  <td>{{ ap.nombre }}</td>
+                  <td>{{ ap.ficha }}</td>
+                  <td><span class="badge" [ngClass]="{'badge-success': ap.nivel === 'Alto', 'badge-warning': ap.nivel === 'Medio', 'badge-danger': ap.nivel === 'Bajo'}">{{ ap.nivel }}</span></td>
+                  <td>{{ ap.puntos }}</td>
+                  <td>{{ ap.horas }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna del Ranking -->
+    <div class="col-md-3">
+      <div class="card ranking-card">
+        <div class="card-body text-center">
+          <h5 class="card-title">TOP 3 Aprendices</h5>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let ap of topAprendices; let i = index" class="list-group-item ranking-item">
+              <span class="medal">{{ i === 0 ? '🥇' : (i === 1 ? '🥈' : '🥉') }}</span>
+              <div class="ranking-info">
+                <strong>{{ ap.nombre }}</strong>
+                <small>{{ ap.puntos }} puntos</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

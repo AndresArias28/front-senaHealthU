@@ -12,6 +12,7 @@ import { DashboardAdminComponent } from "../dashboard-admin/dashboard-admin.comp
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [
     CommonModule,
     SidebarComponent,
@@ -28,7 +29,7 @@ import { DashboardAdminComponent } from "../dashboard-admin/dashboard-admin.comp
 
 export class DashboardComponent {
 
-  seccionActual: string = '';
+  seccionActual: string = 'panelAdmin';
 
   constructor() {}
 
