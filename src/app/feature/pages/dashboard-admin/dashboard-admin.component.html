@@ -22,7 +22,7 @@
     <div class="col-md-3">
       <div class="card metric-card text-center">
         <div class="card-body">
-          <h5 class="card-title">Rutinas Completadas (Hoy)</h5>
+          <h5 class="card-title">Rutinas Completadas</h5>
           <p class="card-text display-4">{{ rutinasCompletadasHoy }}</p>
         </div>
       </div>
@@ -72,9 +72,9 @@
             <input type="text" class="form-control" placeholder="Filtrar por ficha..." [(ngModel)]="filtroFicha" (input)="aplicarFiltros()">
             <select class="form-control" [(ngModel)]="filtroNivel" (change)="aplicarFiltros()">
               <option value="">Todos los niveles</option>
-              <option value="Alto">Alto</option>
-              <option value="Medio">Medio</option>
-              <option value="Bajo">Bajo</option>
+              <option value="Avanzado">Avanzado</option>
+              <option value="Intermedio">Intermedio</option>
+              <option value="Principiante">Principiante/option>
             </select>
           </div>
           <!-- Tabla de Aprendices -->
@@ -93,13 +93,18 @@
                 <tr *ngFor="let ap of aprendicesFiltrados">
                   <td>{{ ap.nombre }}</td>
                   <td>{{ ap.ficha }}</td>
-                  <td><span class="badge" [ngClass]="{'badge-success': ap.nivel === 'Alto', 'badge-warning': ap.nivel === 'Medio', 'badge-danger': ap.nivel === 'Bajo'}">{{ ap.nivel }}</span></td>
+                  <td><span class="badge" [ngClass]="{'badge-success': ap.nivel === 'Avanzado', 'badge-warning': ap.nivel === 'Intermedio', 'badge-danger': ap.nivel === 'Principiante'}">{{ ap.nivel }}</span></td>
                   <td>{{ ap.puntos }}</td>
                   <td>{{ ap.horas }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
+          <!-- <mat-paginator [length]="aprendices.length"
+               [pageSize]="5"
+               [pageSizeOptions]="[5, 10, 25]"
+               aria-label="Seleccionar página">
+</mat-paginator> -->
         </div>
       </div>
     </div>

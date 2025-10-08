@@ -79,6 +79,7 @@ export class RegisterRutineComponent implements OnInit {
       };
 
       const formData = new FormData();
+      
       formData.append(
         'datos',
         new Blob([JSON.stringify(datos)], { type: 'application/json' })
