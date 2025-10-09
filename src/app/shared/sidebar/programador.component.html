@@ -1,0 +1,41 @@
+<div class="p-4 max-w-md mx-auto text-center border rounded-lg shadow">
+  <h2 class="text-xl font-bold mb-4">Generador de QR para Desafíos</h2>
+
+  <div class="mb-3">
+    <label for="accion" class="block mb-1">Acción:</label>
+    <select id="accion" [(ngModel)]="accion" class="border p-2 rounded w-full">
+      <option value="activar">Activar</option>
+      <option value="finalizar">Finalizar</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="idDesafio" class="block mb-1">ID del desafío:</label>
+    <input
+      id="idDesafio"
+      type="text"
+      [(ngModel)]="idDesafio"
+      placeholder="Ej: desafio-001"
+      class="border p-2 rounded w-full"
+    />
+  </div>
+
+  <button
+    (click)="generarQR()"
+    class="mb-3 btn-success text-dark px-4 py-2 rounded hover:bg-green-700"
+  >
+    Generar QR
+  </button>
+<br>
+  <div class="mt-5 mb-4" *ngIf="codigoQR">
+    <h3 class="mb-2 font-semibold">Código QR generado:</h3>
+    <qrcode [qrdata]="codigoQR" [width]="370" errorCorrectionLevel="M"></qrcode>
+  </div>
+  <div *ngIf="codigoQR" class="mb-4">
+    <h3 class="mb-2 font-semibold">Código QR en texto:</h3>
+    <p>{{ codigoQR }}</p>
+  </div>
+  <button (click)="imprimirQR()">Imprimir QR</button>
+  <button (click)="enviarQR()">Enviar QR</button>
+</div>
+<div class="botones"></div>

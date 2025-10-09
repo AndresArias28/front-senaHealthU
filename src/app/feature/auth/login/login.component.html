@@ -1,29 +1,17 @@
-<!-- <p class="text-danger">{{ loginError }}</p> -->
-<div class="max-vh-100">
-  <div class="row min-vh-100">
-    <!-- Background Image Column -->
-    <div class="col-lg-6 d-none d-lg-block position-relative bg-image">
-      <div class="dark-overlay">
-        <!-- <h1
-          class="text-white position-absolute top-50 start-50 translate-middle display-3 fw-bold"
-        >
-          HealthU
-        </h1> -->
-      </div>
-    </div>
+<div class="container-fluid vh-100">
+  <div class="row vh-100">
+    <!-- background Image Column -->
+    <div
+      class="col-lg-6 d-none d-lg-block position-relative bg-image"
+    ></div>
 
     <!-- Login Form Column -->
-    <div class="col-lg-6 d-flex align-items-center justify-content-center">
-      <div class="login-container">
+    <div class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center bg-body-secondary">
+      <div class="login-container p-4 form-container">
         <h2 class="text-center p-4">Iniciar Sesión</h2>
           <!-- Logo -->
           <div class="text-center">
-            <img
-              src="../../../../assets/Designer.png"
-              alt="sena-HealthU"
-              class="img-fluid"
-              style="max-width: 220px"
-            />
+            <img src="../../../../assets/Designer.png" alt="sena-HealthU" class="img-fluid" style="max-width: 220px" />
           </div>
         <div class="text-center mb-4">
           <span>Al continuar, aceptas nuestro</span>
@@ -33,16 +21,15 @@
         </div>
 
         <!-- Login Form -->
-        <form [formGroup]="loginForm">
-          <div >
+        <form [formGroup]="loginForm" (ngSubmit)="login()" (keydown.enter)="login()">
+          <div>
             <label class="form-label"> Email </label>
             <input
               formControlName="emailUsuario"
               type="email"
               class="form-control form-control-lg"
-              id="exampleInputEmail"
+              id="emailUsuario"
               aria-describedby="emailHelp"
-              [(ngModel)] ="correoIngresado"
             />
           </div>
 
@@ -57,23 +44,24 @@
             </div>
           </div>
 
-          <div >
-            <label for="exampleInputPassword" class="form-label mt-5">
+          <div>
+            <label for="contrasenaUsuario" class="form-label mt-5">
               Contraseña
             </label>
             <div class="input-group">
               <input
                 formControlName="contrasenaUsuario"
                 [type]="showPassword ? 'text' : 'password'"
-                class="form-control  "
-                id="exampleInputPassword"
-                [(ngModel)]="contrasenaIngresada"
+                class="form-control"
+                id="contrasenaUsuario"
               />
 
               <button
                 class="btn btn-outline-secondary "
                 type="button"
-                (click)="togglePassword()">
+                (click)="togglePassword()"
+                tabindex="-1"
+                >
                 <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
               </button>
 
@@ -91,17 +79,16 @@
 
           </div>
           <div class="text-end  mt-4 mb-2">
-            <a (click)="abrirModalDesdeLogin()"  class="enlace" >¿Has olvidado tu contraseña?</a>
+            <a (click)="abrirModalDesdeLogin()" class="enlace" >¿Has olvidado tu contraseña?</a>
           </div>
-          <!-- Modal dentro de recuperar-contrasena -->
-          <app-recuperar-contrasena (modalAbierto)="mostrarModal()"></app-recuperar-contrasena>
-   
+
+            <app-recuperar-contrasena (modalAbierto)="mostrarModal()"></app-recuperar-contrasena>
+
           <button
             type="submit"
-            (click)="login()"
             class="btn btn-success mb-4 w-100"
-            [disabled]="contrasenaIngresada.length < 3 || correoIngresado.length < 11">
-            Iniciar Sesión
+            [disabled]="loginForm.invalid">
+            Iniciar Sesion
           </button>
 
         </form>
@@ -109,5 +96,3 @@
     </div>
   </div>
 </div>
-
-

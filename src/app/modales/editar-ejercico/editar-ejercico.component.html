@@ -1,0 +1,140 @@
+<div class="modal-container" mat-dialog-content>
+  <div class="modal-header">
+    <h2>Editar Ejercicio</h2>
+    <button mat-icon-button class="close-button" (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nombre Ejercicio</mat-label>
+      <input matInput [(ngModel)]="ejercicio.nombreEjercicio" />
+    </mat-form-field>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Descripción Ejercicio</mat-label>
+      <textarea matInput rows="3" [(ngModel)]="ejercicio.descripcionEjercicio"></textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- Sección de carga de imagen -->
+  <div class="form-section">
+    <div class="image-upload-section">
+      <mat-card class="upload-card">
+        <mat-card-header>
+          <!-- <mat-card-title>Imagen del Ejercicio</mat-card-title> -->
+          <mat-card-subtitle>
+            Carga una imagen representativa del ejercicio
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <!-- Información de imagen actual -->
+          <div class="current-image-info" *ngIf="ejercicio.fotoEjercicio">
+            <mat-chip-set>
+              <mat-chip color="primary" selected>
+                <mat-icon matChipAvatar>check_circle</mat-icon>
+                Imagen cargada
+              </mat-chip>
+            </mat-chip-set>
+            <p class="image-name">{{ archivoSeleccionado }}</p>
+            <!-- Previsualización de la imagen actual -->
+            <!-- Previsualización de la imagen recién seleccionada -->
+            <div class="preview-container" *ngIf="ejercicio.fotoEjercicio">
+              <p class="text-muted">
+                <strong>Previsualización:</strong> Imagen nueva seleccionada
+              </p>
+              <img
+                [src]="ejercicio.fotoEjercicio"
+                alt="Imagen seleccionada"
+                class="img-preview"
+              />
+            </div>
+          </div>
+
+          <!-- Área de carga -->
+          <div class="upload-controls">
+            <!-- Input file oculto -->
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              style="display: none"
+            />
+
+            <!-- Botones de acción -->
+            <div class="upload-buttons">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="fileInput.click()"
+                [disabled]="isUploading"
+              >
+                <mat-icon>cloud_upload</mat-icon>
+                {{
+                  ejercicio.fotoEjercicio ? "Cambiar imagen" : "Cargar imagen"
+                }}
+              </button>
+
+              <button
+                mat-button
+                color="warn"
+                (click)="removeImage()"
+                *ngIf="ejercicio.fotoEjercicio"
+                [disabled]="isUploading"
+              >
+                <mat-icon>delete</mat-icon>
+                Eliminar
+              </button>
+            </div>
+
+            <!-- Información adicional -->
+            <div class="upload-info">
+              <small class="text-muted">
+                Formatos soportados: JPG, PNG, GIF (máx. 5MB)
+              </small>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Músculos</mat-label>
+      <textarea
+        matInput
+        rows="3"
+        [(ngModel)]="ejercicio.musculos"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+    <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nivel Esfuerzo </mat-label>
+      <textarea
+        matInput
+        rows="3"
+        [(ngModel)]="ejercicio.met"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- Botones del modal -->
+  <div class="modal-actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSave()"
+      [disabled]="isUploading"
+    >
+      Guardar
+    </button>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+  </div>
+</div>

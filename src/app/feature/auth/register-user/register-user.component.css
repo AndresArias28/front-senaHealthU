@@ -1,0 +1,23 @@
+.register-form {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+label {
+  font-weight: bold;
+}
+
+.signup-form {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.signup-title {
+  color: #166840;
+  font-weight: bold;
+  font-size: 2rem;
+}

@@ -11,18 +11,16 @@ import {jwtDecode} from 'jwt-decode';
 export class LoginService {
 
   currentUserLoginOn = new BehaviorSubject<boolean>(false);//observable para el estado del login
-  currentUserData = new BehaviorSubject<String>("");
+  currentUserData = new BehaviorSubject<string>("");
 
-  private dataUrl = 'assets/data.json';
-
-  //servicio para el login utilizando httpclient, se inyecta en el constructor 
+  //servicio para el login utilizando httpclient, se inyecta en el constructor
   // agregar el proveedor en app.config.ts
   constructor(private http: HttpClient) {
     const token = sessionStorage.getItem('token');
     console.log('Token cargado al iniciar el LoginService:', token);
     this.currentUserLoginOn = new BehaviorSubject<boolean>(token !== null);
-    this.currentUserData = new BehaviorSubject<String>(token || "");
- 
+    this.currentUserData = new BehaviorSubject<string>(token || "");
+
   }
 
   getRole() {
@@ -34,7 +32,7 @@ export class LoginService {
   }
 
   recoverPassword(emailUsuario: string): Observable<any> {
-    return this.http.post<any>(environment.urlHost+"auth/forgot-password", {emailUsuario}).pipe(
+    return this.http.post<any>(environment.urlProd+"auth/forgot-password", {emailUsuario}).pipe(
       tap( (response) => {
         console.log('datos recividos del back:', response);
       }),
@@ -43,7 +41,7 @@ export class LoginService {
   }
 
   login(credentials: LoginRequest): Observable<any> {
-    return this.http.post<any>(environment.urlHost+"auth/login",credentials).pipe(
+    return this.http.post<any>(environment.urlProd +"auth/login", credentials).pipe(
       tap( (userData) => {//si todo sale bien encadeno una serie de operaciones con tap
         console.log('Token recibido del backend:', userData.token);
         sessionStorage.setItem("token", userData.token);//guarda el token en el sessionStorage
@@ -70,7 +68,7 @@ export class LoginService {
   }
 
   //observable que emite el estado actual del usuario
-  get userData(): Observable<String | null> {
+  get userData(): Observable<string | null> {
     return this.currentUserData.asObservable();
   }
 
@@ -79,7 +77,7 @@ export class LoginService {
     return this.currentUserLoginOn.asObservable();
   }
 
-  get userToken(): String | null {
+  get userToken(): string | null {
     return this.currentUserData.value;
   }
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +9,13 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent  {
   register;
   showPassword = false;
+  @Input() tipoUsuario!: string; 
+  
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.register = this.fb.group({ 
       nombreAdmin: ['', [Validators.required]],
       apellidoAdmin: ['', [Validators.required]],
@@ -26,9 +28,6 @@ export class RegisterComponent implements OnInit {
     }, { 
       validators: [this.passwordMatchValidator] 
     });
-  }
-
-  ngOnInit(): void {
   }
 
   // Custom validator to check if passwords match

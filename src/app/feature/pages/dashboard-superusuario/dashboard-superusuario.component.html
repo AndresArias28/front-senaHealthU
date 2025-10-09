@@ -1,38 +1,55 @@
-<app-nav></app-nav>
-<!-- Sidebar -->
-<div class="row min-vh-100">
-  <div class="col-auto px-0 bg-light border-end" style="width: 280px">
-    <app-sidebar
-      [seccionActual]="seccionActual" 
-      (seccionSeleccionada)="cambiarSeccion($event)">
-    </app-sidebar>
-  </div>
-  <!-- Main Content -->
-  <div class="col px-4 py-4">
-    <div class="contenido p-4">
-      <div *ngIf="seccionActual === 'dashboard'">
-        <h3>Gestión de Administradores</h3>
-        <app-dashboard-graphics></app-dashboard-graphics>
-        <!-- <p>Contenido del Dashboard...</p> -->
-      </div>
+<!-- <app-nav></app-nav> -->
 
-      <div *ngIf="seccionActual === 'users'">
-        <div class="row justify-content-between align-items-center mb-2">
-          <button class="btn btn-success rounded-3">
-            <i class="bi bi-plus-lg me-2"></i>
-            Registrar nuevo Administrador
-          </button>
-          <button class="btn btn-success rounded-3">
-            <i class="bi bi-plus-lg me-2"></i>
-            Registrar nuevo Administrador
-          </button>
+<div class="container-fluid">
+  <div class="row flex-nowrap min-vh-100">
+
+    <!-- Sidebar para pantallas grandes -->
+    <div class="col-auto d-none d-md-block px-0 bg-light border-end" style="width: 280px">
+      <app-sidebar
+        [seccionActual]="seccionActual"
+        [tipoUsuario]="'superusuario'"
+        (seccionSeleccionada)="cambiarSeccion($event)">
+      </app-sidebar>
+    </div>
+
+    <!-- Sidebar tipo offcanvas para móviles -->
+    <div class="d-md-none">
+      <button class="btn btn-primary m-2 mt-5" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+        Menú
+      </button>
+
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menú</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+          <app-sidebar
+            [seccionActual]="seccionActual"
+            [tipoUsuario]="'superusuario'"
+            (seccionSeleccionada)="cambiarSeccion($event)">
+          </app-sidebar>
         </div>
       </div>
-
-      <div *ngIf="seccionActual === 'settings'">
-        <h3>Settings</h3>
-        <p>Configuraciones del sistema...</p>
-      </div>
     </div>
+
+    <!-- Contenido principal -->
+    <main class="col px-4 py-4 bg-body-secondary">
+      <div class="contenido p-4">
+        <div *ngIf="seccionActual === 'gestionUsers'">
+          <h3>Gestión de Instructores</h3>
+          <!-- Aquí podrías tener un componente específico para la gestión de usuarios del superadmin -->
+          <p>Contenido de gestión de instructores...</p>
+        </div>
+        <div *ngIf="seccionActual === 'settings'">
+          <h3>Settings</h3>
+          <p>Configuraciones del sistema...</p>
+        </div>
+        <div *ngIf="seccionActual == '' || seccionActual == null">
+          <h3>Bienvenido Superusuario</h3>
+          <p>Gestione los instructores y la configuración del sistema desde aquí.</p>
+        </div>
+      </div>
+    </main>
   </div>
 </div>

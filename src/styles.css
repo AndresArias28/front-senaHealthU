@@ -1,16 +1,36 @@
-
-/*  CLASES DE CONTROL DE ESTADO DE LOS INPUTS 
+/*  CLASES DE CONTROL DE ESTADO DE LOS INPUTS
 /*  reflejar automaticamente muchas propiedades de control en el FormControl como clase CSS
 ng-valid, ng-invalid, ng-pending, ng-dirty, ng-pristine, ng-untouched, ng-touched, ng-empty, ng-not-empty
 */
 
+.ng-valid:not(form).ng-touched {
+  border-left: 5px solid #42a948; /* green */
+}
 
-.ng-valid:not(form).ng-touched   {
-    border-left: 5px solid #42A948; /* green */
-  }
- 
-.ng-invalid:not(form).ng-touched  {
-    border-left: 5px solid #a94442; /* red */
-  }
+.ng-invalid:not(form).ng-touched {
+  border-left: 5px solid #a94442; /* red */
+}
 
-  
+html,
+body {
+  height: 100%;
+  /* El padding-top solo en desktop, en móvil usar menos */
+  padding-top: 20px;
+}
+@media (max-width: 991.98px) {
+  html, body {
+    padding-top: 10px;
+  }
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-weight: 400;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+

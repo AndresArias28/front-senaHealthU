@@ -6,18 +6,24 @@ import { DashboardSuperusuarioComponent } from './feature/pages/dashboard-superu
 import { roleGuard } from './core/guards/role.guard';
 import { Component } from '@angular/core';
 import { RegisterComponent } from './feature/auth/register/register.component';
+import { RegisterUserComponent } from './feature/auth/register-user/register-user.component';
+import { RegisterRutineComponent } from './feature/pages/register-rutine/register-rutine.component';
+import { RegisterExerciseComponent } from './feature/pages/register-exercise/register-exercise.component';
+import { AboutUsComponent } from './feature/pages/about-us/about-us.component';
+import { ContactComponent } from './feature/pages/contact/contact.component';
+import { AsignarRutinaComponent } from './feature/pages/asignar-rutina/asignar-rutina.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'iniciar-sesion', pathMatch: 'full'},
-    
+
     {
         path: 'inicio-admin',
-        component: DashboardComponent, 
+        component: DashboardComponent,
         //canActivate: [authGuard, roleGuard],
         data: {role: 'ROLE_Administrador'}
     },
     {
-        path: 'iniciar-sesion', 
+        path: 'iniciar-sesion',
         component: LoginComponent
     },
     {
@@ -31,6 +37,32 @@ export const routes: Routes = [
         component: RegisterComponent,
         //canActivate: [authGuard, roleGuard],
         //data: {role: 'ROLE_Superusuario'}
+    },
+    {
+        path : 'register-user',
+        component: RegisterUserComponent,
+        //canActivate: [authGuard, roleGuard],
+        //data: {role: 'ROLE_Administrador'}
+    },
+    {
+        path: 'register-rutine',
+        component: RegisterRutineComponent,
+    },
+    {
+        path: 'register-exercise',
+        component: RegisterExerciseComponent
+    },
+    {
+        path: 'sobre-nosotros',
+        component: AboutUsComponent
+    },
+    {
+        path: 'contacto',
+        component: ContactComponent
+    },
+    {
+        path: 'asignar-rutina/:id',
+        component: AsignarRutinaComponent
     },
     {path: '**', redirectTo: 'iniciar-sesion' },
 ];

@@ -1,0 +1,87 @@
+<div class="container" style="margin-top: 80px; max-width: 700px">
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-header bg-primary text-white text-center rounded-top-4">
+      <h3 class="mb-0">Asignar Rutina</h3>
+    </div>
+    <div class="card-body p-4">
+      <form
+        *ngIf="formularioAsignarRutina"
+        [formGroup]="formularioAsignarRutina"
+        (ngSubmit)="asignarRutina()"
+      >
+        <!-- Usuario -->
+        <div class="mb-4">
+          <label for="idPersona" class="form-label fw-semibold">
+            👤 Seleccionar Usuario
+          </label>
+          <select
+            formControlName="idPersona"
+            id="idPersona"
+            class="form-select form-select-lg shadow-sm"
+          >
+            <option *ngFor="let usuario of usuarios" [value]="usuario.idPersona">
+              {{ usuario.nombreCompleto }} ({{ usuario.emailUsuario }})
+            </option>
+          </select>
+        </div>
+
+        <!-- Días -->
+        <div class="mb-4" formArrayName="diasAsignado">
+          <label class="form-label fw-semibold">📅 Seleccionar Días</label>
+          <div class="d-flex flex-wrap gap-3 mt-2">
+            <div
+              class="form-check form-check-inline"
+              *ngFor="let dia of dias; let i = index"
+            >
+              <input
+                type="checkbox"
+                class="btn-check"
+                [formControlName]="i"
+                [id]="'dia' + i"
+                autocomplete="off"
+              />
+              <label
+                class="btn btn-outline-primary btn-sm rounded-pill px-3"
+                [for]="'dia' + i"
+              >
+                {{ dia }}
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Observaciones -->
+        <div class="mb-4">
+          <label for="observaciones" class="form-label fw-semibold">
+            Observaciones
+          </label>
+          <textarea
+            formControlName="observaciones"
+            id="observaciones"
+            rows="3"
+            class="form-control shadow-sm"
+            placeholder="Escribe alguna observación sobre la rutina..."
+          ></textarea>
+        </div>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-secondary" (click)="router.navigate(['/inicio-admin'])">
+            ⬅️ Volver al Dashboard
+          </button>
+          <button type="submit" class="btn btn-primary px-4">
+            ✅ Asignar Rutina
+          </button>
+        </div>
+      </form>
+
+      <!-- Mensaje de éxito -->
+      <div
+        *ngIf="mensajeExito"
+        class="alert alert-success text-center mt-4 rounded-pill shadow-sm"
+      >
+        {{ mensajeExito }}
+      </div>
+    </div>
+  </div>
+</div>

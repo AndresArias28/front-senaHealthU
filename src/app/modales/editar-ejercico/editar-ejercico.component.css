@@ -1,0 +1,270 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-top-left-radius:12px ;
+  border-top-right-radius:12px ;
+  
+  h2 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+}
+.close-button {
+  color: white;
+}
+
+.preview-container {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.img-preview {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  margin-top: 0.5rem;
+}
+
+
+
+.modal-container {
+  padding: 10px;
+  max-height: 70vh;
+  overflow-y: auto;
+  
+
+  .form-section {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e0dbdb;
+    
+    &:last-of-type {
+      border-bottom: none;
+    }
+    
+    .w-100 {
+      width: 100%;
+    }
+  }
+  
+  .exercises-section{
+    padding: 20px 24px;
+    background-color: #f9f9f9;
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      
+      .exercise-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        
+        .exercise-name {
+          font-size: 14px;
+          color: #333;
+        }
+        
+        .remove-exercise-btn {
+          color: #f44336; /* Red color for remove button */
+          cursor: pointer;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .image-upload-section {
+    background-color: #fafafa;
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-weight: 500;
+      color: #333;
+      /* esto es para el badge  */
+      .optional-badge { 
+        background: #e0e0e0;
+        color: #666;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+.upload-card {
+  margin: 0;
+  box-shadow: none !important;
+  border: 2px dashed #ddd;
+  background: white;
+  
+  mat-card-content {
+    padding: 20px !important;
+  }
+}
+
+.current-image-info {
+  margin-bottom: 16px;
+  
+  .image-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .image-name {
+      font-size: 14px;
+      color: #666;
+      font-style: italic;
+    }
+  }
+}
+
+.upload-controls {
+  .upload-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    
+    .upload-btn, .remove-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+  
+
+  
+  .upload-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #666;
+    
+    .info-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.text-end {
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.modal-actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 24px;
+  margin: 0;
+  border-top: 1px solid #e0e0e0;
+  background-color: #cfd5ea;
+  
+  button {
+    min-width: 100px;
+    height: 40px;
+  }
+}
+
+
+
+@media (max-width: 768px) {
+  .modal-container {
+    max-height: 80vh;
+    
+    .form-section {
+      padding: 16px 20px;
+    }
+    
+    .upload-controls .upload-buttons {
+      flex-direction: column;
+      
+      .upload-btn, .remove-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+  
+  .modal-actions {
+    flex-direction: column-reverse;
+    padding: 16px 20px;
+    
+    button {
+      width: 100%;
+    }
+  }
+  
+}
+/*   mostrar el snackbar */
+::ng-deep {
+  .success-snackbar {
+    background-color: #4caf50 !important;
+    color: white !important;
+  }
+  
+  .error-snackbar {
+    background-color: #f44336 !important;
+    color: white !important;
+  }
+}
+
+
+.upload-card {
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.current-image-info {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

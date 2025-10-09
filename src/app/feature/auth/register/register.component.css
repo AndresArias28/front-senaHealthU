@@ -1,38 +1,38 @@
-.form-control, .btn {
-    height: 50px;
-  }
+.form-control,
+.btn {
+  height: 50px;
+}
 
-  .btn-primary {
-    background-color: #10d876;
-    border-color: #10d876;
-  }
+.btn-primary {
+  background-color: #10d876;
+  border-color: #10d876;
+}
 
-  .btn-primary:hover {
-    background-color: #0fbd69;
-    border-color: #0fbd69;
-  }
+.btn-primary:hover {
+  background-color: #0fbd69;
+  border-color: #0fbd69;
+}
 
-  .signup-container {
-    background-color: #f4f6f9;
-    position: relative;
-    overflow: scroll;
-  }
+.signup-container {
+  background-color: #f4f6f9;
+  position: relative;
+  overflow: scroll;
+}
 
-  .signup-form {
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 10;
-  }
+.signup-form {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
 
-  .signup-title {
-    color: #166840;
-    font-weight: bold;
-    font-size: 2rem;
-  }
+.signup-title {
+  color: #166840;
+  font-weight: bold;
+  font-size: 2rem;
+}
 
-  .error-container {
-    position: absolute;
-    font-size: 12px;
-    color: rgb(207, 29, 29);
-  }
+.error-container {
+  font-size: 12px;
+  color: rgb(207, 29, 29);
+}

@@ -1,17 +1,10 @@
-.sidenav-container {
-    height: 100%;
+/* Eliminar estilos innecesarios y asegurar responsividad del nav */
+.navbar {
+  padding: 10px 20px;
+}
+
+@media (max-width: 991.98px) {
+  .navbar {
+    padding: 10px 8px;
   }
-  
-  .sidenav {
-    width: 200px;
-  }
-  
-  .sidenav .mat-toolbar {
-    background: inherit;
-  }
-  
-  .mat-toolbar.mat-primary {
-    /* position: sticky; */
-    top: 0;
-    z-index: 1;
-  }
+}

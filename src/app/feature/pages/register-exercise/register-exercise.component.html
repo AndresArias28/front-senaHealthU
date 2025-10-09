@@ -1,0 +1,87 @@
+<div class="container-fluid py-5 bg-body-secondary">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-4 p-md-5">
+          <h2 class="card-title mb-4 text-center">Crear Nuevo Ejercicio</h2>
+          <form *ngIf="formularioEjercicio" [formGroup]="formularioEjercicio" (ngSubmit)="registerExercise()" enctype="multipart/form-data" class="form-container">
+            <!-- Nombre del Ejercicio -->
+            <div class="mb-3">
+              <label for="nombreEjercicio" class="form-label">Nombre del ejercicio</label>
+              <input
+                formControlName="nombreEjercicio"
+                type="text"
+                class="form-control form-control-lg"
+                id="nombreEjercicio"
+                aria-describedby="nombreEjercicioHelp"
+                [(ngModel)]="nombreEjercicio"
+              />
+            </div>
+
+            <!-- Descripción del Ejercicio -->
+            <div class="mb-3">
+              <label for="descripcionEjercicio" class="form-label">Descripción del ejercicio</label>
+              <input
+                formControlName="descripcionEjercicio"
+                type="text"
+                class="form-control form-control-lg"
+                id="descripcionEjercicio"
+                aria-describedby="descripcionRutinaHelp"
+                [(ngModel)]="descripcionEjercicio"
+              />
+            </div>
+
+            <!-- Foto del Ejercicio -->
+            <div class="mb-3">
+              <label for="fotoEjercicio" class="form-label">Foto del Ejercicio</label>
+              <input
+                formControlName="fotoEjercicio"
+                type="file"
+                class="form-control form-control-lg"
+                id="fotoEjercicio"
+                aria-describedby="fotoEjercicioaHelp"
+                (change)="onFileSelected($event)"
+              />
+            </div>
+
+            <!-- Músculos -->
+            <div class="mb-3">
+              <label for="musculos" class="form-label">Músculos del ejercicio</label>
+              <input
+                formControlName="musculos"
+                type="text"
+                class="form-control form-control-lg"
+                id="musculos"
+                aria-describedby="musculosHelp"
+                [(ngModel)]="musculos"
+              />
+            </div>
+
+            <!-- MET -->
+            <div class="mb-4">
+              <label for="met" class="form-label">MET - Nivel del ejercicio</label>
+              <input
+                formControlName="met"
+                type="number"
+                class="form-control form-control-lg"
+                id="met"
+                aria-describedby="metHelp"
+                [(ngModel)]="met"
+              />
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-success btn-lg">Crear Ejercicio</button>
+              <button type="button" class="btn btn-outline-secondary btn-lg" onclick="window.history.back()">Volver al Dashboard</button>
+            </div>
+          </form>
+
+          <div *ngIf="mensajeExito" class="alert alert-success mt-4">
+            {{ mensajeExito }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,223 @@
+<div class="modal-container form-container" mat-dialog-content>
+  <div class="modal-header">
+    <h2>Editar Rutina</h2>
+    <button mat-icon-button class="close-button" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+  </div>
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nombre Rutina</mat-label>
+      <input matInput [(ngModel)]="rutina.nombre" />
+    </mat-form-field>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Enfoque</mat-label>
+      <mat-select [(ngModel)]="rutina.enfoque">
+        <mat-option value="TREN_SUPERIOR">Tren Superior</mat-option>
+        <mat-option value="TREN_INFERIOR">Tren Inferior</mat-option>
+        <mat-option value="FULL_BODY">Cuerpo Completo</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Nivel de Dificultad</mat-label>
+      <mat-select [(ngModel)]="rutina.dificultad">
+        <mat-option value="PRINCIPIANTE">Principiante</mat-option>
+        <mat-option value="INTERMEDIO">Intermedio</mat-option>
+        <mat-option value="AVANZADO">Avanzado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="form-section">
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput rows="3" [(ngModel)]="rutina.descripcion"></textarea>
+    </mat-form-field>
+  </div>
+
+  <!-- Sección de carga de imagen -->
+  <div class="form-section">
+    <div class="image-upload-section">
+      <mat-card class="upload-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>image</mat-icon>
+            Imagen de la rutinas
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <!-- Información de imagen actual -->
+          <div class="current-image-info" *ngIf="rutina.fotoRutina">
+            <mat-chip-set>
+              <!-- <mat-chip color="primary" selected>
+                <mat-icon matChipAvatar>check_circle</mat-icon>
+                Imagen cargada
+              </mat-chip> -->
+            </mat-chip-set>
+            <p class="image-name">{{ archivoSeleccionado }}</p>
+            <!-- Previsualización de la imagen actual -->
+            <!-- Previsualización de la imagen recién seleccionada -->
+            <div class="preview-container" *ngIf="rutina.fotoRutina">
+              <p class="text-muted"><strong>Previsualización:</strong> Imagen nueva seleccionada</p>
+              <img [src]="rutina.fotoRutina" alt="Imagen seleccionada" class="img-preview" />
+            </div>
+          </div>
+
+          <!-- Área de carga -->
+          <div class="upload-controls">
+            <!-- Input file oculto -->
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              style="display: none"
+            />
+
+            <!-- Botones de acción -->
+            <div class="upload-buttons">
+              <button
+                mat-raised-button
+                color="primary"
+                (click)="fileInput.click()"
+                [disabled]="isUploading"
+              >
+                <mat-icon>cloud_upload</mat-icon>
+                {{ rutina.fotoRutina ? "Cambiar imagen" : "Cargar imagen" }}
+              </button>
+
+              <button
+                mat-button
+                color="warn"
+                (click)="removeImage()"
+                *ngIf="rutina.fotoRutina"
+                [disabled]="isUploading"
+              >
+                <mat-icon>delete</mat-icon>
+                Eliminar
+              </button>
+            </div>
+
+            <div class="upload-info">
+              <small class="text-muted">
+                Formatos soportados: JPG, PNG, GIF (máx. 5MB)
+              </small>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- ejercicios de la rutina -->
+  <ng-container *ngIf="tieneEjercicios(); else sinEjercicios">
+    <div class="exercises-section">
+      <mat-card class="exercises-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>fitness_center</mat-icon>
+            Ejercicios incluidos en la rutina
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div
+            *ngFor="let ejercicio of rutina.ejercicios; let i = index"
+            class="exercise-item"
+          >
+            <input [(ngModel)]="ejercicio.idEjercicio" hidden />
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Nombre del ejercicio</mat-label>
+              <mat-select
+                [(ngModel)]="ejercicio.idEjercicio"
+                name="nombre{{ i }}"
+                (click)="cargarEjerciciosDisponibles()"
+              >
+                <mat-option *ngFor="let e of listaEjerciciosDisponibles" [value]="e.idEjercicio">
+                  {{ e.nombreEjercicio }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Repeticiones</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="ejercicio.repeticion"
+                name="repeticion{{ i }}"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Series</mat-label>
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="ejercicio.series"
+                name="series{{ i }}"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Carga</mat-label>
+              <input
+                matInput
+                [(ngModel)]="ejercicio.carga"
+                name="carga{{ i }}"
+              />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Duración</mat-label>
+              <input
+                matInput
+                [(ngModel)]="ejercicio.duracion"
+                name="duracion{{ i }}"
+              />
+            </mat-form-field>
+
+            <div class="text-end">
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="eliminarEjercicio(i)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <hr class="divider" />
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-container>
+
+  <ng-template #sinEjercicios>
+    <p class="no-exercises">No hay ejercicios registrados para esta rutina.</p>
+  </ng-template>
+
+  <!-- Botones del modal -->
+  <div class="modal-actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSave()"
+      [disabled]="isUploading"
+    >
+      Guardar
+    </button>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+
+  </div>
+</div>

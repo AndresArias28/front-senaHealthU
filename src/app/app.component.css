@@ -1,9 +1,25 @@
 .btn-success {
-    background-color: #39A900 !important;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .btn-success:hover {
-    background-color: #2e8700 !important;
-  }
+  background-color: #39a900 !important;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-success:hover {
+  background-color: #2e8700 !important;
+}
+
+.back-button {
+  display: inline-block;
+  margin: 20px;
+  color: #1f4524;
+  text-decoration: none;
+  font-weight: bold;
+  position: absolute;
+  top: 80px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.back-button span {
+  margin-right: 5px;
+}

@@ -1,32 +1,55 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavComponent } from '../../../shared/nav/nav.component';
 import { CommonModule } from '@angular/common';
-import { LoginService } from '../../../core/services/login/login.service';
 import { SidebarComponent } from '../../../shared/sidebar/sidebar.component';
-//import { User } from '../../../shared/models/user';
-//import { PersonalDetailsComponent } from "../personal-details/personal-details.component";
+import { DashboardGraphicsComponent } from '../dashboard-graphics/dashboard-graphics.component';
+import { ProgramadorComponent } from '../programador-qr/programador.component';
+import { RegisterRutineComponent } from '../register-rutine/register-rutine.component';
+import { DashboardExercisesComponent } from '../dashboard-exercises/dashboard-exercises.component';
+import { GestionarAsignacionComponent } from '../gestionar-asignacion/gestionar-asignacion.component';
+import { DashboardAdminComponent } from "../dashboard-admin/dashboard-admin.component";
+
 
 @Component({
   selector: 'app-dashboard',
-  imports: [NavComponent, CommonModule, SidebarComponent],
+  standalone: true,
+  imports: [
+    CommonModule,
+    SidebarComponent,
+    DashboardGraphicsComponent,
+    ProgramadorComponent,
+    RegisterRutineComponent,
+    DashboardExercisesComponent,
+    GestionarAsignacionComponent,
+    DashboardAdminComponent
+],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit {
+
+export class DashboardComponent {
+
+  seccionActual: string = 'panelAdmin';
+
+  constructor() {}
+
+  cambiarSeccion(seccion: string) {
+    console.log('dashh sexxion cambiada a ', seccion);
+    this.seccionActual = seccion;
+  }
+
+  redirigirAGestionUsuarios() {
+    this.seccionActual = 'gestionUsers'; // cambio manual tras registrar rutina
+    console.log('Redirigido a gestionUsers tras registrar rutina');
+  }
+  redirigirADashboard() {
+    this.seccionActual = 'gestionUsers'; // cambio manual tras eliminar rutina
+    console.log('Redirigido a gestionUsers tras eliminar rutina');
   
-  userLoginOn: boolean = false;
-   title = "admin-dashboard";
-  //userData?: User;
+  }
 
-  constructor(private loginService: LoginService) {}
-
-  ngOnInit(): void {// se ejecuta una sola vez al cargar el componente en el DOM del navegador
-
-    this.loginService.currentUserLoginOn.subscribe({//se suscribe al observable currentUserLoginOn al iniciar el componente
-      next: (userLoginOn) => {
-        this.userLoginOn = userLoginOn; //almacena el estado del login en la variable userLoggedIn
-      },
-    });
-
+  redirigirAGestionEjercicios() {
+    this.seccionActual = 'gestionEjercicios';
+    console.log('Redirigido a gestion Ejercicios ');
   }
 }

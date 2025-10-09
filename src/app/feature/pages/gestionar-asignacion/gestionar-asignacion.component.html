@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h3 class="mb-3">Asignaciones de Rutinas</h3>
+
+  <table class="table table-hover table-bordered align-middle shadow-sm">
+    <thead class="table-primary text-center">
+      <tr>
+        <th>Aprendiz</th>
+        <th>Ficha</th>
+        <th>Fecha de Asignación</th>
+        <th>Nivel Físico</th>
+        <th>Ver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let asignacion of asignaciones">
+        <td>{{ asignacion.nombreAprendiz }}</td>
+        <td>{{ asignacion.ficha }}</td>
+        <td>{{ asignacion.fechaCreacion | date:'dd/MM/yyyy' }}</td>
+        <td>{{ asignacion.nivelFisico }}</td>
+        <td class="text-center">
+
+          <button
+            class="btn btn-sm btn-warning me-2"
+            (click)="editarAsignacion(asignacion)"
+          >
+            <i class="bi bi-pencil"></i>
+          </button>
+
+        </td>
+      </tr>
+      <tr *ngIf="asignaciones.length === 0">
+        <td colspan="4" class="text-center text-muted">
+          No hay asignaciones registradas
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
