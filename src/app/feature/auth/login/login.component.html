@@ -21,7 +21,7 @@
         </div>
 
         <!-- Login Form -->
-        <form [formGroup]="loginForm">
+        <form [formGroup]="loginForm" (ngSubmit)="login()" (keydown.enter)="login()">
           <div>
             <label class="form-label"> Email </label>
             <input
@@ -59,7 +59,9 @@
               <button
                 class="btn btn-outline-secondary "
                 type="button"
-                (click)="togglePassword()">
+                (click)="togglePassword()"
+                tabindex="-1"
+                >
                 <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
               </button>
 
@@ -84,7 +86,6 @@
 
           <button
             type="submit"
-            (click)="login()"
             class="btn btn-success mb-4 w-100"
             [disabled]="loginForm.invalid">
             Iniciar Sesion
