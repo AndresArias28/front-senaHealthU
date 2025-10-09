@@ -1,23 +1,38 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../core/services/user/user.service';
 import { Aprendiz } from '../../../shared/models/aprendiz';
-import { environment } from '../../../../environments/environmets.mapbox';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { BaseChartDirective } from 'ng2-charts';
+
+import {
+  Chart,
+  registerables,
+  ChartConfiguration,
+  ChartData,
+  ChartType,
+} from 'chart.js';
+
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard-admin',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BaseChartDirective],
   templateUrl: './dashboard-admin.component.html',
-  styleUrls: ['./dashboard-admin.component.css']
+  styleUrls: ['./dashboard-admin.component.css'],
 })
-export class DashboardAdminComponent implements OnInit {
+export class DashboardAdminComponent implements OnInit, AfterViewInit {
   @Input() tipoUsuario: string = '';
+  @ViewChildren(BaseChartDirective) charts!: QueryList<BaseChartDirective>;
   // --- Métricas Rápidas ---
   totalAprendicesActivos = 0;
   promedioHorasEntrenadas = 0;
@@ -25,8 +40,45 @@ export class DashboardAdminComponent implements OnInit {
   rutinasAsignadas = 50; // Dato estático de ejemplo
 
   // --- Datos para Gráficas ---
-  chartDataHoras: { label: string, value: number }[] = [];
-  chartDataRutinas: { label: string, value: number }[] = [];
+  chartDataHoras: { label: string; value: number }[] = [];
+  chartDataRutinas: { label: string; value: number }[] = [];
+
+  // --- Configuración de Gráfica de Barras ---
+  barChartOptions: ChartConfiguration['options'] = {
+    maintainAspectRatio: false,
+    animation: false,
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      title: { display: false },
+    },
+    scales: {
+      x: {},
+      y: { beginAtZero: true },
+    },
+  };
+  barChartType: ChartType = 'bar';
+  barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      { data: [], label: 'Horas Acumuladas', backgroundColor: '#007bff' },
+    ],
+  };
+
+  // --- Configuración de Gráfica de Pastel ---
+  pieChartOptions: ChartConfiguration['options'] = {
+    maintainAspectRatio: false,
+    animation: false,
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom' },
+    },
+  };
+  pieChartType: ChartType = 'pie';
+  pieChartData: ChartData<'pie'> = {
+    labels: ['Completadas', 'Pendientes'],
+    datasets: [{ data: [], backgroundColor: ['#28a745', '#ffc107'] }],
+  };
 
   // --- Tabla de Aprendices ---
   aprendices: Aprendiz[] = [];
@@ -35,47 +87,70 @@ export class DashboardAdminComponent implements OnInit {
   filtroFicha = '';
   filtroNivel = '';
 
-
   // --- Ranking TOP 3 ---
   topAprendices: any[] = [];
-
-  // dataSource = new MatTableDataSource(this.aprendices);
-
-  // @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  constructor( private userService: UserService ) { }
+  constructor(
+    private userService: UserService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.userService.getAprendicesDashboard().subscribe({
       next: (response) => {
-        console.log('Datos de aprendices obtenidos del servicio:', response.data);
+        console.log(
+          'Datos de aprendices obtenidos del servicio:',
+          response.data
+        );
         this.aprendices = response.data;
         this.aprendicesFiltrados = response.data;
         this.calcularMetricas();
         this.prepararDatosGraficas();
         this.calcularTopAprendices();
+
+        this.cdr.detectChanges(); // Forzar detección de cambios
+
+        setTimeout(() => this.refreshCharts(), 300);
       },
       error: (error) => {
         console.error('Error al obtener los datos de aprendices:', error);
-      }
+      },
     });
   }
 
-  calcularMetricas(): void { 
+  ngAfterViewInit(): void {
+    setTimeout(() => this.refreshCharts(), 400);
+  }
+
+  private refreshCharts(): void {
+    if (this.charts && this.charts.length > 0) {
+      this.charts.forEach((chartDir) => {
+        if (chartDir.chart) {
+          chartDir.chart.update();
+        }
+      });
+    }
+  }
+
+  calcularMetricas(): void {
     this.totalAprendicesActivos = this.aprendices.length;
     const totalHoras = this.aprendices.reduce((sum, ap) => sum + ap.horas, 0);
-    this.promedioHorasEntrenadas = Math.round(totalHoras / this.totalAprendicesActivos);
+    this.promedioHorasEntrenadas = Math.round(
+      totalHoras / this.totalAprendicesActivos
+    );
   }
 
   prepararDatosGraficas(): void {
-    this.chartDataHoras = this.aprendices.map(ap => ({
-      label: ap.nombre,
-      value: ap.horas
-    }));
+    const top10 = [...this.aprendices]
+      .sort((a, b) => b.horas - a.horas)
+      .slice(0, 15);
+    // --- Actualizar gráfica de barras ---
+    this.barChartData.labels = top10.map((ap) => ap.nombre);
+    this.barChartData.datasets[0].data = top10.map((ap) => ap.horas);
 
-    this.chartDataRutinas = [
-      { label: 'Completadas', value: this.rutinasCompletadasHoy },
-      { label: 'Pendientes', value: this.rutinasAsignadas - this.rutinasCompletadasHoy }
+    // --- Actualizar gráfica de pastel ---
+    this.pieChartData.datasets[0].data = [
+      this.rutinasCompletadasHoy,
+      this.rutinasAsignadas - this.rutinasCompletadasHoy,
     ];
   }
 
@@ -86,10 +161,13 @@ export class DashboardAdminComponent implements OnInit {
   }
 
   aplicarFiltros(): void {
-    this.aprendicesFiltrados = this.aprendices.filter(ap => {
-      const nombreMatch = ap.nombre.toLowerCase().includes(this.filtroNombre.toLowerCase());
+    this.aprendicesFiltrados = this.aprendices.filter((ap) => {
+      const nombreMatch = ap.nombre
+        .toLowerCase()
+        .includes(this.filtroNombre.toLowerCase());
       const fichaMatch = ap.ficha.toString().includes(this.filtroFicha);
-      const nivelMatch = this.filtroNivel === '' || ap.nivel === this.filtroNivel;
+      const nivelMatch =
+        this.filtroNivel === '' || ap.nivel === this.filtroNivel;
       return nombreMatch && fichaMatch && nivelMatch;
     });
   }
