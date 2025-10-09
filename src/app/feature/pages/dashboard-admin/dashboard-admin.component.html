@@ -120,7 +120,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let ap of aprendicesFiltrados">
+                <tr *ngFor="let ap of aprendicesPaginados">
                   <td>{{ ap.nombre }}</td>
                   <td>{{ ap.ficha }}</td>
                   <td>
@@ -138,6 +138,49 @@
                   <td>{{ ap.horas }}</td>
                 </tr>
               </tbody>
+              <nav aria-label="Page navigation" class="mt-3">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item" [class.disabled]="page === 1">
+                    <button
+                      class="page-link"
+                      (click)="page = page - 1"
+                      [disabled]="page === 1"
+                    >
+                      Anterior
+                    </button>
+                  </li>
+
+                  <li
+                    class="page-item"
+                    *ngFor="
+                      let p of [].constructor(
+                        Math.ceil(aprendicesFiltrados.length / pageSize)
+                      );
+                      let i = index
+                    "
+                    [class.active]="page === i + 1"
+                  >
+                    <button class="page-link" (click)="page = i + 1">
+                      {{ i + 1 }}
+                    </button>
+                  </li>
+
+                  <li
+                    class="page-item"
+                    [class.disabled]="
+                      page >= aprendicesFiltrados.length / pageSize
+                    "
+                  >
+                    <button
+                      class="page-link"
+                      (click)="page = page + 1"
+                      [disabled]="page >= aprendicesFiltrados.length / pageSize"
+                    >
+                      Siguiente
+                    </button>
+                  </li>
+                </ul>
+              </nav>
             </table>
           </div>
         </div>

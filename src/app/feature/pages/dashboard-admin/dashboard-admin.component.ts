@@ -38,6 +38,9 @@ export class DashboardAdminComponent implements OnInit, AfterViewInit {
   promedioHorasEntrenadas = 0;
   rutinasCompletadasHoy = 15; // Dato estático de ejemplo
   rutinasAsignadas = 50; // Dato estático de ejemplo
+  Math = Math;
+  page = 1;
+  pageSize = 10;
 
   // --- Datos para Gráficas ---
   chartDataHoras: { label: string; value: number }[] = [];
@@ -119,6 +122,12 @@ export class DashboardAdminComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => this.refreshCharts(), 400);
+  }
+
+  get aprendicesPaginados(): Aprendiz[] {
+    const start = (this.page - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.aprendicesFiltrados.slice(start, end);
   }
 
   private refreshCharts(): void {
