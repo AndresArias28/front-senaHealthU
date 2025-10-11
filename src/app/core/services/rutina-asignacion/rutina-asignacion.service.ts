@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Asignacion, AsignacionRutinaDTO, Rutina } from '../../../shared/models/asignacion';
-import { environment } from '../../../../environments/environmet.prod';
+import { environment } from '../../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'

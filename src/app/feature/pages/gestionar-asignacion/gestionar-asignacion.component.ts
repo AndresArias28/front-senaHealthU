@@ -8,7 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { EditarAsignacionComponent } from '../../../modales/editar-asignacion/editar-asignacion.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 
 interface Asignacion {
   id: number;

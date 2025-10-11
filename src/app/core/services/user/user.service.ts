@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from '../../../shared/models/user';
-import { environment } from '../../../../environments/environmet.prod';
+import { environment } from '../../../../environments/environment.prod';
 import { AprendizDashboardResponse } from '../../../shared/models/aprendiz';
 
 @Injectable({
