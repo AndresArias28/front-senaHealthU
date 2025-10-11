@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RutineService } from '../../../core/services/rutine/rutine.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -8,6 +7,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ExcerciseServiceService } from '../../../core/services/excercise-service.service';
 import Swal, { SweetAlertResult } from 'sweetalert2';
+import { Ejercicio } from '../../../shared/models/ejercicio';
+
 
 @Component({
   selector: 'app-dashboard-exercises',
@@ -17,13 +18,17 @@ import Swal, { SweetAlertResult } from 'sweetalert2';
 })
 export class DashboardExercisesComponent implements OnInit {
   @Input() tipoUsuario!: string;
-  datos: any[] = [];
-  ejercicios = [...this.datos];
+  datos: Ejercicio[] = [];
+  ejercicios: Ejercicio[] = [...this.datos];
   terminoBusqueda: string = '';
   seleccionados: number[] = [];
+  //paginacion
+  paginaActual: number = 1;
+  elementosPorPagina: number = 10;
+  Math = Math;
+  totalPaginas: number = 1;
 
   constructor(
-    private rutineService: RutineService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private route: Router,
@@ -31,17 +36,7 @@ export class DashboardExercisesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.rutineService.getAllExcercises().subscribe({
-      next: (ejercicios) => {
-        console.log('Ejercicios obtenidos:', ejercicios);
-        this.datos = ejercicios;
-        this.ejercicios = [...this.datos];
-        this.rutineService.ejercicios.next(this.ejercicios);
-      },
-      error: (error) => {
-        console.error('Error al obtener ejercicios:', error);
-      },
-    });
+    this.cargarEjercicios();
   }
 
   abrirModal(ejercicio: any): void {
@@ -61,7 +56,6 @@ export class DashboardExercisesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((resultado) => {
-      console.log('Resultado del modal:', resultado);
       if (resultado?.actualizado) {
         this.cargarEjercicios();
         this.mostrarMensaje('Ejercicio actualizado correctamente', 'success');
@@ -99,15 +93,17 @@ export class DashboardExercisesComponent implements OnInit {
     });
   }
 
-  cargarEjercicios() {
-    this.rutineService.getAllExcercises().subscribe({
+  cargarEjercicios(): void {
+    this.excerciseService.getAllExcercises().subscribe({
       next: (ejercicio) => {
-        console.log('ejercicios recargadas desde el servidor:', ejercicio);
-        this.ejercicios = ejercicio;
+        this.datos = ejercicio;
+        this.ejercicios = [...this.datos];
+        this.totalPaginas = Math.ceil(
+          this.ejercicios.length / this.elementosPorPagina
+        );
       },
-      error: (error) => {
-        console.error('Error al cargar rutinas:', error);
-      },
+      error: (error) =>
+        this.mostrarMensaje('Error al cargar ejercicios', error),
     });
   }
 
@@ -144,48 +140,59 @@ export class DashboardExercisesComponent implements OnInit {
     }
   }
 
-eliminarEjercicio(id: number) {
-  Swal.fire({
-    title: '¿Eliminar ejercicio?',
-    text: 'Esta acción no se puede deshacer.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Sí, eliminar',
-    cancelButtonText: 'Cancelar'
-  }).then((result: SweetAlertResult) => {
-    if (result.isConfirmed) {
-      // 👉 Solo elimina si confirma
-      this.excerciseService.deleteExercise(id).subscribe({
-        next: () => {
-          // Actualizar arrays locales
-          this.datos = this.datos.filter((d) => d.idEjercicio !== id);
-          this.ejercicios = [...this.datos];
-          this.seleccionados = this.seleccionados.filter((s) => s !== id);
+  eliminarEjercicio(id: number) {
+    Swal.fire({
+      title: '¿Eliminar ejercicio?',
+      text: 'Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    }).then((result: SweetAlertResult) => {
+      if (result.isConfirmed) {
+        this.excerciseService.deleteExercise(id).subscribe({
+          next: () => {
+            this.datos = this.datos.filter((d) => d.idEjercicio !== id);
+            this.ejercicios = [...this.datos];
+            this.seleccionados = this.seleccionados.filter((s) => s !== id);
 
-          this.cargarEjercicios(); // Recargar lista
+            this.cargarEjercicios();
 
-          Swal.fire({
-            icon: 'success',
-            title: 'Ejercicio eliminado',
-            text: 'El ejercicio se eliminó correctamente.',
-            timer: 2000,
-            showConfirmButton: false
-          });
-        },
-        error: (error) => {
-          console.error('Error al eliminar el ejercicio:', error);
+            Swal.fire({
+              icon: 'success',
+              title: 'Ejercicio eliminado',
+              text: 'El ejercicio se eliminó correctamente.',
+              timer: 2000,
+              showConfirmButton: false,
+            });
+          },
+          error: (error) => {
+            console.error('Error al eliminar el ejercicio:', error);
 
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo eliminar el ejercicio. Intenta nuevamente.',
-            confirmButtonText: 'Aceptar'
-          });
-        }
-      });
-    }
-  });
-}
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'No se pudo eliminar el ejercicio. Intenta nuevamente.',
+              confirmButtonText: 'Aceptar',
+            });
+          },
+        });
+      }
+    });
+  }
+
+  // Ejercicios visibles en la página actual
+  get ejerciciosPaginados() {
+    const inicio = (this.paginaActual - 1) * this.elementosPorPagina;
+    const fin = inicio + this.elementosPorPagina;
+    return this.ejercicios.slice(inicio, fin);
+  }
+
+  // Cambiar de página
+  cambiarPagina(pagina: number) {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
+  }
 }

@@ -1,0 +1,99 @@
+/* ===== Fondo general con textura QR ===== */
+.qr-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fff9 0%, #e6f4ea 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Patrón de QR translúcido */
+.qr-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.06;
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/8/8f/Qr-2.svg");
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  filter: grayscale(100%);
+  z-index: 0;
+}
+
+/* Tarjeta principal */
+.qr-card {
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.qr-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Contenido del formulario */
+.form-label {
+  font-size: 1rem;
+}
+
+.form-control,
+.form-select {
+  border-radius: 0.75rem;
+  border: 1px solid #dee2e6;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #39A900;
+  box-shadow: 0 0 6px rgba(57, 169, 0, 0.4);
+}
+
+.btn-success {
+  background-color: #39A900;
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+  background-color: #2d8900;
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+  border-width: 2px;
+  font-weight: 600;
+}
+
+.qr-preview {
+  border: 2px dashed #39A900;
+  display: inline-block;
+  transition: all 0.3s ease-in-out;
+}
+
+.qr-preview:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(57, 169, 0, 0.3);
+}
+
+.alert-success {
+  background-color: #e6f4ea;
+  border: none;
+  color: #256029;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 2rem;
+  }
+
+  .btn-lg {
+    font-size: 1rem;
+  }
+}

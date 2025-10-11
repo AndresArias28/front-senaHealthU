@@ -15,10 +15,10 @@ declare var window: any;
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  // viewchild para abrir el modal al hacer click en el boton de recuperar contraseña
   @ViewChild(RecuperarContrasenaComponent)
-  recuperarComponent!: RecuperarContrasenaComponent; //esto es para el modal de recuperar contraseña
-
+  recuperarComponent!: RecuperarContrasenaComponent; 
+  mensajeError: string = '';
+  mensajeExito: string = '';
   contrasenaIngresada: string = '';
   loginError: string = '';
   loginForm;
@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private loginService: LoginService
   ) {
-    //validaciones del formulario reactivo
     this.loginForm = this.formBuilder.group({
       emailUsuario: [
         '',
@@ -51,17 +50,12 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) return;
 
     if (this.loginForm.valid) {
-      //validar el formulario reactivo
       this.loginService.login(this.loginForm.value as LoginRequest).subscribe({
-        // utilizando httpclient
-
         next: (data) => {
           const rol = this.loginService.getRole();
-          console.log('Rol obtenido:', rol);
 
           // Redirigir segun el rol
           if (rol == 'ROLE_Administrador') {
-            console.log('deberia entrar aca');
             this.router.navigate(['/inicio-admin']);
           } else if (rol === 'ROLE_Superusuario') {
             this.router.navigate(['/inicio-super']);
@@ -70,22 +64,20 @@ export class LoginComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.log(error.message);
-          this.loginError = error.message; //almacenar en loginError el mensaje de error que es mostrado en el html
+          this.loginError = error.message; 
+          toast.error('Error al iniciar sesión: ' + this.loginError, { duration: 5000 });
         },
         complete: () => {
-          console.log('complete');
-          this.loginForm.reset(); // resetea el formulario para  que no se muestre el error
+          this.loginForm.reset(); 
         },
       });
     } else {
-      this.loginForm.markAllAsTouched(); // marca todos los campos como tocados para mostrar los errores de validación
+      this.loginForm.markAllAsTouched(); 
       this.loginError = 'Error en el formulario';
     }
   }
 
   ngAfterViewInit() {
-    // abrir el modal al hacer click en el boton de recuperar contraseña
     this.recuperarComponent.modalAbierto.subscribe(() => {
       this.mostrarModal();
     });
@@ -99,13 +91,11 @@ export class LoginComponent implements OnInit {
     }
 
     modalElement?.addEventListener('hidden.bs.modal', () => {
-      // eliminar el backdrop del modal de recuperar contraseña
       this.eliminarBackdrop();
     });
   }
 
   eliminarBackdrop() {
-    // eliminar backdrop del modal de recuperar contraseña
     const backdrop = document.querySelector('.modal-backdrop');
     if (backdrop) {
       backdrop.remove();
@@ -114,22 +104,18 @@ export class LoginComponent implements OnInit {
   }
 
   abrirModalDesdeLogin() {
-    // modal de recuperar contraseña desde el login
     this.recuperarComponent.abrirModal();
   }
 
   togglePassword() {
-    // mostrar y ocultar la contraseña
     this.showPassword = !this.showPassword;
   }
 
   get email() {
-    // obtener el valor del campo de correo electronico
     return this.loginForm.controls.emailUsuario;
   }
 
   get password() {
-    // obtener el valor del campo de contraseña
     return this.loginForm.controls.contrasenaUsuario;
   }
 }

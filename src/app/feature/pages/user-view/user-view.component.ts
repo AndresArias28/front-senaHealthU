@@ -17,7 +17,7 @@ export class UserViewComponent implements OnInit{
   ngOnInit(): void {
     this.loginService.currentUserLoginOn.subscribe({
       next: (userLoginOn) => {
-        this.userLoginOn = userLoginOn; //almacena el estado del login en la variable userLoggedIn
+        this.userLoginOn = userLoginOn; 
       },
     });
   }

@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ExcerciseServiceService } from '../../../core/services/excercise-service.service';
 
 @Component({
@@ -24,6 +24,7 @@ export class RegisterExerciseComponent {
   musculos: string = '';
   archivoSeleccionado: File | null = null;
   mensajeExito: any;
+  previewUrl: string | ArrayBuffer | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,7 +33,10 @@ export class RegisterExerciseComponent {
   ) {
     this.formularioEjercicio = this.formBuilder.group({
       nombreEjercicio: ['', [Validators.required]],
-      descripcionEjercicio: ['', [Validators.required, Validators.minLength(10)],],
+      descripcionEjercicio: [
+        '',
+        [Validators.required, Validators.minLength(10)],
+      ],
       fotoEjercicio: [''],
       met: ['', [Validators.required]],
       musculos: ['', [Validators.required]],
@@ -44,18 +48,23 @@ export class RegisterExerciseComponent {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
+        this.previewUrl = reader.result;
         this.fotoEjercicio = e.target.result; // Aquí puedes almacenar la imagen en una variable
         this.archivoSeleccionado = file; // Almacena el archivo seleccionado
       };
       reader.readAsDataURL(file);
     }
   }
+  volverDashboard(): void {
+    this.router.navigate(['/inicio-admin']);
+  }
 
   registerExercise() {
     if (this.formularioEjercicio.valid && this.archivoSeleccionado) {
       const datos = {
         nombreEjercicio: this.formularioEjercicio.value.nombreEjercicio,
-        descripcionEjercicio: this.formularioEjercicio.value.descripcionEjercicio,
+        descripcionEjercicio:
+          this.formularioEjercicio.value.descripcionEjercicio,
         fotoEjercicio: this.fotoEjercicio,
         met: this.formularioEjercicio.value.met,
         musculos: this.formularioEjercicio.value.musculos,
@@ -72,23 +81,20 @@ export class RegisterExerciseComponent {
         next: (response) => {
           this.mensajeExito = 'Ejercicio registrado exitosamente';
           setTimeout(() => {
-            console.log('Ejercicio registrado:', response);
             this.mensajeExito = '';
             this.router.navigate(['/inicio-admin']);
           }, 1000);
         },
         error: (error) => {
-          console.error('Error al registrar ejercicio:', error);
           this.mensajeExito = 'Error al registrar el ejercicio';
         },
         complete: () => {
-          console.log('Registro de ejercicio completado');
           this.formularioEjercicio.reset();
           this.archivoSeleccionado = null;
         },
       });
     } else {
-      console.log('Formulario inválido o archivo no seleccionado');
+      this.mensajeExito = 'Formulario inválido o archivo no seleccionado';
     }
   }
 }

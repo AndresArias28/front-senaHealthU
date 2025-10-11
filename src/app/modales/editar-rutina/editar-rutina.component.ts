@@ -92,7 +92,6 @@ export class EditarRutinaComponent implements OnInit {
         },
         error: (err) => {
           this.showError('Error al cargar los ejercicios disponibles');
-          console.error(err);
         },
       });
     }
@@ -126,27 +125,23 @@ export class EditarRutinaComponent implements OnInit {
     );
 
     if (this.archivoSeleccionado) {
-      console.log('Archivo seleccionado:', this.archivoSeleccionado);
       formData.append('fotoRutina', this.archivoSeleccionado);
     } else {
-      console.log('No se ha seleccionado un archivo, no se adjuntará imagen');
+      formData.append('fotoRutina', new Blob(), '');
     }
 
     this.rutineService.updateRutine(formData, this.data.idRutina!).subscribe({
       next: (response) => {
         this.showSuccess('Rutina actualizada correctamente');
-        console.log('Rutina registrada exitosamente:', response);
         this.rutinaActualizada.emit();
         this.dialogRef.close({ actualizado: true }); // Cerrar el modal y pasar la respuesta
       },
       error: (error) => {
-        console.error('Error al actualizar la rutina:', error);
         this.showError('No es posible editar la rutina, porque ya fue registrada');
       },
       complete: () => {
         this.isUploading = false;
         this.archivoSeleccionado = null;
-        console.log('Actualización de rutina completada');
       },
     });
   }
@@ -200,7 +195,6 @@ export class EditarRutinaComponent implements OnInit {
       try {
         const result = e.target?.result as string;
         this.rutina.fotoRutina = result;
-        // this.rutina.fotoRutina = file.name;
         this.currentImageName = file.name;
         this.showSuccess('Imagen cargada correctamente');
       } catch (error) {

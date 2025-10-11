@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ComunicacionService } from '../../core/services/comunicacion/comunicacion.service';
 import { LoginService } from '../../core/services/login/login.service';
 import { jwtDecode } from 'jwt-decode';
@@ -12,12 +19,12 @@ import { jwtDecode } from 'jwt-decode';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent implements OnInit {
-
-  @Input() seccionActual!: string  //Definite Assignment Assertion - recibe cambios del padre
+  @Input() seccionActual!: string; //Definite Assignment Assertion - recibe cambios del padre
   @Input() tipoUsuario!: string;
   @Output() seccionSeleccionada = new EventEmitter<string>(); // Emite cambios aL padre
 
-  userName: string = '';
+  isCollapsed = false;
+  userName = 'Administrador';
 
   constructor(
     private comunicacionsv: ComunicacionService,
@@ -29,12 +36,11 @@ export class SidebarComponent implements OnInit {
       this.cambiarSeccion(seccion);
     });
 
-    this.loginService.userData.subscribe(token => {
+    this.loginService.userData.subscribe((token) => {
       if (token) {
         try {
           const decodedToken: any = jwtDecode(token);
           this.userName = decodedToken.nombre_usuario;
-          console.log("el nombre es: " + this.userName);
         } catch (error) {
           console.error('Error decoding token:', error);
         }
@@ -43,11 +49,19 @@ export class SidebarComponent implements OnInit {
   }
 
   cambiarSeccion(seccion: string) {
-    if (seccion === "logout") {
+    if (seccion === 'logout') {
       this.loginService.logout();
       window.location.href = '/login';
     }
-    console.log('Sidebar emitió sección:', seccion);
-    this.seccionSeleccionada.emit(seccion);//emite el cambio de sección a la vista padre
+    this.seccionSeleccionada.emit(seccion); 
+  }
+
+  toggleSidebar() {
+    this.isCollapsed = !this.isCollapsed;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isCollapsed = window.innerWidth < 992;
   }
 }

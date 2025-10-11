@@ -29,27 +29,22 @@ import { DashboardAdminComponent } from "../dashboard-admin/dashboard-admin.comp
 
 export class DashboardComponent {
 
-  seccionActual: string = 'panelAdmin';
+  seccionActual: string = 'Panel Administrativo';
 
   constructor() {}
 
   cambiarSeccion(seccion: string) {
-    console.log('dashh sexxion cambiada a ', seccion);
     this.seccionActual = seccion;
   }
 
   redirigirAGestionUsuarios() {
     this.seccionActual = 'gestionUsers'; // cambio manual tras registrar rutina
-    console.log('Redirigido a gestionUsers tras registrar rutina');
   }
   redirigirADashboard() {
-    this.seccionActual = 'gestionUsers'; // cambio manual tras eliminar rutina
-    console.log('Redirigido a gestionUsers tras eliminar rutina');
-  
+    this.seccionActual = 'gestionUsers'; // cambio manual tras eliminar rutina  
   }
 
   redirigirAGestionEjercicios() {
     this.seccionActual = 'gestionEjercicios';
-    console.log('Redirigido a gestion Ejercicios ');
   }
 }

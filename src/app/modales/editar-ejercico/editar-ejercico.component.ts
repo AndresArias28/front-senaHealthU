@@ -14,16 +14,9 @@ import { MatIconModule, MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { Ejercicio } from '../../shared/models/ejercicio';
 
-export interface EjercicioData {
-  idEjercicio?: number;
-  nombreEjercicio: string;
-  descripcionEjercicio: string;
-  met: number;
-  fotoEjercicio?: string;
-  isEdit?: boolean;
-  musculos: string;
-}
+
 @Component({
   selector: 'app-editar-ejercico',
   imports: [
@@ -46,14 +39,7 @@ export interface EjercicioData {
 })
 export class EditarEjercicoComponent implements OnInit {
   @Output() ejercicioActualizado = new EventEmitter<void>();
-
-  ejercicio: EjercicioData = {
-    nombreEjercicio: '',
-    descripcionEjercicio: '',
-    met: 0,
-    musculos: '',
-  };
-
+  ejercicio: Ejercicio;
   currentImageName: string = '';
   isUploading: boolean = false;
   archivoSeleccionado: File | null = null;
@@ -62,7 +48,7 @@ export class EditarEjercicoComponent implements OnInit {
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<EditarEjercicoComponent>,
     private exerciseService: ExcerciseServiceService,
-    @Inject(MAT_DIALOG_DATA) public data: EjercicioData
+    @Inject(MAT_DIALOG_DATA) public data: Ejercicio
   ) {
     this.ejercicio = { ...data };
   }
@@ -102,11 +88,9 @@ export class EditarEjercicoComponent implements OnInit {
     );
 
     if (this.archivoSeleccionado) {
-      console.log('Archivo seleccionado:', this.archivoSeleccionado);
       formData.append('fotoEjercicio', this.archivoSeleccionado);
     } else {
       formData.append('fotoEjercicio', new Blob(), '');
-      console.log('No se ha seleccionado un archivo, no se adjuntará imagen');
     }
 
     this.exerciseService
@@ -114,18 +98,15 @@ export class EditarEjercicoComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.showSuccess('Ejercicio actualizado correctamente');
-          console.log('Ejercicio actualizado exitosamente:', response);
           this.ejercicioActualizado.emit();
           this.dialogRef.close({ actualizado: true });
         },
         error: (error) => {
-          console.error('Error al actualizar el ejercicio:', error);
           this.showError('Error al actualizar el ejercicio');
         },
         complete: () => {
           this.isUploading = false;
           this.archivoSeleccionado = null;
-          console.log('Actualización de ejercicio completada');
         },
       });
   }
@@ -152,7 +133,7 @@ export class EditarEjercicoComponent implements OnInit {
       return;
     }
     this.archivoSeleccionado = file; // Guardar el archivo seleccionado
-    this.processFile(file); //previsualizar la imagen
+    this.processFile(file); 
   }
 
   private validateFile(file: File): boolean {
@@ -186,7 +167,6 @@ export class EditarEjercicoComponent implements OnInit {
       try {
         const result = e.target?.result as string;
         this.ejercicio.fotoEjercicio = result;
-        // this.rutina.fotoRutina = file.name;
         this.currentImageName = file.name;
         this.showSuccess('Imagen cargada correctamente');
       } catch (error) {

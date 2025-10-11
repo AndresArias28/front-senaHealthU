@@ -1,39 +1,92 @@
-<div class="container mt-4">
-  <h3 class="mb-3">Asignaciones de Rutinas</h3>
+<div class="col mt-4">
+  <div class="card border-0 shadow-lg rounded-4 dashboard-card">
+    <div class="card-body p-4 p-md-5">
+      <!-- Header -->
+      <div
+        class="d-flex flex-wrap justify-content-between align-items-center mb-4 border-bottom pb-3"
+      >
+        <div>
+          <h3 class="fw-bold text-success mb-1">
+            <i class="bi bi-people-fill me-2"></i>Gestión de Asignaciones
+          </h3>
+          <p class="text-muted small mb-0">
+            Visualiza y administra las rutinas asignadas a cada aprendiz.
+          </p>
+        </div>
 
-  <table class="table table-hover table-bordered align-middle shadow-sm">
-    <thead class="table-primary text-center">
-      <tr>
-        <th>Aprendiz</th>
-        <th>Ficha</th>
-        <th>Fecha de Asignación</th>
-        <th>Nivel Físico</th>
-        <th>Ver</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let asignacion of asignaciones">
-        <td>{{ asignacion.nombreAprendiz }}</td>
-        <td>{{ asignacion.ficha }}</td>
-        <td>{{ asignacion.fechaCreacion | date:'dd/MM/yyyy' }}</td>
-        <td>{{ asignacion.nivelFisico }}</td>
-        <td class="text-center">
-
+        <div class="d-flex flex-wrap gap-2 mt-3 mt-md-0">
           <button
-            class="btn btn-sm btn-warning me-2"
-            (click)="editarAsignacion(asignacion)"
+            class="btn btn-outline-success d-flex align-items-center gap-2 shadow-sm"
+            (click)="recargarAsignaciones()"
           >
-            <i class="bi bi-pencil"></i>
+            <i class="bi bi-arrow-clockwise"></i> Actualizar
           </button>
+        </div>
+      </div>
 
-        </td>
-      </tr>
-      <tr *ngIf="asignaciones.length === 0">
-        <td colspan="4" class="text-center text-muted">
-          No hay asignaciones registradas
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <!-- Tabla -->
+      <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm mb-0">
+          <thead class="table-success bg-light">
+            <tr class="text-uppercase small text-muted">
+              <th><i class="bi bi-person-badge me-2"></i>Aprendiz</th>
+              <th><i class="bi bi-card-list me-2"></i>Ficha</th>
+              <th><i class="bi bi-calendar-event me-2"></i>Fecha Asignación</th>
+              <th><i class="bi bi-activity me-2"></i>Nivel Físico</th>
+              <th class="text-center"><i class="bi bi-eye-fill me-1"></i>Ver</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let asignacion of asignaciones">
+              <td class="fw-semibold text-dark">
+                {{ asignacion.nombreAprendiz }}
+              </td>
+              <td>{{ asignacion.ficha }}</td>
+              <td>{{ asignacion.fechaCreacion | date : 'dd/MM/yyyy' }}</td>
+              <td>
+                <span
+                  class="badge bg-success bg-opacity-75 text-uppercase px-3 py-2 rounded-pill"
+                  >{{ asignacion.nivelFisico }}</span
+                >
+              </td>
+              <td class="text-center">
+                <button
+                  class="btn btn-sm btn-outline-warning rounded-circle shadow-sm"
+                  (click)="editarAsignacion(asignacion)"
+                  title="Ver o editar asignación"
+                >
+                  <i class="bi bi-pencil"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Sin datos -->
+            <tr *ngIf="asignaciones.length === 0">
+              <td colspan="5" class="text-center text-muted py-4">
+                <i class="bi bi-exclamation-circle me-2"></i>No hay asignaciones registradas
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Paginación opcional -->
+      <div
+        class="d-flex justify-content-between align-items-center mt-4 px-2 border-top pt-3"
+        *ngIf="asignaciones.length > 0"
+      >
+        <p class="mb-0 small text-muted">
+          Mostrando {{ asignaciones.length }} asignaciones
+        </p>
+
+        <button
+          class="btn btn-outline-success btn-sm d-flex align-items-center gap-1"
+          (click)="recargarAsignaciones()"
+        >
+          <i class="bi bi-arrow-repeat"></i> Recargar
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-

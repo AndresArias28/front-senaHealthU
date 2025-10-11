@@ -68,7 +68,7 @@ export class DashboardAdminComponent implements OnInit, AfterViewInit {
     ],
   };
 
-  // --- Configuración de Gráfica de Pastel ---
+  // --- grafica de Pastel ---
   pieChartOptions: ChartConfiguration['options'] = {
     maintainAspectRatio: false,
     animation: false,
@@ -100,17 +100,13 @@ export class DashboardAdminComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.userService.getAprendicesDashboard().subscribe({
       next: (response) => {
-        console.log(
-          'Datos de aprendices obtenidos del servicio:',
-          response.data
-        );
         this.aprendices = response.data;
         this.aprendicesFiltrados = response.data;
         this.calcularMetricas();
         this.prepararDatosGraficas();
         this.calcularTopAprendices();
 
-        this.cdr.detectChanges(); // Forzar detección de cambios
+        this.cdr.detectChanges(); 
 
         setTimeout(() => this.refreshCharts(), 300);
       },

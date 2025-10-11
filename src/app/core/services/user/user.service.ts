@@ -2,20 +2,16 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 import { User } from '../../../shared/models/user';
-import { environment } from '../../../../environments/environmets';
+import { environment } from '../../../../environments/environmet.prod';
 import { AprendizDashboardResponse } from '../../../shared/models/aprendiz';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
-  // private url = environment.urlApi;
-
   constructor(private http: HttpClient) { }
 
   getUser(id: number) : Observable<User>{
-    // console.log('Ejecutando getUser() para ID:', id);  
     return this.http.get<User>(`${environment.urlProd}obtenereUsario/${id}`).pipe(
       catchError(this.handleError)
     );
@@ -47,6 +43,7 @@ export class UserService {
     return this.http.post(`${environment.urlProd}admin/register/qr`, body, { headers }).pipe(
       tap((response) => {
         console.log('QR registrado exitosamente:', response);
+      
       }),
 
       catchError(this.handleError)

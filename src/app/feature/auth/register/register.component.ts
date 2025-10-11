@@ -30,7 +30,6 @@ export class RegisterComponent  {
     });
   }
 
-  // Custom validator to check if passwords match
   passwordMatchValidator(form: FormGroup) {
     const password: any = form.get('contrasenaAdmin');
     const confirmPassword: any = form.get('confirmPassword');
@@ -69,7 +68,7 @@ export class RegisterComponent  {
 
   onSubmit() {
     if (this.register.valid) {
-      console.log(this.register.value);
+      
       // Aquí implementarías la lógica de registro
     }
   }

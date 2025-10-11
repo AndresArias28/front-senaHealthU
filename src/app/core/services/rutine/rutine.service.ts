@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
-import { environment } from '../../../../environments/environmets';
+import { environment } from '../../../../environments/environmet.prod';
 
 
 @Injectable({
@@ -9,41 +9,34 @@ import { environment } from '../../../../environments/environmets';
 })
 export class RutineService {
 
-  currentRutine = new BehaviorSubject<String>(""); // Observable para la rutina actual
-  rutines = new BehaviorSubject<any[]>([]); // Observable para todas las rutinas
-  ejercicios = new BehaviorSubject<any[]>([]); // Observable para los ejercicios
+  currentRutine = new BehaviorSubject<String>(""); 
+  rutines = new BehaviorSubject<any[]>([]); 
+  ejercicios = new BehaviorSubject<any[]>([]); 
 
 
   constructor(private http: HttpClient) {}
 
-  //registrar una rutina
   registerRutine(formaData: FormData): Observable<any> {
     return this.http.post<any>(environment.urlProd + "rutina/crear", formaData).pipe(
       tap((response) => {
-        console.log('Rutina registrada:', response);
-        this.currentRutine.next(response); // actualiza el observable con la nueva rutina
+        this.currentRutine.next(response); 
       }),
-      
       catchError(this.handleError)
     );
   }
 
-  //actualizar una rutina
   updateRutine(formaData: FormData, id: number): Observable<any> {
     return this.http.put<any>(environment.urlProd + "rutina/actualizar/" + id, formaData).pipe(
       tap((response) => {
-        console.log('Rutina actualizada:', response);
         this.currentRutine.next(response);
       }),
       catchError(this.handleError)
     );
   }
 
-  //obtener todas las rutinas
   getAllRutines(): Observable<any[]> {
     return this.http.get<any[]>(environment.urlProd + "rutina/obtenerRutinas").pipe(
       tap((response) => {
-        console.log('Rutinas obtenidas:', response);
         this.rutines.next(response);
       }),
       catchError(this.handleError)
@@ -53,7 +46,6 @@ export class RutineService {
   getRutineById(id: number): Observable<any> {
     return this.http.get<any>(environment.urlProd + "rutina/obtenerRutina/" + id).pipe(
       tap((response) => {
-        console.log('Rutina obtenida:', response);
         this.currentRutine.next(response);
       }),
       catchError(this.handleError)
@@ -63,7 +55,7 @@ export class RutineService {
   getAllAsinacionRutines(): Observable<any[]> {
     return this.http.get<any[]>(environment.urlProd + "asignaciones/obttenerAll").pipe(
       tap((response) => {
-        console.log('Asignaciones obtenidas:', response);
+        this.rutines.next(response); // Actualiza el observable de rutinas con las asignaciones
       }),
       catchError(this.handleError)
     );
@@ -72,18 +64,16 @@ export class RutineService {
   getAllExcercises(): Observable<any[]> {
     return this.http.get<any[]>(environment.urlProd + "ejercicio/obtenerEjercicios").pipe(
       tap((response) => {
-        console.log('Ejercicios obtenidos:', response);
         this.ejercicios.next(response); // Actualiza el observable de rutinas con los ejercicios
       }),
       catchError(this.handleError)
     );
   }
       
-  //eliminar una rutina por ID
   deleteRutine(id: number): Observable<any> {
     return this.http.delete<any>(environment.urlProd + "rutina/eliminarRutinas/" + id).pipe(
       tap((response) => {
-        console.log('Rutina eliminada:', response);
+        this.currentRutine.next(''); 
       }),
       catchError(this.handleError)
     );

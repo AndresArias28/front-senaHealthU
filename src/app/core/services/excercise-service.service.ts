@@ -1,15 +1,14 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
-import { environment } from '../../../environments/environmets';
+import { environment } from '../../../environments/environmet.prod';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExcerciseServiceService {
-
-  ejercicios = new BehaviorSubject<String[]>([]); // Observable para los ejercicios
-  ejercicioACtual = new BehaviorSubject<String>(''); // Observable para el ejercicio actual
+  ejercicios = new BehaviorSubject<String[]>([]);
+  ejercicioACtual = new BehaviorSubject<String>('');
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +17,6 @@ export class ExcerciseServiceService {
       .post<any>(environment.urlProd + 'ejercicio/crearEjercicio', formData)
       .pipe(
         tap((response) => {
-          console.log('Ejercicio registrado:', response);
           this.ejercicioACtual.next(response); // actualiza el observable con el nuevo ejercicio
         }),
         catchError(this.handleError)
@@ -27,10 +25,12 @@ export class ExcerciseServiceService {
 
   updateExercise(formData: FormData, id: number): Observable<any> {
     return this.http
-      .put<any>(environment.urlProd + 'ejercicio/actualizarEjercicio/' + id, formData)
+      .put<any>(
+        environment.urlProd + 'ejercicio/actualizarEjercicio/' + id,
+        formData
+      )
       .pipe(
         tap((response) => {
-          console.log('Ejercicio actualizado:', response);
           this.ejercicioACtual.next(response);
         }),
         catchError(this.handleError)
@@ -42,16 +42,26 @@ export class ExcerciseServiceService {
       .delete<any>(environment.urlProd + 'ejercicio/eliminarEjercicio/' + id)
       .pipe(
         tap((response) => {
-          console.log('Ejercicio eliminado:', response);
-          // Aquí podrías actualizar el observable de ejercicios si es necesario
+          this.ejercicioACtual.next('');
         }),
         catchError(this.handleError)
-      )
+      );
+  }
+
+  getAllExcercises(): Observable<any[]> {
+    return this.http
+      .get<any[]>(environment.urlProd + 'ejercicio/obtenerEjercicios')
+      .pipe(
+        tap((response) => {
+          this.ejercicios.next(response); // Actualiza el observable de rutinas con los ejercicios
+        }),
+        catchError(this.handleError)
+      );
   }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 200) {
-      console.log(error.error); // Retorna la respuesta como exitosa
+      console.error('Error inesperado ', error.error);
     }
     if (error.status === 0) {
       console.error('Se ha producio un error ', error.error);

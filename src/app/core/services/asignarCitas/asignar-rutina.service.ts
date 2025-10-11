@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
-import { environment } from '../../../../environments/environmets';
+import { environment } from '../../../../environments/environmet.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,6 @@ export class AsignarRutinaService {
   asignarRutina( datos: any): Observable<any> {
     return this.http.post<any>(environment.urlProd + "asignaciones/asignar", datos).pipe(
       tap((response) => {
-        console.log('Asignación de rutina:', response);
         this.currentAsignacion.next(response);
       }),
       catchError(this.handleError)
@@ -25,6 +24,7 @@ export class AsignarRutinaService {
   private handleError(error: HttpErrorResponse) {
     if (error.status === 200) {
       console.log(error.error); // Retorna la respuesta como exitosa
+      
     }
     if (error.status === 0) {
       console.error('Se ha producio un error ', error.error);

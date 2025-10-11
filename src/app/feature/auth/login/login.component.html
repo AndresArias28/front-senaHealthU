@@ -1,97 +1,136 @@
-<div class="container-fluid vh-100">
+<div class="container-fluid login-page">
   <div class="row vh-100">
-    <!-- background Image Column -->
-    <div
-      class="col-lg-6 d-none d-lg-block position-relative bg-image"
-    ></div>
+    <!-- Imagen lateral -->
+    <div class="col-lg-6 d-none d-lg-block bg-image position-relative">
+      <!-- Capa oscura -->
+      <div class="overlay d-flex justify-content-center align-items-center">
+        <div class="overlay-text text-center text-white px-4">
+          <h2 class="fw-bold mb-3">
+            <i
+              class="bi bi-heart-pulse-fill text-danger me-2 animate-pulse"
+            ></i>
+            Bienvenido a
+            <span class="fw-bold shine-effect ms-1">HealthU</span>
+          </h2>
+          <p class="lead fw-semibold mb-0 text-white-80">
+            Conéctate, entrena y alcanza tus metas saludables.
+          </p>
+        </div>
+      </div>
+    </div>
 
-    <!-- Login Form Column -->
-    <div class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center bg-body-secondary">
-      <div class="login-container p-4 form-container">
-        <h2 class="text-center p-4">Iniciar Sesión</h2>
-          <!-- Logo -->
-          <div class="text-center">
-            <img src="../../../../assets/Designer.png" alt="sena-HealthU" class="img-fluid" style="max-width: 220px" />
-          </div>
+    <!-- Formulario -->
+    <div
+      class="col-lg-6 col-md-12 d-flex align-items-center justify-content-center bg-light"
+    >
+      <div class="login-card p-5 shadow-lg rounded-4">
+        <!-- Logo -->
         <div class="text-center mb-4">
-          <span>Al continuar, aceptas nuestro</span>
-          <a href="#" class="enlace"> Acuerdo del usuario</a>
-          <span> y confirmas que has entendido la </span>
-          <a href="#" class="enlace">Política de privacidad</a>.
+          <img
+            src="../../../../assets/Designer.png"
+            alt="Logo HealthU"
+            class="img-fluid mb-3"
+            style="max-width: 180px"
+          />
+          <h3 class="fw-semibold">Iniciar Sesión</h3>
         </div>
 
-        <!-- Login Form -->
-        <form [formGroup]="loginForm" (ngSubmit)="login()" (keydown.enter)="login()">
-          <div>
-            <label class="form-label"> Email </label>
+        <!-- Mensajes -->
+        <div *ngIf="mensajeError" class="alert alert-danger text-center py-2">
+          {{ mensajeError }}
+        </div>
+        <div *ngIf="mensajeExito" class="alert alert-success text-center py-2">
+          {{ mensajeExito }}
+        </div>
+
+        <!-- Formulario -->
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="login()"
+          (keydown.enter)="login()"
+        >
+          <div class="mb-3">
+            <label class="form-label fw-medium">Correo electrónico</label>
             <input
-              formControlName="emailUsuario"
               type="email"
+              formControlName="emailUsuario"
               class="form-control form-control-lg"
-              id="emailUsuario"
-              aria-describedby="emailHelp"
+              placeholder="ejemplo@correo.com"
             />
+            <div
+              *ngIf="email.invalid && (email.dirty || email.touched)"
+              class="error-text"
+            >
+              <small *ngIf="email.errors?.['required']"
+                >El correo es obligatorio.</small
+              >
+              <small
+                *ngIf="email.errors?.['email'] || email.errors?.['pattern']"
+                >Formato de correo no válido.</small
+              >
+            </div>
           </div>
 
-          <div
-            *ngIf="email.invalid && (email.dirty || email.touched)"
-            class="error-container ">
-            <div *ngIf="email.errors?.['required']">
-              El Email es requerido.
-            </div>
-            <div *ngIf="email.errors ?.['email'] || email.errors ?.['pattern']">
-              El Email debe tener un formato válido.
-            </div>
-          </div>
-
-          <div>
-            <label for="contrasenaUsuario" class="form-label mt-5">
-              Contraseña
-            </label>
+          <div class="mb-3">
+            <label class="form-label fw-medium">Contraseña</label>
             <div class="input-group">
               <input
                 formControlName="contrasenaUsuario"
                 [type]="showPassword ? 'text' : 'password'"
-                class="form-control"
-                id="contrasenaUsuario"
+                class="form-control form-control-lg"
+                placeholder="Tu contraseña"
               />
-
               <button
-                class="btn btn-outline-secondary "
+                class="btn btn-outline-secondary"
                 type="button"
                 (click)="togglePassword()"
                 tabindex="-1"
-                >
+              >
                 <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
               </button>
-
             </div>
-              <div
-                *ngIf="password.invalid && (password.dirty || password.touched)"
-                class="error-container ">
-                <div *ngIf="password.errors?.['required']">
-                  El Password es requerido.
-                </div>
-                <div *ngIf="password.errors?.['minlength']">
-                  El Password debe tener al menos 6 caracteres.
-                </div>
-              </div>
-
-          </div>
-          <div class="text-end  mt-4 mb-2">
-            <a (click)="abrirModalDesdeLogin()" class="enlace" >¿Has olvidado tu contraseña?</a>
+            <div
+              *ngIf="password.invalid && (password.dirty || password.touched)"
+              class="error-text"
+            >
+              <small *ngIf="password.errors?.['required']"
+                >La contraseña es obligatoria.</small
+              >
+              <small *ngIf="password.errors?.['minlength']"
+                >Debe tener al menos 6 caracteres.</small
+              >
+            </div>
           </div>
 
-            <app-recuperar-contrasena (modalAbierto)="mostrarModal()"></app-recuperar-contrasena>
+          <div class="text-end mb-3">
+            <a (click)="abrirModalDesdeLogin()" class="link-secondary small"
+              >¿Olvidaste tu contraseña?</a
+            >
+          </div>
+
+          <app-recuperar-contrasena
+            (modalAbierto)="mostrarModal()"
+          ></app-recuperar-contrasena>
 
           <button
             type="submit"
-            class="btn btn-success mb-4 w-100"
-            [disabled]="loginForm.invalid">
-            Iniciar Sesion
+            class="btn btn-success w-100 py-2"
+            [disabled]="loginForm.invalid"
+          >
+            <i class="bi bi-box-arrow-in-right me-2"></i> Iniciar Sesión
           </button>
-
         </form>
+
+        <div class="text-center mt-4 small">
+          <span>Al continuar, aceptas nuestro </span>
+          <a href="#" class="text-decoration-none fw-semibold text-success"
+            >Acuerdo del Usuario</a
+          >
+          <span> y la </span>
+          <a href="#" class="text-decoration-none fw-semibold text-success"
+            >Política de Privacidad</a
+          >.
+        </div>
       </div>
     </div>
   </div>

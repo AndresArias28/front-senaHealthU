@@ -1,84 +1,153 @@
-<div class="container-fluid py-5 bg-body-secondary">
+<div class="container-fluid bg-light py-5">
   <div class="row justify-content-center">
-    <div class="col-lg-8">
-      <div class="card border-0 shadow-sm rounded-4">
-        <div class="card-body p-4 p-md-5">
-          <h2 class="card-title mb-4 text-center">Crear Nuevo Ejercicio</h2>
-          <form *ngIf="formularioEjercicio" [formGroup]="formularioEjercicio" (ngSubmit)="registerExercise()" enctype="multipart/form-data" class="form-container">
-            <!-- Nombre del Ejercicio -->
+    <div class="col-lg-8 col-md-10">
+      <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-5">
+          <!-- Encabezado -->
+          <div class="text-center mb-4">
             <div class="mb-3">
-              <label for="nombreEjercicio" class="form-label">Nombre del ejercicio</label>
-              <input
-                formControlName="nombreEjercicio"
-                type="text"
-                class="form-control form-control-lg"
-                id="nombreEjercicio"
-                aria-describedby="nombreEjercicioHelp"
-                [(ngModel)]="nombreEjercicio"
-              />
+              <i
+                class="bi bi-activity text-success"
+                style="font-size: 3rem"
+              ></i>
+            </div>
+            <h2 class="fw-bold mb-1 text-success">Crear Nuevo Ejercicio</h2>
+            <p class="text-muted mb-0">
+              Registra los detalles y carga la imagen del ejercicio.
+            </p>
+          </div>
+
+          <!-- Formulario -->
+          <form
+            *ngIf="formularioEjercicio"
+            [formGroup]="formularioEjercicio"
+            (ngSubmit)="registerExercise()"
+            enctype="multipart/form-data"
+            class="form-container mt-4"
+          >
+            <!-- Nombre -->
+            <div class="mb-4">
+              <label for="nombreEjercicio" class="form-label fw-semibold"
+                >Nombre del ejercicio</label
+              >
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-success text-white">
+                  <i class="bi bi-pencil-square"></i>
+                </span>
+                <input
+                  formControlName="nombreEjercicio"
+                  type="text"
+                  id="nombreEjercicio"
+                  class="form-control"
+                  placeholder="Ej: Sentadillas"
+                />
+              </div>
             </div>
 
-            <!-- Descripción del Ejercicio -->
-            <div class="mb-3">
-              <label for="descripcionEjercicio" class="form-label">Descripción del ejercicio</label>
-              <input
-                formControlName="descripcionEjercicio"
-                type="text"
-                class="form-control form-control-lg"
-                id="descripcionEjercicio"
-                aria-describedby="descripcionRutinaHelp"
-                [(ngModel)]="descripcionEjercicio"
-              />
+            <!-- Descripción -->
+            <div class="mb-4">
+              <label for="descripcionEjercicio" class="form-label fw-semibold"
+                >Descripción</label
+              >
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-success text-white">
+                  <i class="bi bi-file-text"></i>
+                </span>
+                <textarea
+                  formControlName="descripcionEjercicio"
+                  id="descripcionEjercicio"
+                  rows="2"
+                  class="form-control"
+                  placeholder="Describe el ejercicio..."
+                ></textarea>
+              </div>
             </div>
 
-            <!-- Foto del Ejercicio -->
-            <div class="mb-3">
-              <label for="fotoEjercicio" class="form-label">Foto del Ejercicio</label>
-              <input
-                formControlName="fotoEjercicio"
-                type="file"
-                class="form-control form-control-lg"
-                id="fotoEjercicio"
-                aria-describedby="fotoEjercicioaHelp"
-                (change)="onFileSelected($event)"
-              />
+            <!-- Foto -->
+            <div class="mb-4">
+              <label for="fotoEjercicio" class="form-label fw-semibold"
+                >Foto del ejercicio</label
+              >
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-success text-white">
+                  <i class="bi bi-image"></i>
+                </span>
+                <input
+                  formControlName="fotoEjercicio"
+                  type="file"
+                  id="fotoEjercicio"
+                  class="form-control"
+                  accept="image/*"
+                  (change)="onFileSelected($event)"
+                />
+              </div>
+              <div *ngIf="previewUrl" class="text-center mt-3">
+                <img
+                  [src]="previewUrl"
+                  alt="Preview"
+                  class="img-fluid rounded shadow-sm"
+                  style="max-height: 180px"
+                />
+              </div>
             </div>
 
             <!-- Músculos -->
-            <div class="mb-3">
-              <label for="musculos" class="form-label">Músculos del ejercicio</label>
-              <input
-                formControlName="musculos"
-                type="text"
-                class="form-control form-control-lg"
-                id="musculos"
-                aria-describedby="musculosHelp"
-                [(ngModel)]="musculos"
-              />
+            <div class="mb-4">
+              <label for="musculos" class="form-label fw-semibold"
+                >Músculos trabajados</label
+              >
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-success text-white">
+                  <i class="bi bi-heart-pulse"></i>
+                </span>
+                <input
+                  formControlName="musculos"
+                  type="text"
+                  id="musculos"
+                  class="form-control"
+                  placeholder="Ej: Cuádriceps, glúteos"
+                />
+              </div>
             </div>
 
             <!-- MET -->
-            <div class="mb-4">
-              <label for="met" class="form-label">MET - Nivel del ejercicio</label>
-              <input
-                formControlName="met"
-                type="number"
-                class="form-control form-control-lg"
-                id="met"
-                aria-describedby="metHelp"
-                [(ngModel)]="met"
-              />
+            <div class="mb-5">
+              <label for="met" class="form-label fw-semibold">Nivel MET</label>
+              <div class="input-group input-group-lg">
+                <span class="input-group-text bg-success text-white">
+                  <i class="bi bi-graph-up"></i>
+                </span>
+                <input
+                  formControlName="met"
+                  type="number"
+                  id="met"
+                  class="form-control"
+                  placeholder="Ej: 5"
+                />
+              </div>
             </div>
 
-            <!-- Botones de Acción -->
-            <div class="d-flex gap-2">
-              <button type="submit" class="btn btn-success btn-lg">Crear Ejercicio</button>
-              <button type="button" class="btn btn-outline-secondary btn-lg" onclick="window.history.back()">Volver al Dashboard</button>
+            <!-- Botones -->
+            <div class="d-flex flex-wrap justify-content-between gap-3">
+              <button type="submit" class="btn btn-success btn-lg flex-fill">
+                <i class="bi bi-check-circle me-2"></i> Crear Ejercicio
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-secondary btn-lg flex-fill"
+                (click)="volverDashboard()"
+              >
+                <i class="bi bi-arrow-left-circle me-2"></i> Volver al Dashboard
+              </button>
             </div>
           </form>
 
-          <div *ngIf="mensajeExito" class="alert alert-success mt-4">
-            {{ mensajeExito }}
+          <!-- Mensaje de éxito -->
+          <div
+            *ngIf="mensajeExito"
+            class="alert alert-success mt-4 text-center fw-semibold rounded-pill shadow-sm"
+          >
+            <i class="bi bi-check-circle-fill me-2"></i>{{ mensajeExito }}
           </div>
         </div>
       </div>

@@ -1,0 +1,70 @@
+.dashboard-card {
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.search-bar .form-control {
+  border-radius: 0 0.75rem 0.75rem 0;
+  font-size: 1rem;
+}
+
+.search-bar .input-group-text {
+  border-radius: 0.75rem 0 0 0.75rem;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.75em;
+  border-radius: 0.75rem;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-outline-success:hover {
+  background-color: #39A900;
+  color: #fff;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(57, 169, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  .dashboard-card {
+    padding: 1rem;
+  }
+  .table thead {
+    display: none;
+  }
+  .table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 0.75rem;
+  }
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+  }
+}

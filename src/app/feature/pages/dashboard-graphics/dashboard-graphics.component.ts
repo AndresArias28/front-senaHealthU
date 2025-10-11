@@ -20,8 +20,6 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarRutinaComponent } from '../../../modales/editar-rutina/editar-rutina.component';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-// import { toast } from 'ngx-sonner';
-// import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import Swal, { SweetAlertResult } from 'sweetalert2';
 
 @Component({
@@ -47,6 +45,10 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   datos: any[] = [];
   seleccionados: number[] = [];
   datosFiltrados = [...this.datos];
+  //paginacion
+  paginaActual: number = 1;
+  elementosPorPagina: number = 10;
+  Math = Math;
 
   constructor(
     private loginService: LoginService,
@@ -96,7 +98,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
     });
   }
 
-
   private mostrarMensaje(
     mensaje: string,
     tipo: 'success' | 'error' = 'success'
@@ -111,16 +112,15 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.loginService.currentUserLoginOn.subscribe({
       next: (userLoginOn) => {
-        this.userLoginOn = userLoginOn; //almacena el estado del login en la variable userLoggedIn
+        this.userLoginOn = userLoginOn;
       },
     });
 
     this.rutineService.getAllRutines().subscribe({
       next: (response) => {
-        console.log('Rutinas obtenidas:', response);
-        this.datos = response; 
-        this.datosFiltrados = [...this.datos]; 
-        this.rutineService.rutines.next(this.datos); // Actualiza el observable de rutinas
+        this.datos = response;
+        this.datosFiltrados = [...this.datos];
+        this.rutineService.rutines.next(this.datos);
       },
       error: (error) => {
         console.error('Error al obtener rutinas:', error);
@@ -149,7 +149,9 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tipoUsuario'] && this.tipoUsuario) {
-      console.log('Tipo de usuario actualizado:', this.tipoUsuario);
+      this.datosFiltrados = this.datos.filter((item) =>
+        item.tipoUsuario.includes(this.tipoUsuario)
+      );
     }
   }
 
@@ -189,8 +191,6 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
               timer: 2000,
               showConfirmButton: false,
             });
-
-            // Si quieres recargar desde backend
             this.cargarRutinas();
           },
           error: (error) => {
@@ -223,6 +223,23 @@ export class DashboardGraphicsComponent implements OnInit, OnChanges {
 
     this.datos = this.datos.filter((d) => !this.seleccionados.includes(d.id));
     this.seleccionados = [];
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.datosFiltrados.length / this.elementosPorPagina);
+  }
+
+  // Rutinas visibles en la página actual
+  get rutinasPaginadas() {
+    const inicio = (this.paginaActual - 1) * this.elementosPorPagina;
+    const fin = inicio + this.elementosPorPagina;
+    return this.datosFiltrados.slice(inicio, fin);
+  }
+
+  // Cambiar de página
+  cambiarPagina(pagina: number) {
+    if (pagina < 1 || pagina > this.totalPaginas) return;
+    this.paginaActual = pagina;
   }
 
   quitarTildes(texto: string): string {

@@ -1,34 +1,48 @@
-<div class="container" style="margin-top: 80px; max-width: 700px">
-  <div class="card shadow-lg border-0 rounded-4">
-    <div class="card-header bg-primary text-white text-center rounded-top-4">
-      <h3 class="mb-0">Asignar Rutina</h3>
+<div class="asignar-container d-flex justify-content-center align-items-center py-5">
+  <div class="overlay"></div> <!-- Fondo semitransparente -->
+
+  <div class="card shadow-lg border-0 rounded-4 w-100 position-relative" style="max-width: 720px;">
+    <!-- Header -->
+    <div class="card-header bg-success text-white text-center py-4 rounded-top-4">
+      <h3 class="fw-bold mb-1">
+        <i class="bi bi-person-check me-2"></i>Asignar Rutina
+      </h3>
+      <p class="text-white-50 mb-0 small">
+        Rutina seleccionada: <strong>{{ nombreRutinaSeleccionada }}</strong>
+      </p>
     </div>
-    <div class="card-body p-4">
+
+    <!-- Body -->
+    <div class="card-body p-4 p-md-5">
       <form
         *ngIf="formularioAsignarRutina"
         [formGroup]="formularioAsignarRutina"
         (ngSubmit)="asignarRutina()"
+        class="formulario-asignar"
       >
-        <!-- Usuario -->
+        <!-- Seleccionar Usuario -->
         <div class="mb-4">
-          <label for="idPersona" class="form-label fw-semibold">
-            👤 Seleccionar Usuario
+          <label for="idPersona" class="form-label fw-semibold text-success">
+            <i class="bi bi-person-fill me-2"></i>Seleccionar Aprendiz
           </label>
           <select
             formControlName="idPersona"
             id="idPersona"
-            class="form-select form-select-lg shadow-sm"
+            class="form-select form-select-lg shadow-sm border-0 rounded-3"
           >
+            <option value="" disabled selected>Seleccione un aprendiz...</option>
             <option *ngFor="let usuario of usuarios" [value]="usuario.idPersona">
-              {{ usuario.nombreCompleto }} ({{ usuario.emailUsuario }})
+              {{ usuario.nombreCompleto }} — {{ usuario.emailUsuario }}
             </option>
           </select>
         </div>
 
-        <!-- Días -->
+        <!-- Seleccionar Días -->
         <div class="mb-4" formArrayName="diasAsignado">
-          <label class="form-label fw-semibold">📅 Seleccionar Días</label>
-          <div class="d-flex flex-wrap gap-3 mt-2">
+          <label class="form-label fw-semibold text-success">
+            <i class="bi bi-calendar-check me-2"></i>Seleccionar Días
+          </label>
+          <div class="d-flex flex-wrap gap-2 mt-2">
             <div
               class="form-check form-check-inline"
               *ngFor="let dia of dias; let i = index"
@@ -41,7 +55,7 @@
                 autocomplete="off"
               />
               <label
-                class="btn btn-outline-primary btn-sm rounded-pill px-3"
+                class="btn btn-outline-success rounded-pill px-3 py-2 shadow-sm fw-semibold"
                 [for]="'dia' + i"
               >
                 {{ dia }}
@@ -52,35 +66,50 @@
 
         <!-- Observaciones -->
         <div class="mb-4">
-          <label for="observaciones" class="form-label fw-semibold">
-            Observaciones
+          <label for="observaciones" class="form-label fw-semibold text-success">
+            <i class="bi bi-chat-left-text me-2"></i>Observaciones
           </label>
           <textarea
             formControlName="observaciones"
             id="observaciones"
             rows="3"
-            class="form-control shadow-sm"
-            placeholder="Escribe alguna observación sobre la rutina..."
+            class="form-control border-0 shadow-sm rounded-3"
+            placeholder="Escribe alguna observación sobre la rutina asignada..."
           ></textarea>
         </div>
 
         <!-- Botones -->
-        <div class="d-flex justify-content-between">
-          <button type="button" class="btn btn-outline-secondary" (click)="router.navigate(['/inicio-admin'])">
-            ⬅️ Volver al Dashboard
+        <div class="d-flex justify-content-between mt-4">
+          <button
+            type="button"
+            class="btn btn-outline-secondary d-flex align-items-center gap-2"
+            (click)="router.navigate(['/inicio-admin'])"
+          >
+            <i class="bi bi-arrow-left-circle"></i> Volver
           </button>
-          <button type="submit" class="btn btn-primary px-4">
-            ✅ Asignar Rutina
+
+          <button
+            type="submit"
+            class="btn btn-success d-flex align-items-center gap-2 px-4 shadow-sm"
+          >
+            <i class="bi bi-check-circle"></i> Asignar Rutina
           </button>
         </div>
       </form>
 
-      <!-- Mensaje de éxito -->
+      <!-- Mensajes -->
       <div
         *ngIf="mensajeExito"
-        class="alert alert-success text-center mt-4 rounded-pill shadow-sm"
+        class="alert alert-success text-center mt-4 rounded-pill shadow-sm fw-semibold"
       >
-        {{ mensajeExito }}
+        <i class="bi bi-check-circle-fill me-2"></i>{{ mensajeExito }}
+      </div>
+
+      <div
+        *ngIf="mensajeError"
+        class="alert alert-danger text-center mt-4 rounded-pill shadow-sm fw-semibold"
+      >
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ mensajeError }}
       </div>
     </div>
   </div>

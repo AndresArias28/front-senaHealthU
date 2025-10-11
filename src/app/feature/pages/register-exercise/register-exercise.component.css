@@ -1,0 +1,48 @@
+.card {
+  border-radius: 1.5rem;
+}
+
+.input-group-text {
+  border: none;
+  font-size: 1.2rem;
+}
+
+.form-control:focus {
+  border-color: #39A900;
+  box-shadow: 0 0 6px rgba(57, 169, 0, 0.4);
+}
+
+.btn-success {
+  background-color: #39A900;
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+  background-color: #2d8900;
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+  border-width: 2px;
+}
+
+textarea {
+  resize: none;
+}
+
+.alert-success {
+  background-color: #e6f4ea;
+  border: none;
+  color: #256029;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 2rem;
+  }
+  .btn-lg {
+    font-size: 1rem;
+  }
+}

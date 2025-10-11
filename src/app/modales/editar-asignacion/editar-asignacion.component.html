@@ -1,55 +1,64 @@
-<div class="modal-container form-container" mat-dialog-content>
-  <div class="modal-header">
-    <h2>Editar Asignación</h2>
-    <button mat-icon-button class="close-button" (click)="dialogRef.close()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
+<!-- Título: queda por fuera del área con scroll -->
+<h2 mat-dialog-title class="modal-title">
+  <span>Editar Asignación</span>
+  <button mat-icon-button class="close-button" (click)="dialogRef.close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</h2>
 
-  <!-- Datos del aprendiz -->
-  <div class="form-section">
-    <p><strong>Aprendiz:</strong> {{ data.nombreAprendiz }}</p>
-    <p><strong>Ficha:</strong> {{ data.ficha }}</p>
-    <p><strong>Nivel físico:</strong> {{ data.nivelFisico }}</p>
+<!-- Contenido: esta sección es la que scrollea -->
+<mat-dialog-content class="modal-content">
+  <!-- Tarjeta de info -->
+  <div class="info-card">
+    <div class="info-row">
+      <mat-icon color="primary">person</mat-icon>
+      <span><strong>Aprendiz:</strong> {{ data.nombreAprendiz }}</span>
+    </div>
+    <div class="info-row">
+      <mat-icon color="primary">badge</mat-icon>
+      <span><strong>Ficha:</strong> {{ data.ficha }}</span>
+    </div>
+    <div class="info-row">
+      <mat-icon color="primary">fitness_center</mat-icon>
+      <span><strong>Nivel físico:</strong> {{ data.nivelFisico }}</span>
+    </div>
   </div>
 
   <!-- Observaciones -->
-  <div class="form-section">
-    <mat-form-field appearance="outline" class="w-100">
-      <mat-label>Observaciones</mat-label>
-      <textarea
-        matInput
-        [(ngModel)]="data.observaciones"
-        placeholder="Agregar observaciones"
-        rows="3"
-      ></textarea>
-    </mat-form-field>
-  </div>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Observaciones</mat-label>
+    <textarea
+      matInput
+      [(ngModel)]="data.obsevaciones"
+      placeholder="Agregar observaciones..."
+      rows="3">
+    </textarea>
+  </mat-form-field>
 
-  <!-- Rutinas por días -->
-  <div class="form-section">
-    <h3>Días y Rutinas</h3>
-    <div *ngFor="let dia of dias" class="d-flex align-items-center mb-2">
-      <span class="me-3" style="width: 100px;">{{ dia }}</span>
-      <mat-form-field appearance="outline" class="flex-grow-1">
+  <!-- Días y Rutinas -->
+  <h3 class="section-title">Días y Rutinas</h3>
+  <div class="dias-container">
+    <div *ngFor="let dia of dias" class="dia-item">
+      <span class="dia-label">{{ dia }}</span>
+      <mat-form-field appearance="outline" class="rutina-select">
         <mat-label>Rutina</mat-label>
-        <mat-select [(ngModel)]="rutinasAsignadas[dia]">
-          <mat-option
-            *ngFor="let rutina of rutinasDisponibles"
-            [value]="rutina.nombre"
-          >
+        <mat-select [(ngModel)]="rutinasAsignadas[dia]" >
+          <mat-option [value]="null">Descanso</mat-option>
+          <mat-option *ngFor="let rutina of rutinasDisponibles; trackBy: trackByRutinaId"   [value]="rutina.idRutina">
             {{ rutina.nombre }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
+</mat-dialog-content>
 
-  <!-- Botones -->
-  <div class="modal-actions">
-    <button mat-raised-button color="primary" (click)="guardar()">
-      Guardar cambios
-    </button>
-    <button mat-button (click)="dialogRef.close()">Cancelar</button>
-  </div>
-</div>
+<!-- Acciones: fuera del scroll también -->
+<mat-dialog-actions align="end" class="modal-actions">
+  <button mat-raised-button color="primary" (click)="guardar()">
+    <mat-icon class="me-2">save</mat-icon> Guardar cambios
+  </button>
+  <button mat-stroked-button color="warn" (click)="dialogRef.close()">
+    <mat-icon class="me-2">close</mat-icon> Cancelar
+  </button>
+</mat-dialog-actions>

@@ -2,7 +2,6 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LoginService } from '../../../core/services/login/login.service';
 
-
 @Component({
   selector: 'app-recuperar-contrasena',
   imports: [FormsModule],
@@ -21,20 +20,20 @@ export class RecuperarContrasenaComponent {
     if (this.correoIngresado != '') {
       this.loginService.recoverPassword(this.correoIngresado).subscribe({
         next: (data) => {
-          console.log('Recuperar contraseña del correo:', data);
+          this.message = 'Si el correo existe, se ha enviado un enlace de recuperación';
         },
         error: (error) => {
-          console.log(error.message);
+    
+          this.message = 'Si el correo existe, se ha enviado un enlace de recuperación';
         },
         complete: () => {
-          console.log('complete');
+          this.message = 'Si el correo existe, se ha enviado un enlace de recuperación';
         }
       });
     }else{
       this.message = 'Por favor ingrese un correo';
     }
   }
- 
 
   validarTextoIngresado() {
     throw new Error('Method not implemented.');
@@ -43,7 +42,7 @@ export class RecuperarContrasenaComponent {
   @Output() modalAbierto = new EventEmitter<void>();
 
   abrirModal() {
-    this.modalAbierto.emit(); // Envia el evento al padre (LoginComponent)
+    this.modalAbierto.emit();
   }
 
   recuperarContrasena() {

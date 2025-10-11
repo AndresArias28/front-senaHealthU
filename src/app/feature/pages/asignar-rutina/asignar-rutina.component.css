@@ -1,0 +1,95 @@
+/* Fondo principal */
+.asignar-container {
+  position: relative;
+  min-height: 100vh;
+  background-image: url('../../../../assets/fondo-asignacion.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* Capa translúcida */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(245, 245, 245, 0.8); /* gris muy suave */
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+
+/* Card principal */
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(6px);
+  z-index: 2;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Campos */
+.form-select,
+.form-control {
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-select:focus,
+.form-control:focus {
+  border-color: #39A900;
+  box-shadow: 0 0 0 0.25rem rgba(57, 169, 0, 0.25);
+}
+
+/* Botones de días */
+.btn-outline-success {
+  border: 1.5px solid #39A900;
+  color: #39A900;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-outline-success:hover,
+.btn-check:checked + .btn-outline-success {
+  background-color: #39A900;
+  color: #fff;
+  box-shadow: 0 3px 6px rgba(57, 169, 0, 0.3);
+}
+
+/* Botones principales */
+.btn-success {
+  background-color: #39A900;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #2e8900;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+/* Alertas */
+.alert {
+  border: none;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .card {
+    margin: 1rem;
+  }
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

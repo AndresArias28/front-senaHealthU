@@ -1,86 +1,116 @@
-<div class="bg-light border-end p-4 sidebar w-100 w-lg-auto" style="max-width: 280px;">
-  <div class="d-flex flex-column h-100">
-    <!-- profile Section -->
-    <div class="text-center p-4 border-bottom">
+<!-- SIDEBAR CONTENEDOR -->
+<nav
+  class="sidebar d-flex flex-column justify-content-between p-3 shadow-sm"
+  [class.collapsed]="isCollapsed"
+>
+  <!-- Header / perfil -->
+  <div>
+    <div class="text-center mb-4 border-bottom pb-3">
       <div class="position-relative d-inline-block">
         <img
-          src="../../../assets/uuser.png"
-          class="rounded-circle border"
-          alt="Profile avatar"
+          src="../../../assets/admin.png"
+          alt="Perfil"
+          class="rounded-circle border border-3 border-success shadow-sm"
           width="80"
           height="80"
         />
         <span
-          class="position-absolute bottom-0 end-0 bg-success rounded-circle p-1 border border-white"
+          class="position-absolute bottom-0 end-0 bg-success rounded-circle p-2 border border-white"
         ></span>
       </div>
-      <h6 class="mt-3 mb-1 fw-semibold">{{ userName }}</h6>
-      <p class="text-muted small mb-0">Administrador SENA</p>
+
+      <div *ngIf="!isCollapsed" class="mt-3">
+        <h6 class="fw-semibold mb-0">{{ userName }}</h6>
+        <p class="text-muted small">Administrador SENA</p>
+      </div>
     </div>
 
-    <!-- Navigation Menu -->
-    <div class="p-1 mt-3">
-      <div class="nav flex-column align-items-start">
-        <!-- boton para superusuario   -->
+    <!-- MENÚ PRINCIPAL -->
+    <ul class="nav flex-column">
+      <li class="nav-item" *ngIf="tipoUsuario === 'superusuario'">
         <button
-          *ngIf="tipoUsuario === 'superusuario'"
-          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
+          class="nav-link"
           [class.active]="seccionActual === 'gestionUsers'"
           (click)="cambiarSeccion('gestionUsers')"
         >
-          <i class="bi bi-people me-3"></i>Gestionar Instructores
+          <i class="bi bi-people me-2"></i>
+          <span *ngIf="!isCollapsed">Gestionar Instructores</span>
         </button>
+      </li>
 
-          <button
-            *ngIf="tipoUsuario === 'administrador'"
-            class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
-            [class.active]="seccionActual === 'panelAdmin'"
-            (click)="cambiarSeccion('panelAdmin')"
-          >
-            <i class="bi bi-speedometer2 me-3"></i>Dashboard
-          </button>
-
+      <li class="nav-item" *ngIf="tipoUsuario === 'administrador'">
         <button
-          *ngIf="tipoUsuario === 'administrador'"
-          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
+          class="nav-link"
+          [class.active]="seccionActual === 'panelAdmin'"
+          (click)="cambiarSeccion('panelAdmin')"
+        >
+          <i class="bi bi-speedometer2 me-2"></i>
+          <span *ngIf="!isCollapsed">Dashboard</span>
+        </button>
+      </li>
+
+      <li class="nav-item" *ngIf="tipoUsuario === 'administrador'">
+        <button
+          class="nav-link"
           [class.active]="seccionActual === 'gestionEjercicios'"
           (click)="cambiarSeccion('gestionEjercicios')"
         >
-          <i class="bi bi-people me-3"></i>Gestión Ejercicios
+          <i class="bi bi-suit-heart me-2"></i>
+          <span *ngIf="!isCollapsed">Gestión Ejercicios</span>
         </button>
+      </li>
+
+      <li class="nav-item" *ngIf="tipoUsuario === 'administrador'">
         <button
-          *ngIf="tipoUsuario === 'administrador'"
-          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
+          class="nav-link"
           [class.active]="seccionActual === 'gestionUsers'"
           (click)="cambiarSeccion('gestionUsers')"
         >
-          <i class="bi bi-people me-3"></i>Gestión Rutinas
+          <i class="bi bi-calendar-check me-2"></i>
+          <span *ngIf="!isCollapsed">Gestión Rutinas</span>
         </button>
+      </li>
+
+      <li class="nav-item" *ngIf="tipoUsuario === 'administrador'">
         <button
-          *ngIf="tipoUsuario === 'administrador'"
-          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
+          class="nav-link"
           [class.active]="seccionActual === 'qr'"
           (click)="cambiarSeccion('qr')"
         >
-          <i class="bi bi-house-door me-3"></i> Crear QR
+          <i class="bi bi-qr-code me-2"></i>
+          <span *ngIf="!isCollapsed">Crear QR</span>
         </button>
+      </li>
+
+      <li class="nav-item" *ngIf="tipoUsuario === 'administrador'">
         <button
-          *ngIf="tipoUsuario === 'administrador'"
-          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
+          class="nav-link"
           [class.active]="seccionActual === 'asignarRutina'"
           (click)="cambiarSeccion('asignarRutina')"
         >
-          <i class="bi bi-house-door me-3"></i> Ver asignaciones
+          <i class="bi bi-list-task me-2"></i>
+          <span *ngIf="!isCollapsed">Ver asignaciones</span>
         </button>
-
-        <button
-          class="nav-link text-dark px-3 py-2 rounded-3 mb-1"
-          [class.active]="seccionActual === 'logout'"
-          (click)="cambiarSeccion('logout')"
-        >
-          <i class="bi bi-box-arrow-right me-3"></i>Salir
-        </button>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
-</div>
+
+  <!-- Logout -->
+  <div class="border-top pt-3">
+    <button
+      class="nav-link text-danger fw-semibold"
+      (click)="cambiarSeccion('logout')"
+    >
+      <i class="bi bi-box-arrow-right me-2"></i>
+      <span *ngIf="!isCollapsed">Salir</span>
+    </button>
+  </div>
+</nav>
+
+<!-- BOTÓN PARA TOGGLE (solo móvil) -->
+<button
+  class="btn btn-success sidebar-toggle d-md-none"
+  (click)="toggleSidebar()"
+>
+  <i class="bi" [ngClass]="isCollapsed ? 'bi-list' : 'bi-x-lg'"></i>
+</button>

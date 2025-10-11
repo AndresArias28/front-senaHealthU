@@ -1,57 +1,102 @@
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card text-center shadow-sm">
-        <div class="card-body p-4 form-container">
-          <h2 class="card-title mb-4">Generador de QR para Desafíos</h2>
-
-          <div class="mb-3">
-            <label for="accion" class="form-label">Acción:</label>
-            <select id="accion" [(ngModel)]="accion" class="form-select">
-              <option value="activar">Activar</option>
-              <option value="finalizar">Finalizar</option>
-            </select>
-          </div>
-
-          <div class="mb-3">
-            <label for="idDesafio" class="form-label">ID del desafío:</label>
-            <input
-              id="idDesafio"
-              type="text"
-              [(ngModel)]="idDesafio"
-              placeholder="Ej: desafio-001"
-              class="form-control"
-            />
-          </div>
-
-          <div class="d-flex justify-content-center gap-2">
-            <button
-              (click)="generarQR()"
-              class="btn btn-success mb-3"
-            >
-              Generar QR
-            </button>
-            <button *ngIf="codigoQR" (click)="saveQR()" class="btn btn-primary mb-3">Guardar QR</button>
-          </div>
-
-          <div class="mt-4 mb-3" *ngIf="codigoQR">
-            <h3 class="h5 mb-2">Código QR generado:</h3>
-            <div class="d-flex justify-content-center">
-              <qrcode [qrdata]="codigoQR" [width]="256" [errorCorrectionLevel]="'M'" class="img-fluid"></qrcode>
+<div class="qr-bg d-flex align-items-center justify-content-center py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4 text-center qr-card">
+          <div class="card-body p-5">
+            <!-- Encabezado -->
+            <div class="mb-4">
+              <i class="bi bi-qr-code text-success" style="font-size: 3rem;"></i>
+              <h2 class="fw-bold text-success mt-2">Generador de QR para Desafíos</h2>
+              <p class="text-muted mb-0">Crea y descarga códigos QR para tus desafíos en segundos.</p>
             </div>
-          </div>
 
-          <div *ngIf="codigoQR" class="mb-3">
-            <h3 class="h5 mb-2">Código QR en texto:</h3>
-            <p class="text-break">{{ codigoQR }}</p>
-          </div>
+            <!-- Formulario -->
+            <form>
+              <div class="mb-4 text-start">
+                <label for="accion" class="form-label fw-semibold">
+                  <i class="bi bi-lightning-charge-fill text-success me-2"></i> Acción:
+                </label>
+                <select
+                  id="accion"
+                  name="accion"
+                  [(ngModel)]="accion"
+                  class="form-select form-select-lg shadow-sm"
+                >
+                  <option value="activar">Activar</option>
+                  <option value="finalizar">Finalizar</option>
+                </select>
+              </div>
 
-          <div *ngIf="mensaje" class="alert alert-success mt-3">
-            {{ mensaje }}
+              <div class="mb-4 text-start">
+                <label for="idDesafio" class="form-label fw-semibold">
+                  <i class="bi bi-hash text-success me-2"></i> ID del desafío:
+                </label>
+                <input
+                  id="idDesafio"
+                  name="idDesafio"
+                  type="text"
+                  [(ngModel)]="idDesafio"
+                  placeholder="Ej: desafio-001"
+                  class="form-control form-control-lg shadow-sm"
+                />
+              </div>
+
+              <!-- Botones -->
+              <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+                <button
+                  (click)="generarQR()"
+                  type="button"
+                  class="btn btn-success btn-lg d-flex align-items-center gap-2"
+                >
+                  <i class="bi bi-qr-code me-1"></i> Generar QR
+                </button>
+                <button
+                  *ngIf="codigoQR"
+                  (click)="saveQR()"
+                  type="button"
+                  class="btn btn-outline-primary btn-lg d-flex align-items-center gap-2"
+                >
+                  <i class="bi bi-download me-1"></i> Guardar QR
+                </button>
+              </div>
+            </form>
+
+            <!-- QR generado -->
+            <div *ngIf="codigoQR" class="mt-5">
+              <h4 class="fw-semibold text-success mb-3">
+                <i class="bi bi-eye me-2"></i> Vista previa del código QR:
+              </h4>
+              <div class="qr-preview p-4 bg-white rounded-4 shadow-sm d-inline-block">
+                <qrcode
+                  [qrdata]="codigoQR"
+                  [width]="240"
+                  [errorCorrectionLevel]="'M'"
+                  class="img-fluid"
+                ></qrcode>
+              </div>
+            </div>
+
+            <!-- Código QR texto -->
+            <div *ngIf="codigoQR" class="mt-4 text-start">
+              <h6 class="fw-semibold text-success">
+                <i class="bi bi-code-slash me-2"></i> Código QR en texto:
+              </h6>
+              <div
+                class="p-3 bg-light rounded text-break border small shadow-sm"
+                style="font-family: monospace;"
+              >
+                {{ codigoQR }}
+              </div>
+            </div>
+
+            <!-- Mensaje -->
+            <div *ngIf="mensaje" class="alert alert-success mt-4 fw-semibold rounded-pill shadow-sm">
+              <i class="bi bi-check-circle-fill me-2"></i>{{ mensaje }}
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<div class="botones"></div>

@@ -1,24 +1,93 @@
-.titulo-modal {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 10px;
+.card {
+  border-radius: 1.5rem;
+  background-color: #ffffff;
 }
 
-.contenido-modal {
+.input-group-text {
+  border: none;
+  font-size: 1.2rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #39A900;
+  box-shadow: 0 0 6px rgba(57, 169, 0, 0.4);
+}
+
+.btn-success {
+  background-color: #39A900;
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+  background-color: #2d8900;
+  transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+  border-width: 2px;
+}
+
+textarea {
+  resize: none;
+}
+
+.alert-success {
+  background-color: #e6f4ea;
+  border: none;
+  color: #256029;
+}
+
+.shadow-sm {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+@media (max-width: 768px) {
+  .card-body {
+    padding: 2rem;
+  }
+
+  .btn-lg {
+    font-size: 1rem;
+  }
+}
+
+/* Fondo general del componente */
+.bg-register-rutine {
+  min-height: 100vh;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 24px;
-  min-width: 300px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.campo {
+/* Imagen de fondo */
+.bg-register-rutine::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background-image: url("../../../../assets/sena-team.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.2;
+  z-index: -1;
 }
 
-.acciones-modal {
-  padding-top: 20px;
-  display: flex;
-  gap: 15px;
-  justify-content: flex-end;
+
+/* Contenido sobre el fondo */
+.register-content {
+  position: relative;
+  z-index: 1;
 }
+
+
+.bg-register-rutine {
+  background-color: transparent !important; 
+}
+

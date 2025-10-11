@@ -3,6 +3,11 @@
 ng-valid, ng-invalid, ng-pending, ng-dirty, ng-pristine, ng-untouched, ng-touched, ng-empty, ng-not-empty
 */
 
+/* declarar las clases para color verde en titulos y bordes de inputs */
+
+h3.text-success {
+  color: #42a948; /* verde */
+}
 .ng-valid:not(form).ng-touched {
   border-left: 5px solid #42a948; /* green */
 }
@@ -10,22 +15,21 @@ ng-valid, ng-invalid, ng-pending, ng-dirty, ng-pristine, ng-untouched, ng-touche
 .ng-invalid:not(form).ng-touched {
   border-left: 5px solid #a94442; /* red */
 }
+.page-content {
+  margin-top: 110px;
+}
+
 
 html,
 body {
   height: 100%;
-  /* El padding-top solo en desktop, en móvil usar menos */
-  padding-top: 20px;
 }
-@media (max-width: 991.98px) {
-  html, body {
-    padding-top: 10px;
-  }
-}
+
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   font-weight: 400;
+  /* padding-top: 30px;  */
 }
 
 .form-container {
@@ -33,4 +37,24 @@ body {
   margin: 0 auto;
 }
 
+.dialog-md .mat-mdc-dialog-surface {
+  border-radius: 16px;
+  padding: 0;
+  background: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  margin-top: 90px; 
+}
 
+/* Ajusta el contenido principal para no quedar debajo del navbar */
+main {
+  margin-top: 80px; /* Altura de tu navbar */
+}
+
+/* Ajuste visual general */
+main .contenido {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  margin-top: 1rem;
+}

@@ -1,0 +1,98 @@
+.dashboard-card {
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Tabla */
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(57, 169, 0, 0.05);
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Botones */
+.btn-outline-success {
+  border-color: #39a900;
+  color: #39a900;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-success:hover {
+  background-color: #39a900;
+  color: #fff;
+  box-shadow: 0 3px 6px rgba(57, 169, 0, 0.3);
+}
+
+.btn-outline-warning {
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.btn-outline-warning:hover {
+  background-color: #ffc107;
+  color: #fff;
+  box-shadow: 0 3px 6px rgba(255, 193, 7, 0.4);
+}
+
+/* Badges */
+.badge {
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+/* Loader centrado */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Snackbars */
+.success-snackbar {
+  background-color: #39a900 !important;
+  color: white;
+  font-weight: 500;
+}
+
+.error-snackbar {
+  background-color: #dc3545 !important;
+  color: white;
+  font-weight: 500;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-card {
+    padding: 1rem;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tr {
+    display: block;
+    margin-bottom: 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+    padding: 0.75rem;
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+  }
+}

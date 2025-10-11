@@ -1,79 +1,141 @@
 <div class="col">
-  <div class="card border-0 shadow-sm rounded-4">
-    <div class="card-body p-4">
-      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
-        <div class="col-12 col-md-auto flex-grow-1 form-container">
-          <input
-            type="text"
-            placeholder="Buscar por nombre..."
-            [(ngModel)]="terminoBusqueda"
-            (ngModelChange)="buscar()"
-            class="form-control"
-          />
+  <div class="card border-0 shadow-lg rounded-4 dashboard-card">
+    <div class="card-body p-4 p-md-5">
+      <!-- Header -->
+      <div
+        class="d-flex flex-wrap justify-content-between align-items-center mb-4 border-bottom pb-3"
+      >
+        <div>
+          <h3 class="fw-bold text-success mb-1">
+            <i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Rutinas
+          </h3>
+          <p class="text-muted small mb-0">
+            Administra, visualiza y asigna rutinas a tus aprendices fácilmente.
+          </p>
         </div>
-        <div class="col-12 col-md-auto d-flex gap-2 justify-content-end">
-          <button (click)="buscar()" class="btn btn-success rounded-3">
-            Buscar
-          </button>
-          <button class="btn btn-success rounded-3" (click)="redirigeRutinas()">
-            Crear rutina
+
+        <div class="d-flex flex-wrap gap-2 mt-3 mt-md-0">
+          <button
+            class="btn btn-outline-success btn-lg d-flex align-items-center gap-2"
+            (click)="redirigeRutinas()"
+          >
+            <i class="bi bi-plus-circle"></i> Crear Rutina
           </button>
         </div>
       </div>
+
+      <!-- Buscador -->
+      <div class="input-group input-group-lg mb-4 search-bar">
+        <span class="input-group-text bg-success text-white border-0 rounded-start-3">
+          <i class="bi bi-search"></i>
+        </span>
+        <input
+          type="text"
+          placeholder="Buscar rutina por nombre..."
+          [(ngModel)]="terminoBusqueda"
+          (ngModelChange)="buscar()"
+          class="form-control border-0 shadow-sm"
+        />
+      </div>
+
+      <!-- Tabla -->
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
-          <thead class="bg-light table-success">
-            <tr class="text-uppercase">
-              <th class="border-0 px-4">Rutina</th>
+          <thead class="table-light">
+            <tr class="text-uppercase small text-muted">
+              <th class="border-0 ps-4">Rutina</th>
               <th class="border-0">Descripción</th>
               <th class="border-0">Enfoque</th>
               <th class="border-0 text-end pe-4">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let rutine of datosFiltrados">
-              <td class="px-4">
-                <div class="d-flex align-items-center">
+            <tr *ngFor="let rutine of rutinasPaginadas">
+              <td class="ps-4">
+                <div class="d-flex align-items-center gap-3">
+                  <img
+                    [src]="
+                      rutine.fotoRutina ||
+                      'https://cdn-icons-png.flaticon.com/512/4697/4697260.png'
+                    "
+                    class="rounded shadow-sm border"
+                    alt="imagen rutina"
+                    style="width: 80px; height: 80px; object-fit: cover;"
+                  />
                   <div>
-                    <p class="mb-0 fw-bold">{{ rutine.nombre }}</p>
-                    <img
-                      [src]="rutine.fotoRutina || 'https://via.placeholder.com/100'"
-                      class="img-fluid"
-                      alt="imagen rutina"
-                      style="
-                        width: 100px;
-                        height: 100px;
-                        object-fit: cover;
-                        border-radius: 10px;
-                      "
-                    />
+                    <p class="fw-semibold mb-0 text-dark">{{ rutine.nombre }}</p>
+                    <span class="text-muted small"
+                      ><i class="bi bi-bullseye me-1"></i>{{ rutine.enfoque }}</span
+                    >
                   </div>
                 </div>
               </td>
               <td>
-                <p class="mb-0 small">{{ rutine.descripcion }}</p>
+                <p class="mb-0 text-muted small">
+                  {{ rutine.descripcion }}
+                </p>
               </td>
               <td>
-                <span class="badge bg-secondary">{{ rutine.enfoque }}</span>
+                <span
+                  class="badge bg-success bg-opacity-75 text-uppercase px-3 py-2 rounded-pill"
+                >
+                  {{ rutine.enfoque }}
+                </span>
               </td>
               <td class="text-end pe-4">
                 <button
-                  class="btn btn-light btn-sm rounded-circle me-2"
+                  class="btn btn-outline-primary btn-sm rounded-circle me-2"
                   (click)="abrirModal(rutine)"
+                  title="Ver detalles"
                 >
                   <i class="bi bi-eye"></i>
                 </button>
                 <button
-                  class="btn btn-light btn-sm rounded-circle"
-                  (click)="asignarRutina(rutine.idRutina)"
+                  class="btn btn-outline-success btn-sm rounded-circle"
+                  (click)="asignarRutina(rutine.idRutina!)"
+                  title="Asignar a aprendiz"
                 >
                   <i class="bi bi-person-add"></i>
                 </button>
-    
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Paginación -->
+      <div
+        class="d-flex flex-wrap justify-content-between align-items-center mt-4 px-2 border-top pt-3"
+      >
+        <p class="mb-0 small text-muted">
+          Mostrando
+          {{ (paginaActual - 1) * elementosPorPagina + 1 }} -
+          {{
+            Math.min(
+              paginaActual * elementosPorPagina,
+              datosFiltrados.length
+            )
+          }}
+          de {{ datosFiltrados.length }} rutinas
+        </p>
+
+        <div class="btn-group">
+          <button
+            class="btn btn-outline-success btn-sm"
+            [disabled]="paginaActual === 1"
+            (click)="cambiarPagina(paginaActual - 1)"
+          >
+            <i class="bi bi-chevron-left"></i> Anterior
+          </button>
+
+          <button
+            class="btn btn-outline-success btn-sm"
+            [disabled]="paginaActual === totalPaginas"
+            (click)="cambiarPagina(paginaActual + 1)"
+          >
+            Siguiente <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>

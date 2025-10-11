@@ -2,25 +2,21 @@ import { Injectable } from '@angular/core';
 import { LoginRequest } from '../../../shared/models/loginRequest';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, tap, throwError } from 'rxjs';
-import { environment } from '../../../../environments/environmets';
+import { environment } from '../../../../environments/environmet.prod';
 import {jwtDecode} from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-
-  currentUserLoginOn = new BehaviorSubject<boolean>(false);//observable para el estado del login
+  currentUserLoginOn = new BehaviorSubject<boolean>(false);
   currentUserData = new BehaviorSubject<string>("");
 
-  //servicio para el login utilizando httpclient, se inyecta en el constructor
   // agregar el proveedor en app.config.ts
   constructor(private http: HttpClient) {
     const token = sessionStorage.getItem('token');
-    console.log('Token cargado al iniciar el LoginService:', token);
     this.currentUserLoginOn = new BehaviorSubject<boolean>(token !== null);
     this.currentUserData = new BehaviorSubject<string>(token || "");
-
   }
 
   getRole() {
@@ -35,6 +31,7 @@ export class LoginService {
     return this.http.post<any>(environment.urlProd+"auth/forgot-password", {emailUsuario}).pipe(
       tap( (response) => {
         console.log('datos recividos del back:', response);
+
       }),
       catchError(this.handleError)
     );

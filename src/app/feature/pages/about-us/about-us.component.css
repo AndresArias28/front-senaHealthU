@@ -1,81 +1,90 @@
 .about-us-container {
-  background-color: #ffffff;
-  color: #333333;
-  padding: 80px 20px;
-  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.94),
+      rgba(255, 255, 255, 0.94)
+    ),
+    url('../../../../assets/sena-team.png') center/cover no-repeat;
+  padding: 120px 0 80px;
+  min-height: 100vh;
 }
 
 .about-us-content {
-  max-width: 1000px;
+  max-width: 900px;
   margin: 0 auto;
-  text-align: center;
+  padding: 0 20px;
+  color: #222;
 }
 
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  color: #1f4524; 
+.about-us-content h1 {
+  color: #1f4524;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
 }
 
-.mission {
-  font-size: 1.2rem;
+.about-us-content .mission {
+  font-size: 1.1rem;
   line-height: 1.7;
-  margin-bottom: 50px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  color: #555;
+  max-width: 750px;
 }
 
 .values-container {
-  margin-bottom: 50px;
-}
-
-h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 40px;
-  text-transform: uppercase;
-  color: #1f4524;
+  margin-top: 60px;
 }
 
 .values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 40px;
-  text-align: left;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  justify-items: center;
 }
 
 .value-item {
-  background-color: #f8f9fa;
-  padding: 30px;
-  border-radius: 8px;
-  border-left: 5px solid #198754;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 1px solid #eaeaea;
+}
+
+.value-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
 }
 
 .value-item h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 15px;
   color: #1f4524;
+  margin-top: 15px;
+  font-size: 1.25rem;
 }
 
 .value-item p {
-  font-size: 1rem;
-  line-height: 1.6;
+  color: #555;
+  font-size: 0.95rem;
+  margin-top: 10px;
+}
+
+.icon-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .cta {
-  font-size: 1.3rem;
-  font-weight: 500;
-  margin-bottom: 30px;
+  font-size: 1.15rem;
+  color: #333;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
 }
-
-.slogan {
-  font-size: 1.6rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #198754;
-  letter-spacing: 1px;
+.cta a {
+  color: #39a900;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
 }
