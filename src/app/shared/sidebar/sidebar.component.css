@@ -1,7 +1,7 @@
 /* ===== Sidebar principal ===== */
 .sidebar {
   background: #d2e7d0;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 90px);
   width: 260px;
   transition: all 0.3s ease;
   border-right: 1px solid #dee2e6;
