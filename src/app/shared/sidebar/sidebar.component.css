@@ -1,12 +1,12 @@
 /* ===== Sidebar principal ===== */
 .sidebar {
-  background: #ffffff;
-  min-height: 100vh;
+  background: #d2e7d0;
+  min-height: calc(100vh - 60px);
   width: 260px;
   transition: all 0.3s ease;
   border-right: 1px solid #dee2e6;
   position: fixed;
-  top: 0;
+  top: 90px;
   left: 0;
   z-index: 1040;
 }
